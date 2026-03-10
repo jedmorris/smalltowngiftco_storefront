@@ -4,8 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Search, ShoppingBag, Heart, X } from "lucide-react";
+import { Menu, Search, ShoppingBag, Heart, X, User, LogOut, Package } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
+import { useAuth } from "@/context/AuthContext";
 import MobileMenu from "./MobileMenu";
 import SearchBar from "@/components/ui/SearchBar";
 
@@ -20,7 +22,10 @@ const navLinks = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const { cart, openCart } = useCart();
+  const { count: wishlistCount } = useWishlist();
+  const { customer, isAuthenticated, signOut } = useAuth();
 
   const totalQuantity = cart?.totalQuantity ?? 0;
 
@@ -75,11 +80,97 @@ export default function Header() {
               </button>
               <Link
                 href="/wishlist"
-                className="hidden sm:flex p-2 hover:bg-brand-pink/50 rounded-full transition-colors"
-                aria-label="Wishlist"
+                className="hidden sm:flex relative p-2 hover:bg-brand-pink/50 rounded-full transition-colors"
+                aria-label={`Wishlist (${wishlistCount} items)`}
               >
                 <Heart className="w-5 h-5" />
+                <AnimatePresence mode="wait">
+                  {wishlistCount > 0 && (
+                    <motion.span
+                      key={wishlistCount}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className="absolute -top-0.5 -right-0.5 bg-brand-gold text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-medium"
+                    >
+                      {wishlistCount}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
               </Link>
+              {/* Account */}
+              <div className="relative hidden sm:block">
+                {isAuthenticated ? (
+                  <>
+                    <button
+                      onClick={() => setAccountMenuOpen(!accountMenuOpen)}
+                      className="p-2 hover:bg-brand-pink/50 rounded-full transition-colors"
+                      aria-label="Account menu"
+                    >
+                      <User className="w-5 h-5" />
+                    </button>
+                    <AnimatePresence>
+                      {accountMenuOpen && (
+                        <>
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-40"
+                            onClick={() => setAccountMenuOpen(false)}
+                          />
+                          <motion.div
+                            initial={{ opacity: 0, y: -8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -8 }}
+                            transition={{ duration: 0.15 }}
+                            className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-brand-pink/50 py-2 z-50"
+                          >
+                            <p className="px-4 py-1.5 text-xs text-gray-400 truncate">
+                              {customer?.firstName ?? customer?.email}
+                            </p>
+                            <Link
+                              href="/account"
+                              onClick={() => setAccountMenuOpen(false)}
+                              className="flex items-center gap-2 px-4 py-2 text-sm text-brand-charcoal hover:bg-brand-pink/30 transition-colors"
+                            >
+                              <User className="w-4 h-4" />
+                              My Account
+                            </Link>
+                            <Link
+                              href="/account"
+                              onClick={() => setAccountMenuOpen(false)}
+                              className="flex items-center gap-2 px-4 py-2 text-sm text-brand-charcoal hover:bg-brand-pink/30 transition-colors"
+                            >
+                              <Package className="w-4 h-4" />
+                              Orders
+                            </Link>
+                            <hr className="my-1 border-brand-pink/30" />
+                            <button
+                              onClick={() => {
+                                setAccountMenuOpen(false);
+                                signOut();
+                              }}
+                              className="flex items-center gap-2 w-full px-4 py-2 text-sm text-brand-charcoal hover:bg-brand-pink/30 transition-colors"
+                            >
+                              <LogOut className="w-4 h-4" />
+                              Sign Out
+                            </button>
+                          </motion.div>
+                        </>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  <Link
+                    href="/account/login"
+                    className="p-2 hover:bg-brand-pink/50 rounded-full transition-colors"
+                    aria-label="Sign in"
+                  >
+                    <User className="w-5 h-5" />
+                  </Link>
+                )}
+              </div>
               <button
                 onClick={openCart}
                 className="relative p-2 hover:bg-brand-pink/50 rounded-full transition-colors"

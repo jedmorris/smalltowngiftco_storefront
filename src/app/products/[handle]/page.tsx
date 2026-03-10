@@ -4,6 +4,7 @@ import { getProductByHandle, getProductHandles, getFeaturedProducts } from "@/li
 import ProductGallery from "@/components/product/ProductGallery";
 import ProductInfo from "@/components/product/ProductInfo";
 import ProductGrid from "@/components/product/ProductGrid";
+import ReviewSection from "@/components/product/ReviewSection";
 import JsonLd from "@/components/seo/JsonLd";
 
 interface ProductPageProps {
@@ -56,6 +57,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <ProductGallery images={product.images} title={product.title} />
           <ProductInfo product={product} />
         </div>
+
+        <ReviewSection productHandle={handle} />
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (

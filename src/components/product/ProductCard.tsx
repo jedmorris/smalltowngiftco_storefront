@@ -7,6 +7,8 @@ import { Heart, Eye } from "lucide-react";
 import Badge from "@/components/ui/Badge";
 import Price from "@/components/ui/Price";
 import { isOnSale, getSalePercentage } from "@/lib/shopify";
+import { useWishlist } from "@/context/WishlistContext";
+import { useQuickView } from "@/context/QuickViewContext";
 import type { Product } from "@/lib/shopify/types";
 
 interface ProductCardProps {
@@ -15,6 +17,9 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [hovered, setHovered] = useState(false);
+  const { isInWishlist, toggleWishlist } = useWishlist();
+  const { openQuickView } = useQuickView();
+  const wishlisted = isInWishlist(product.id);
   const image = product.featuredImage;
   const secondImage = product.images.length > 1 ? product.images[1] : null;
   const price = product.priceRange.minVariantPrice;
@@ -73,14 +78,18 @@ export default function ProductCard({ product }: ProductCardProps) {
           }`}
         >
           <button
-            onClick={(e) => { e.preventDefault(); }}
-            className="p-2 bg-white/90 rounded-full hover:bg-brand-gold hover:text-white transition-colors shadow-sm"
-            aria-label="Add to wishlist"
+            onClick={(e) => { e.preventDefault(); toggleWishlist(product); }}
+            className={`p-2 rounded-full transition-colors shadow-sm ${
+              wishlisted
+                ? "bg-brand-gold text-white"
+                : "bg-white/90 hover:bg-brand-gold hover:text-white"
+            }`}
+            aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
           >
-            <Heart className="w-4 h-4" />
+            <Heart className="w-4 h-4" fill={wishlisted ? "currentColor" : "none"} />
           </button>
           <button
-            onClick={(e) => { e.preventDefault(); }}
+            onClick={(e) => { e.preventDefault(); openQuickView(product); }}
             className="p-2 bg-white/90 rounded-full hover:bg-brand-gold hover:text-white transition-colors shadow-sm"
             aria-label="Quick view"
           >

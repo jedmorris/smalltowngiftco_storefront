@@ -17,12 +17,28 @@ import {
   REMOVE_CART_LINE,
   GET_CART,
 } from "./mutations";
+import {
+  CUSTOMER_CREATE,
+  CUSTOMER_ACCESS_TOKEN_CREATE,
+  CUSTOMER_ACCESS_TOKEN_DELETE,
+  CUSTOMER_UPDATE,
+  CUSTOMER_ADDRESS_CREATE,
+  CUSTOMER_ADDRESS_UPDATE,
+  CUSTOMER_ADDRESS_DELETE,
+  CUSTOMER_DEFAULT_ADDRESS_UPDATE,
+  GET_CUSTOMER,
+} from "./customer-queries";
 import type {
   Product,
   Collection,
   Cart,
   CartItem,
   ProductVariant,
+  Customer,
+  CustomerAddress,
+  CustomerOrder,
+  OrderLineItem,
+  CustomerAccessToken,
   ShopifyConnection,
 } from "./types";
 
@@ -234,6 +250,173 @@ function normalizeProduct(product: any): Product {
   };
 }
 
+// ─── Customer ───────────────────────────────────────────
+
+export async function customerCreate(
+  email: string,
+  password: string,
+  firstName: string,
+  lastName: string
+): Promise<{ customer: { id: string; email: string } | null; error: string | null }> {
+  const data = await shopifyFetch<{
+    customerCreate: {
+      customer: { id: string; email: string; firstName: string; lastName: string } | null;
+      customerUserErrors: { message: string }[];
+    };
+  }>({
+    query: CUSTOMER_CREATE,
+    variables: { input: { email, password, firstName, lastName } },
+  });
+
+  const errors = data.customerCreate.customerUserErrors;
+  if (errors.length > 0) {
+    return { customer: null, error: errors[0].message };
+  }
+  return { customer: data.customerCreate.customer, error: null };
+}
+
+export async function customerSignIn(
+  email: string,
+  password: string
+): Promise<{ token: CustomerAccessToken | null; error: string | null }> {
+  const data = await shopifyFetch<{
+    customerAccessTokenCreate: {
+      customerAccessToken: CustomerAccessToken | null;
+      customerUserErrors: { message: string }[];
+    };
+  }>({
+    query: CUSTOMER_ACCESS_TOKEN_CREATE,
+    variables: { input: { email, password } },
+  });
+
+  const errors = data.customerAccessTokenCreate.customerUserErrors;
+  if (errors.length > 0) {
+    return { token: null, error: errors[0].message };
+  }
+  return { token: data.customerAccessTokenCreate.customerAccessToken, error: null };
+}
+
+export async function customerSignOut(accessToken: string): Promise<void> {
+  await shopifyFetch<{
+    customerAccessTokenDelete: { deletedAccessToken: string };
+  }>({
+    query: CUSTOMER_ACCESS_TOKEN_DELETE,
+    variables: { customerAccessToken: accessToken },
+  });
+}
+
+export async function getCustomer(accessToken: string): Promise<Customer | null> {
+  const data = await shopifyFetch<{
+    customer: (Omit<Customer, "orders" | "addresses"> & {
+      addresses: ShopifyConnection<CustomerAddress>;
+      orders: ShopifyConnection<Omit<CustomerOrder, "lineItems"> & {
+        lineItems: ShopifyConnection<OrderLineItem>;
+      }>;
+    }) | null;
+  }>({
+    query: GET_CUSTOMER,
+    variables: { customerAccessToken: accessToken },
+  });
+
+  if (!data.customer) return null;
+  return {
+    ...data.customer,
+    addresses: flattenEdges(data.customer.addresses),
+    orders: flattenEdges(data.customer.orders).map((order) => ({
+      ...order,
+      lineItems: flattenEdges(order.lineItems),
+    })),
+  };
+}
+
+export async function updateCustomer(
+  accessToken: string,
+  fields: { firstName?: string; lastName?: string; phone?: string; email?: string }
+): Promise<{ error: string | null }> {
+  const data = await shopifyFetch<{
+    customerUpdate: {
+      customerUserErrors: { message: string }[];
+    };
+  }>({
+    query: CUSTOMER_UPDATE,
+    variables: { customerAccessToken: accessToken, customer: fields },
+  });
+
+  const errors = data.customerUpdate.customerUserErrors;
+  return { error: errors.length > 0 ? errors[0].message : null };
+}
+
+export async function createCustomerAddress(
+  accessToken: string,
+  address: Omit<CustomerAddress, "id">
+): Promise<{ address: CustomerAddress | null; error: string | null }> {
+  const data = await shopifyFetch<{
+    customerAddressCreate: {
+      customerAddress: CustomerAddress | null;
+      customerUserErrors: { message: string }[];
+    };
+  }>({
+    query: CUSTOMER_ADDRESS_CREATE,
+    variables: { customerAccessToken: accessToken, address },
+  });
+
+  const errors = data.customerAddressCreate.customerUserErrors;
+  if (errors.length > 0) return { address: null, error: errors[0].message };
+  return { address: data.customerAddressCreate.customerAddress, error: null };
+}
+
+export async function updateCustomerAddress(
+  accessToken: string,
+  id: string,
+  address: Omit<CustomerAddress, "id">
+): Promise<{ error: string | null }> {
+  const data = await shopifyFetch<{
+    customerAddressUpdate: {
+      customerUserErrors: { message: string }[];
+    };
+  }>({
+    query: CUSTOMER_ADDRESS_UPDATE,
+    variables: { customerAccessToken: accessToken, id, address },
+  });
+
+  const errors = data.customerAddressUpdate.customerUserErrors;
+  return { error: errors.length > 0 ? errors[0].message : null };
+}
+
+export async function deleteCustomerAddress(
+  accessToken: string,
+  id: string
+): Promise<{ error: string | null }> {
+  const data = await shopifyFetch<{
+    customerAddressDelete: {
+      customerUserErrors: { message: string }[];
+    };
+  }>({
+    query: CUSTOMER_ADDRESS_DELETE,
+    variables: { customerAccessToken: accessToken, id },
+  });
+
+  const errors = data.customerAddressDelete.customerUserErrors;
+  return { error: errors.length > 0 ? errors[0].message : null };
+}
+
+export async function setDefaultCustomerAddress(
+  accessToken: string,
+  addressId: string
+): Promise<{ error: string | null }> {
+  const data = await shopifyFetch<{
+    customerDefaultAddressUpdate: {
+      customerUserErrors: { message: string }[];
+    };
+  }>({
+    query: CUSTOMER_DEFAULT_ADDRESS_UPDATE,
+    variables: { customerAccessToken: accessToken, addressId },
+  });
+
+  const errors = data.customerDefaultAddressUpdate.customerUserErrors;
+  return { error: errors.length > 0 ? errors[0].message : null };
+}
+
 // Re-exports
 export { formatPrice, isOnSale, getSalePercentage } from "./normalize";
-export type { Product, Collection, Cart, CartItem, ProductVariant } from "./types";
+export type { Product, Collection, Cart, CartItem, ProductVariant, Customer, CustomerAddress, CustomerOrder, CustomerAccessToken } from "./types";

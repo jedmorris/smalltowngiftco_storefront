@@ -89,6 +89,55 @@ export interface Cart {
   lines: CartItem[];
 }
 
+// ─── Customer ────────────────────────────────────────────
+
+export interface CustomerAddress {
+  id: string;
+  address1: string;
+  address2: string | null;
+  city: string;
+  province: string;
+  zip: string;
+  country: string;
+  phone: string | null;
+}
+
+export interface Customer {
+  id: string;
+  email: string;
+  firstName: string | null;
+  lastName: string | null;
+  phone: string | null;
+  createdAt: string;
+  defaultAddress: { id: string } | null;
+  addresses: CustomerAddress[];
+  orders: CustomerOrder[];
+}
+
+export interface CustomerOrder {
+  id: string;
+  orderNumber: number;
+  processedAt: string;
+  statusUrl: string;
+  totalPrice: MoneyV2;
+  fulfillmentStatus: string;
+  lineItems: OrderLineItem[];
+}
+
+export interface OrderLineItem {
+  title: string;
+  quantity: number;
+  variant: {
+    image: ShopifyImage | null;
+    price: MoneyV2;
+  } | null;
+}
+
+export interface CustomerAccessToken {
+  accessToken: string;
+  expiresAt: string;
+}
+
 // Raw Shopify GraphQL response types (edges/nodes)
 export interface ShopifyEdge<T> {
   node: T;

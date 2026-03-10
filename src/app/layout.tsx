@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
+import { QuickViewProvider } from "@/context/QuickViewContext";
+import { AuthProvider } from "@/context/AuthContext";
 import AnnouncementBar from "@/components/layout/AnnouncementBar";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
+import QuickViewModal from "@/components/product/QuickViewModal";
+import CookieConsent from "@/components/ui/CookieConsent";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -40,13 +46,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
+      <head>
+        <GoogleAnalytics />
+      </head>
       <body className="font-sans antialiased">
         <CartProvider>
-          <AnnouncementBar />
-          <Header />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-          <CartDrawer />
+          <WishlistProvider>
+            <QuickViewProvider>
+              <AuthProvider>
+                <AnnouncementBar />
+                <Header />
+                <main className="min-h-screen">{children}</main>
+                <Footer />
+                <CartDrawer />
+                <QuickViewModal />
+                <CookieConsent />
+              </AuthProvider>
+            </QuickViewProvider>
+          </WishlistProvider>
         </CartProvider>
       </body>
     </html>
