@@ -3,6 +3,10 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "Terms and conditions for shopping at The Small Town Gift Co.",
+  openGraph: {
+    title: "Terms of Service | The Small Town Gift Co.",
+    description: "Terms and conditions for shopping at The Small Town Gift Co.",
+  },
 };
 
 export default function TermsPage() {

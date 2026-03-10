@@ -3,6 +3,10 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "How The Small Town Gift Co. collects, uses, and protects your personal information.",
+  openGraph: {
+    title: "Privacy Policy | The Small Town Gift Co.",
+    description: "How we collect, use, and protect your personal information.",
+  },
 };
 
 export default function PrivacyPolicyPage() {

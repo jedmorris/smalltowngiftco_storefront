@@ -9,6 +9,7 @@ import {
   useRef,
   type ReactNode,
 } from "react";
+import { toast } from "sonner";
 import type { Product } from "@/lib/shopify/types";
 
 interface WishlistContextValue {
@@ -69,8 +70,10 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     (product: Product) => {
       if (isInWishlist(product.id)) {
         removeFromWishlist(product.id);
+        toast("Removed from wishlist");
       } else {
         addToWishlist(product);
+        toast.success("Added to wishlist");
       }
     },
     [isInWishlist, removeFromWishlist, addToWishlist]

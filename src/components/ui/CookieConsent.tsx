@@ -4,23 +4,25 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Cookie } from "lucide-react";
-
-const CONSENT_KEY = "cookie_consent";
+import { getConsent, setConsent } from "@/lib/consent";
 
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem(CONSENT_KEY);
-    if (!consent) {
-      // Small delay so it doesn't flash on page load
+    if (getConsent() === null) {
       const timer = setTimeout(() => setVisible(true), 1000);
       return () => clearTimeout(timer);
     }
   }, []);
 
-  const accept = () => {
-    localStorage.setItem(CONSENT_KEY, "accepted");
+  const handleAccept = () => {
+    setConsent(true);
+    setVisible(false);
+  };
+
+  const handleDecline = () => {
+    setConsent(false);
     setVisible(false);
   };
 
@@ -43,18 +45,27 @@ export default function CookieConsent() {
                 We value your privacy
               </p>
               <p className="text-xs text-gray-500 mb-3">
-                We use local storage to save your cart, wishlist, and login session.
-                No third-party tracking cookies. See our{" "}
+                We use cookies and local storage for your cart, wishlist, and login session.
+                With your permission, we also use analytics cookies to improve your experience.
+                See our{" "}
                 <Link href="/privacy" className="text-brand-gold hover:text-brand-gold/80 underline">
                   Privacy Policy
                 </Link>.
               </p>
-              <button
-                onClick={accept}
-                className="px-5 py-1.5 bg-brand-gold text-white text-sm font-medium rounded-full hover:bg-brand-gold/90 transition-colors"
-              >
-                Got it
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleAccept}
+                  className="px-5 py-1.5 bg-brand-gold text-white text-sm font-medium rounded-full hover:bg-brand-gold/90 transition-colors"
+                >
+                  Accept
+                </button>
+                <button
+                  onClick={handleDecline}
+                  className="px-5 py-1.5 border border-gray-300 text-sm font-medium text-gray-500 rounded-full hover:bg-gray-50 transition-colors"
+                >
+                  Decline
+                </button>
+              </div>
             </div>
           </div>
         </motion.div>

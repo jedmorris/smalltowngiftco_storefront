@@ -4,6 +4,10 @@ import { Truck, Clock, Globe, Package } from "lucide-react";
 export const metadata: Metadata = {
   title: "Shipping Policy",
   description: "Shipping methods, timeframes, and costs for The Small Town Gift Co. orders.",
+  openGraph: {
+    title: "Shipping Policy | The Small Town Gift Co.",
+    description: "Shipping methods, timeframes, and costs for your orders.",
+  },
 };
 
 const shippingMethods = [

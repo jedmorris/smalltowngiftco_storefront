@@ -11,6 +11,7 @@ import CartDrawer from "@/components/cart/CartDrawer";
 import QuickViewModal from "@/components/product/QuickViewModal";
 import CookieConsent from "@/components/ui/CookieConsent";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import Toaster from "@/components/ui/Toaster";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -46,9 +47,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
-      <head>
-        <GoogleAnalytics />
-      </head>
       <body className="font-sans antialiased">
         <CartProvider>
           <WishlistProvider>
@@ -61,6 +59,8 @@ export default function RootLayout({
                 <CartDrawer />
                 <QuickViewModal />
                 <CookieConsent />
+                <GoogleAnalytics />
+                <Toaster />
               </AuthProvider>
             </QuickViewProvider>
           </WishlistProvider>

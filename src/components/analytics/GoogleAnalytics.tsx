@@ -1,9 +1,27 @@
+"use client";
+
+import { useSyncExternalStore } from "react";
 import Script from "next/script";
+import { getConsent, onConsentChange } from "@/lib/consent";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
+function subscribeConsent(callback: () => void) {
+  return onConsentChange(() => callback());
+}
+
+function useConsent() {
+  return useSyncExternalStore(
+    subscribeConsent,
+    () => getConsent() === true,
+    () => false
+  );
+}
+
 export default function GoogleAnalytics() {
-  if (!GA_ID) return null;
+  const hasConsent = useConsent();
+
+  if (!GA_ID || !hasConsent) return null;
 
   return (
     <>

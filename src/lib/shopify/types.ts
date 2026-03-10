@@ -146,3 +146,14 @@ export interface ShopifyEdge<T> {
 export interface ShopifyConnection<T> {
   edges: ShopifyEdge<T>[];
 }
+
+// ─── Raw GraphQL shapes (before normalization) ──────────
+
+export interface RawProduct extends Omit<Product, "images" | "variants"> {
+  images: ShopifyConnection<ShopifyImage>;
+  variants: ShopifyConnection<ProductVariant>;
+}
+
+export interface RawCart extends Omit<Cart, "lines"> {
+  lines: ShopifyConnection<CartItem>;
+}

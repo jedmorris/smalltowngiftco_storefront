@@ -135,6 +135,18 @@ export const CUSTOMER_DEFAULT_ADDRESS_UPDATE = `
   }
 `;
 
+export const CUSTOMER_RECOVER = `
+  mutation customerRecover($email: String!) {
+    customerRecover(email: $email) {
+      customerUserErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+`;
+
 export const GET_CUSTOMER = `
   query getCustomer($customerAccessToken: String!) {
     customer(customerAccessToken: $customerAccessToken) {

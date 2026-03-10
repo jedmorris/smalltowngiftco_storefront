@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Loader2, CheckCircle } from "lucide-react";
+import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 import { updateCustomer } from "@/lib/shopify";
 import Button from "@/components/ui/Button";
@@ -25,9 +26,11 @@ export default function EditProfileForm() {
       const { error: err } = await updateCustomer(accessToken, { firstName, lastName, phone: phone || undefined });
       if (err) {
         setError(err);
+        toast.error(err);
       } else {
         await refreshCustomer();
         setSuccess(true);
+        toast.success("Profile updated");
         setTimeout(() => setSuccess(false), 3000);
       }
     } finally {

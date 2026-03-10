@@ -6,6 +6,7 @@ import Price from "@/components/ui/Price";
 import VariantSelector from "./VariantSelector";
 import AddToCartButton from "./AddToCartButton";
 import type { Product, ProductVariant } from "@/lib/shopify/types";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 interface ProductInfoProps {
   product: Product;
@@ -131,7 +132,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           <div className={`overflow-hidden transition-all duration-300 ${descriptionOpen ? "max-h-[500px] pb-4" : "max-h-0"}`}>
             <div
               className="prose-boutique prose prose-sm text-gray-600 max-w-none"
-              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(product.descriptionHtml) }}
             />
           </div>
         </div>

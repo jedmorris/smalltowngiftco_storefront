@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Loader2, CheckCircle, AlertTriangle } from "lucide-react";
+import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 import { customerSignIn, updateCustomer } from "@/lib/shopify";
 import Button from "@/components/ui/Button";
@@ -47,6 +48,7 @@ export default function ChangePasswordForm() {
       }
 
       setSuccess(true);
+      toast.success("Password updated successfully");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");

@@ -4,6 +4,10 @@ import { RotateCcw, CheckCircle, XCircle, Clock } from "lucide-react";
 export const metadata: Metadata = {
   title: "Returns & Refunds",
   description: "Return policy, exchange process, and refund information for The Small Town Gift Co.",
+  openGraph: {
+    title: "Returns & Refunds | The Small Town Gift Co.",
+    description: "Return policy, exchange process, and refund information.",
+  },
 };
 
 export default function ReturnsPage() {

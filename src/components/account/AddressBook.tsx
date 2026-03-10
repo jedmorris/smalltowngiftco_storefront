@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MapPin, Plus, Trash2, Star } from "lucide-react";
+import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 import {
   createCustomerAddress,
@@ -24,18 +25,20 @@ export default function AddressBook() {
   const handleAdd = async (address: Omit<CustomerAddress, "id">) => {
     if (!accessToken) return "Not authenticated";
     const { error } = await createCustomerAddress(accessToken, address);
-    if (error) return error;
+    if (error) { toast.error(error); return error; }
     await refreshCustomer();
     setAdding(false);
+    toast.success("Address added");
     return null;
   };
 
   const handleUpdate = async (address: Omit<CustomerAddress, "id">) => {
     if (!accessToken || !editing) return "Not authenticated";
     const { error } = await updateCustomerAddress(accessToken, editing.id, address);
-    if (error) return error;
+    if (error) { toast.error(error); return error; }
     await refreshCustomer();
     setEditing(null);
+    toast.success("Address updated");
     return null;
   };
 
@@ -43,12 +46,14 @@ export default function AddressBook() {
     if (!accessToken) return;
     await deleteCustomerAddress(accessToken, id);
     await refreshCustomer();
+    toast.success("Address deleted");
   };
 
   const handleSetDefault = async (id: string) => {
     if (!accessToken) return;
     await setDefaultCustomerAddress(accessToken, id);
     await refreshCustomer();
+    toast.success("Default address updated");
   };
 
   if (adding) {

@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Invalid secret" }, { status: 401 });
   }
 
-  const body = await req.json();
+  await req.json();
   const topic = req.headers.get("x-shopify-topic");
 
   // Revalidate based on webhook topic

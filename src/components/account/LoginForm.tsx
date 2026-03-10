@@ -69,6 +69,12 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
         />
       </div>
 
+      <div className="text-right">
+        <Link href="/account/forgot-password" className="text-sm text-brand-gold hover:text-brand-gold/80">
+          Forgot password?
+        </Link>
+      </div>
+
       <Button type="submit" disabled={isLoading} size="lg" className="w-full">
         {isLoading ? (
           <>

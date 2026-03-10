@@ -6,6 +6,7 @@ import {
   useState,
   useCallback,
   useEffect,
+  useRef,
   type ReactNode,
 } from "react";
 import type { Customer } from "@/lib/shopify/types";
@@ -15,6 +16,7 @@ import {
   customerSignOut as apiSignOut,
   getCustomer as apiGetCustomer,
 } from "@/lib/shopify";
+import { encryptToken, decryptToken } from "@/lib/token-crypto";
 
 interface AuthContextValue {
   customer: Customer | null;
@@ -31,29 +33,48 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 const TOKEN_KEY = "shopify_customer_token";
 
+async function readToken(): Promise<string | null> {
+  const stored = localStorage.getItem(TOKEN_KEY);
+  if (!stored) return null;
+  try {
+    return await decryptToken(stored);
+  } catch {
+    // Legacy plain token or corrupted — remove it
+    localStorage.removeItem(TOKEN_KEY);
+    return null;
+  }
+}
+
+async function writeToken(token: string): Promise<void> {
+  const encrypted = await encryptToken(token);
+  localStorage.setItem(TOKEN_KEY, encrypted);
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const tokenRef = useRef<string | null>(null);
 
   // Restore session on mount
   useEffect(() => {
-    const token = localStorage.getItem(TOKEN_KEY);
-    if (token) {
-      apiGetCustomer(token)
-        .then((c) => {
+    readToken()
+      .then(async (token) => {
+        if (token) {
+          tokenRef.current = token;
+          const c = await apiGetCustomer(token);
           if (c) {
             setCustomer(c);
           } else {
             localStorage.removeItem(TOKEN_KEY);
+            tokenRef.current = null;
           }
-        })
-        .catch(() => {
-          localStorage.removeItem(TOKEN_KEY);
-        })
-        .finally(() => setIsLoading(false));
-    } else {
-      setIsLoading(false);
-    }
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem(TOKEN_KEY);
+        tokenRef.current = null;
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   const signIn = useCallback(async (email: string, password: string): Promise<string | null> => {
@@ -62,7 +83,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { token, error } = await apiSignIn(email, password);
       if (error || !token) return error ?? "Sign in failed";
 
-      localStorage.setItem(TOKEN_KEY, token.accessToken);
+      await writeToken(token.accessToken);
+      tokenRef.current = token.accessToken;
       const c = await apiGetCustomer(token.accessToken);
       setCustomer(c);
       return null;
@@ -78,7 +100,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const { error: createError } = await apiCreate(email, password, firstName, lastName);
         if (createError) return createError;
 
-        // Auto sign-in after registration
         return await signIn(email, password);
       } finally {
         setIsLoading(false);
@@ -88,15 +109,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const refreshCustomer = useCallback(async () => {
-    const token = localStorage.getItem(TOKEN_KEY);
+    const token = await readToken();
     if (token) {
+      tokenRef.current = token;
       const c = await apiGetCustomer(token);
       setCustomer(c);
     }
   }, []);
 
   const signOut = useCallback(async () => {
-    const token = localStorage.getItem(TOKEN_KEY);
+    const token = await readToken();
     if (token) {
       try {
         await apiSignOut(token);
@@ -105,6 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     }
     localStorage.removeItem(TOKEN_KEY);
+    tokenRef.current = null;
     setCustomer(null);
   }, []);
 
@@ -114,7 +137,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         customer,
         isLoading,
         isAuthenticated: !!customer,
-        accessToken: typeof window !== "undefined" ? localStorage.getItem(TOKEN_KEY) : null,
+        accessToken: tokenRef.current,
         signIn,
         signUp,
         signOut,

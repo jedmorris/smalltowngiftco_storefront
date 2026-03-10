@@ -101,7 +101,7 @@ const faqSections: FAQSection[] = [
       },
       {
         question: "How do I reset my password?",
-        answer: "Currently, please email us at hello@smalltowngiftco.com and we'll help you reset your password. We're working on adding self-service password reset soon.",
+        answer: "Visit the sign-in page and click 'Forgot password?' to receive a reset link via email. If you don't receive it within a few minutes, check your spam folder or email us at hello@smalltowngiftco.com.",
       },
     ],
   },
@@ -138,8 +138,28 @@ function FAQAccordion({ item }: { item: FAQItem }) {
   );
 }
 
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqSections.flatMap((section) =>
+    section.items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    }))
+  ),
+};
+
 export default function FAQPage() {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
     <div className="max-w-3xl mx-auto px-4 py-12 lg:py-20">
       <div className="text-center mb-12">
         <span className="text-brand-gold text-sm">◆</span>
@@ -181,5 +201,6 @@ export default function FAQPage() {
         </Link>
       </div>
     </div>
+    </>
   );
 }

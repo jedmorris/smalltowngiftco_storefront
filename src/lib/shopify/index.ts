@@ -26,27 +26,28 @@ import {
   CUSTOMER_ADDRESS_UPDATE,
   CUSTOMER_ADDRESS_DELETE,
   CUSTOMER_DEFAULT_ADDRESS_UPDATE,
+  CUSTOMER_RECOVER,
   GET_CUSTOMER,
 } from "./customer-queries";
 import type {
   Product,
   Collection,
   Cart,
-  CartItem,
-  ProductVariant,
   Customer,
   CustomerAddress,
   CustomerOrder,
   OrderLineItem,
   CustomerAccessToken,
   ShopifyConnection,
+  RawProduct,
+  RawCart,
 } from "./types";
 
 // ─── Products ────────────────────────────────────────────
 
 export async function getFeaturedProducts(count = 8): Promise<Product[]> {
   const data = await shopifyFetch<{
-    collection: { products: ShopifyConnection<Product & { variants: ShopifyConnection<ProductVariant>; images: ShopifyConnection<Product["images"][0]> }> } | null;
+    collection: { products: ShopifyConnection<RawProduct> } | null;
   }>({
     query: GET_FEATURED_PRODUCTS,
     variables: { first: count },
@@ -60,7 +61,7 @@ export async function getFeaturedProducts(count = 8): Promise<Product[]> {
 
 export async function getAllProducts(first = 50): Promise<Product[]> {
   const data = await shopifyFetch<{
-    products: ShopifyConnection<Product & { variants: ShopifyConnection<ProductVariant>; images: ShopifyConnection<Product["images"][0]> }>;
+    products: ShopifyConnection<RawProduct>;
   }>({
     query: GET_ALL_PRODUCTS,
     variables: { first },
@@ -73,7 +74,7 @@ export async function getAllProducts(first = 50): Promise<Product[]> {
 
 export async function getProductByHandle(handle: string): Promise<Product | null> {
   const data = await shopifyFetch<{
-    product: (Product & { variants: ShopifyConnection<ProductVariant>; images: ShopifyConnection<Product["images"][0]> }) | null;
+    product: RawProduct | null;
   }>({
     query: GET_PRODUCT_BY_HANDLE,
     variables: { handle },
@@ -87,7 +88,7 @@ export async function getProductByHandle(handle: string): Promise<Product | null
 
 export async function searchProducts(query: string, first = 20): Promise<Product[]> {
   const data = await shopifyFetch<{
-    search: ShopifyConnection<Product & { variants: ShopifyConnection<ProductVariant>; images: ShopifyConnection<Product["images"][0]> }>;
+    search: ShopifyConnection<RawProduct>;
   }>({
     query: SEARCH_PRODUCTS,
     variables: { query, first },
@@ -131,7 +132,7 @@ export async function getCollectionByHandle(
 ): Promise<(Collection & { products: Product[] }) | null> {
   const data = await shopifyFetch<{
     collection: (Collection & {
-      products: ShopifyConnection<Product & { variants: ShopifyConnection<ProductVariant>; images: ShopifyConnection<Product["images"][0]> }>;
+      products: ShopifyConnection<RawProduct>;
     }) | null;
   }>({
     query: GET_COLLECTION_BY_HANDLE,
@@ -161,29 +162,28 @@ export async function getCollectionHandles(): Promise<{ handle: string; updatedA
 
 // ─── Cart ────────────────────────────────────────────────
 
-function normalizeCart(rawCart: Record<string, unknown>): Cart {
-  const cart = rawCart as unknown as Cart & { lines: ShopifyConnection<CartItem> };
+function normalizeCart(rawCart: RawCart): Cart {
   return {
-    ...cart,
-    lines: flattenEdges(cart.lines as unknown as ShopifyConnection<CartItem>),
+    ...rawCart,
+    lines: flattenEdges(rawCart.lines),
   };
 }
 
 export async function createCart(variantId?: string, quantity?: number): Promise<Cart> {
   const lines = variantId ? [{ merchandiseId: variantId, quantity: quantity ?? 1 }] : [];
   const data = await shopifyFetch<{
-    cartCreate: { cart: Cart & { lines: ShopifyConnection<CartItem> } };
+    cartCreate: { cart: RawCart };
   }>({
     query: CREATE_CART,
     variables: { lines },
   });
 
-  return normalizeCart(data.cartCreate.cart as unknown as Record<string, unknown>);
+  return normalizeCart(data.cartCreate.cart);
 }
 
 export async function addToCart(cartId: string, variantId: string, quantity = 1): Promise<Cart> {
   const data = await shopifyFetch<{
-    cartLinesAdd: { cart: Cart & { lines: ShopifyConnection<CartItem> } };
+    cartLinesAdd: { cart: RawCart };
   }>({
     query: ADD_TO_CART,
     variables: {
@@ -192,12 +192,12 @@ export async function addToCart(cartId: string, variantId: string, quantity = 1)
     },
   });
 
-  return normalizeCart(data.cartLinesAdd.cart as unknown as Record<string, unknown>);
+  return normalizeCart(data.cartLinesAdd.cart);
 }
 
 export async function updateCartLine(cartId: string, lineId: string, quantity: number): Promise<Cart> {
   const data = await shopifyFetch<{
-    cartLinesUpdate: { cart: Cart & { lines: ShopifyConnection<CartItem> } };
+    cartLinesUpdate: { cart: RawCart };
   }>({
     query: UPDATE_CART_LINE,
     variables: {
@@ -206,12 +206,12 @@ export async function updateCartLine(cartId: string, lineId: string, quantity: n
     },
   });
 
-  return normalizeCart(data.cartLinesUpdate.cart as unknown as Record<string, unknown>);
+  return normalizeCart(data.cartLinesUpdate.cart);
 }
 
 export async function removeCartLine(cartId: string, lineId: string): Promise<Cart> {
   const data = await shopifyFetch<{
-    cartLinesRemove: { cart: Cart & { lines: ShopifyConnection<CartItem> } };
+    cartLinesRemove: { cart: RawCart };
   }>({
     query: REMOVE_CART_LINE,
     variables: {
@@ -220,33 +220,32 @@ export async function removeCartLine(cartId: string, lineId: string): Promise<Ca
     },
   });
 
-  return normalizeCart(data.cartLinesRemove.cart as unknown as Record<string, unknown>);
+  return normalizeCart(data.cartLinesRemove.cart);
 }
 
 export async function getCart(cartId: string): Promise<Cart | null> {
   const data = await shopifyFetch<{
-    cart: (Cart & { lines: ShopifyConnection<CartItem> }) | null;
+    cart: RawCart | null;
   }>({
     query: GET_CART,
     variables: { cartId },
   });
 
   if (!data.cart) return null;
-  return normalizeCart(data.cart as unknown as Record<string, unknown>);
+  return normalizeCart(data.cart);
 }
 
 // ─── Helpers ─────────────────────────────────────────────
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function normalizeProduct(product: any): Product {
+function normalizeProduct(product: RawProduct): Product {
   return {
     ...product,
     images: product.images?.edges
       ? flattenEdges(product.images)
-      : product.images ?? [],
+      : (product.images as unknown as Product["images"]) ?? [],
     variants: product.variants?.edges
       ? flattenEdges(product.variants)
-      : product.variants ?? [],
+      : (product.variants as unknown as Product["variants"]) ?? [],
   };
 }
 
@@ -414,6 +413,20 @@ export async function setDefaultCustomerAddress(
   });
 
   const errors = data.customerDefaultAddressUpdate.customerUserErrors;
+  return { error: errors.length > 0 ? errors[0].message : null };
+}
+
+export async function customerRecover(email: string): Promise<{ error: string | null }> {
+  const data = await shopifyFetch<{
+    customerRecover: {
+      customerUserErrors: { message: string }[];
+    };
+  }>({
+    query: CUSTOMER_RECOVER,
+    variables: { email },
+  });
+
+  const errors = data.customerRecover.customerUserErrors;
   return { error: errors.length > 0 ? errors[0].message : null };
 }
 

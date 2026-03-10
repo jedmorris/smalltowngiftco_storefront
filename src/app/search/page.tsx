@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { searchProducts } from "@/lib/shopify";
 import ProductGrid from "@/components/product/ProductGrid";
 
@@ -44,9 +45,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           </p>
           <p className="text-sm text-gray-400">
             Try a different search term or browse our{" "}
-            <a href="/collections" className="text-brand-gold hover:underline">
+            <Link href="/collections" className="text-brand-gold hover:underline">
               collections
-            </a>
+            </Link>
             .
           </p>
         </div>
