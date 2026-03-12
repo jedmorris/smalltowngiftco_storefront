@@ -1,12 +1,11 @@
-function requireEnv(name: string): string {
-  const value = process.env[name];
-  if (!value) throw new Error(`Missing required environment variable: ${name}`);
-  return value;
-}
-
-const domain = requireEnv("NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN");
-const publicToken = requireEnv("NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN");
+// Static access required — Next.js inlines NEXT_PUBLIC_* at build time only with literal property access
+const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN ?? "";
+const publicToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN ?? "";
 const privateToken = process.env.SHOPIFY_STOREFRONT_PRIVATE_TOKEN;
+
+if (!domain || !publicToken) {
+  console.error("Missing required Shopify environment variables");
+}
 const endpoint = `https://${domain}/api/2025-01/graphql.json`;
 
 interface ShopifyFetchOptions {

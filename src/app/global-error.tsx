@@ -1,6 +1,7 @@
 "use client";
 
 export default function GlobalError({
+  error,
   reset,
 }: {
   error: Error & { digest?: string };
@@ -16,6 +17,11 @@ export default function GlobalError({
           <p className="text-gray-500 mb-8 max-w-md">
             We&apos;re sorry — a critical error occurred. Please try refreshing the page.
           </p>
+          <pre className="text-left text-xs text-red-600 bg-red-50 p-4 rounded-lg max-w-lg overflow-auto mb-8">
+            {error?.message}
+            {error?.digest ? `\nDigest: ${error.digest}` : ""}
+            {error?.stack ? `\n\n${error.stack}` : ""}
+          </pre>
           <button
             onClick={reset}
             className="px-8 py-3 bg-amber-700 text-white font-medium rounded-full hover:bg-amber-600 transition-colors"

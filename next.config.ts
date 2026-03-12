@@ -24,14 +24,14 @@ const nextConfig: NextConfig = {
             value: "max-age=63072000; includeSubDomains; preload",
           },
           {
-            key: "Content-Security-Policy",
+            key: "Content-Security-Policy-Report-Only",
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https://cdn.shopify.com https://www.google-analytics.com",
-              "connect-src 'self' https://*.shopify.com https://www.google-analytics.com https://www.googletagmanager.com",
+              "connect-src 'self' https://*.shopify.com https://*.myshopify.com https://www.google-analytics.com https://www.googletagmanager.com",
               "frame-ancestors 'none'",
             ].join("; "),
           },
