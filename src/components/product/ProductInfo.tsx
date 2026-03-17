@@ -38,14 +38,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Vendor */}
-      {product.vendor && (
-        <p className="text-sm text-brand-gold font-medium uppercase tracking-wide">
-          {product.vendor}
-        </p>
-      )}
-
+    <div className="space-y-8">
       {/* Title */}
       <h1 className="font-serif text-3xl lg:text-4xl text-brand-charcoal">
         {product.title}
@@ -94,13 +87,13 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
       {/* Wishlist + Share */}
       <div className="flex gap-3">
-        <button className="flex-1 flex items-center justify-center gap-2 py-2.5 border border-brand-pink rounded-full text-sm text-brand-charcoal hover:bg-brand-pink/30 transition-colors">
+        <button className="flex-1 flex items-center justify-center gap-2 py-2.5 border border-gray-200 rounded-full text-sm text-brand-charcoal hover:border-brand-gold transition-colors">
           <Heart className="w-4 h-4" />
           Wishlist
         </button>
         <button
           onClick={handleShare}
-          className="flex-1 flex items-center justify-center gap-2 py-2.5 border border-brand-pink rounded-full text-sm text-brand-charcoal hover:bg-brand-pink/30 transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 py-2.5 border border-gray-200 rounded-full text-sm text-brand-charcoal hover:border-brand-gold transition-colors"
         >
           <Share2 className="w-4 h-4" />
           Share
@@ -108,20 +101,18 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       </div>
 
       {/* Trust badges */}
-      <div className="bg-brand-cream/50 rounded-2xl p-4">
-        <div className="grid grid-cols-2 gap-3">
-          {trustBadges.map((badge) => (
-            <div key={badge.label} className="flex items-center gap-2 text-xs text-gray-600">
-              <badge.icon className="w-4 h-4 text-brand-gold flex-shrink-0" />
-              {badge.label}
-            </div>
-          ))}
-        </div>
+      <div className="flex flex-wrap gap-4 pt-6 border-t border-gray-100">
+        {trustBadges.map((badge) => (
+          <div key={badge.label} className="flex items-center gap-1.5 text-xs text-gray-500">
+            <badge.icon className="w-3.5 h-3.5 text-brand-gold flex-shrink-0" />
+            {badge.label}
+          </div>
+        ))}
       </div>
 
       {/* Collapsible Description */}
       {product.descriptionHtml && (
-        <div className="border-t border-brand-pink/50">
+        <div className="border-t border-gray-100">
           <button
             onClick={() => setDescriptionOpen(!descriptionOpen)}
             className="flex items-center justify-between w-full py-4 text-left"
@@ -139,7 +130,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       )}
 
       {/* Collapsible Product Details */}
-      <div className="border-t border-brand-pink/50">
+      <div className="border-t border-gray-100">
         <button
           onClick={() => setDetailsOpen(!detailsOpen)}
           className="flex items-center justify-between w-full py-4 text-left"

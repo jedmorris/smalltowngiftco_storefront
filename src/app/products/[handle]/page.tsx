@@ -62,13 +62,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <div className="mt-20 pt-12 border-t border-brand-pink/50">
+          <div className="mt-20 pt-12 border-t border-gray-100">
             <div className="text-center mb-10">
-              <span className="text-brand-gold text-sm">◆</span>
-              <h2 className="font-serif text-2xl lg:text-3xl text-brand-charcoal mt-2 mb-2">
+              <h2 className="font-serif text-2xl lg:text-3xl text-brand-charcoal mb-2">
                 You Might Also Love
               </h2>
-              <div className="decorative-underline mx-auto" />
             </div>
             <ProductGrid products={relatedProducts} columns={4} />
           </div>

@@ -40,19 +40,17 @@ export default function AboutPage() {
     <div className="max-w-4xl mx-auto px-4 py-12 lg:py-20">
       {/* Hero */}
       <div className="text-center mb-16">
-        <span className="text-brand-gold text-sm">◆</span>
-        <h1 className="font-serif text-4xl lg:text-5xl text-brand-charcoal mt-2 mb-4">
+        <h1 className="font-serif text-4xl lg:text-5xl text-brand-charcoal mb-4">
           Our Story
         </h1>
         <p className="text-gray-500 text-lg max-w-2xl mx-auto">
           From our small town to your doorstep — every gift tells a story.
         </p>
-        <div className="decorative-underline mx-auto" />
       </div>
 
       {/* Story */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
-        <div className="relative aspect-square rounded-2xl overflow-hidden bg-brand-cream shadow-[var(--shadow-medium)]">
+        <div className="relative aspect-square rounded-xl overflow-hidden bg-brand-cream shadow-[var(--shadow-medium)]">
           <Image
             src="/images/banner.jpg"
             alt="The Small Town Gift Co. storefront"
@@ -88,7 +86,7 @@ export default function AboutPage() {
         {values.map((item) => (
           <div
             key={item.title}
-            className="text-center bg-white rounded-2xl p-8 shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] transition-shadow"
+            className="text-center bg-white rounded-xl p-8 shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] transition-shadow"
           >
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-brand-pink/30 mb-4">
               <item.icon className="w-7 h-7 text-brand-gold" />
@@ -102,8 +100,7 @@ export default function AboutPage() {
       {/* Contact */}
       <div id="contact" className="mb-16 scroll-mt-24">
         <div className="text-center mb-8">
-          <span className="text-brand-gold text-sm">◆</span>
-          <h2 className="font-serif text-2xl text-brand-charcoal mt-2 mb-2">
+          <h2 className="font-serif text-2xl text-brand-charcoal mb-2">
             Get in Touch
           </h2>
           <p className="text-gray-500">We&apos;d love to hear from you!</p>
@@ -112,7 +109,7 @@ export default function AboutPage() {
           {contactInfo.map((item) => (
             <div
               key={item.label}
-              className="text-center bg-white rounded-2xl p-6 shadow-[var(--shadow-soft)]"
+              className="text-center bg-white rounded-xl p-6 shadow-[var(--shadow-soft)]"
             >
               <item.icon className="w-6 h-6 text-brand-gold mx-auto mb-3" />
               <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">{item.label}</p>
@@ -130,7 +127,7 @@ export default function AboutPage() {
 
       {/* Shipping & Returns */}
       <div id="shipping" className="scroll-mt-24">
-        <div className="bg-brand-cream/50 rounded-2xl p-8 border border-brand-gold/10">
+        <div className="bg-brand-cream/50 rounded-xl p-8 border border-brand-gold/10">
           <div className="flex items-start gap-4">
             <div className="flex-shrink-0">
               <div className="w-10 h-10 rounded-full bg-brand-gold/10 flex items-center justify-center">

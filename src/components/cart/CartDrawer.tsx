@@ -44,13 +44,13 @@ export default function CartDrawer() {
             className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white z-50 shadow-xl flex flex-col"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-brand-pink">
+            <div className="flex items-center justify-between p-4 border-b border-gray-100">
               <h2 className="font-serif text-lg text-brand-charcoal">
                 Your Cart ({cart?.totalQuantity ?? 0})
               </h2>
               <button
                 onClick={closeCart}
-                className="p-1.5 hover:bg-brand-pink/50 rounded-full transition-colors"
+                className="p-1.5 hover:bg-gray-100 rounded-full transition-colors"
                 aria-label="Close cart"
               >
                 <X className="w-5 h-5" />
@@ -108,7 +108,7 @@ export default function CartDrawer() {
                 </div>
 
                 <div className="flex-1 overflow-y-auto px-4 cart-scrollbar">
-                  <div className="divide-y divide-brand-pink/50">
+                  <div className="divide-y divide-gray-100">
                     {items.map((item) => (
                       <CartLineItem key={item.id} item={item} />
                     ))}
@@ -116,7 +116,7 @@ export default function CartDrawer() {
                 </div>
 
                 {/* Trust badges */}
-                <div className="px-4 py-2 border-t border-brand-pink/30">
+                <div className="px-4 py-2 border-t border-gray-100">
                   <div className="flex justify-center gap-4">
                     {trustBadges.map((badge) => (
                       <div key={badge.label} className="flex items-center gap-1 text-xs text-gray-400">

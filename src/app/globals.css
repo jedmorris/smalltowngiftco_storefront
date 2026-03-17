@@ -11,9 +11,9 @@
   --font-serif: var(--font-playfair);
   --font-sans: var(--font-inter);
 
-  --shadow-soft: 0 2px 15px rgba(184, 147, 90, 0.08);
-  --shadow-medium: 0 4px 25px rgba(184, 147, 90, 0.12);
-  --shadow-strong: 0 8px 40px rgba(184, 147, 90, 0.18);
+  --shadow-soft: 0 2px 15px rgba(184, 147, 90, 0.05);
+  --shadow-medium: 0 4px 25px rgba(184, 147, 90, 0.08);
+  --shadow-strong: 0 8px 40px rgba(184, 147, 90, 0.12);
 
   --animate-fade-in-up: fade-in-up 0.6s ease-out both;
   --animate-scale-in: scale-in 0.4s ease-out both;
@@ -79,9 +79,9 @@ html {
 /* Decorative utilities */
 .decorative-underline {
   display: block;
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(to right, var(--color-brand-gold), var(--color-brand-gold)/40);
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(to right, var(--color-brand-gold), var(--color-brand-gold)/30);
   margin-top: 0.75rem;
 }
 

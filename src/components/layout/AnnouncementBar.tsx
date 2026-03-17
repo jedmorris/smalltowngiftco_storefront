@@ -29,7 +29,7 @@ export default function AnnouncementBar() {
   if (!visible) return null;
 
   return (
-    <div className="bg-brand-forest text-white text-center py-2 px-4 text-sm tracking-wide relative">
+    <div className="bg-brand-forest text-white text-center py-1.5 px-4 text-xs tracking-wide relative">
       <p
         className={`transition-all duration-300 ${
           animating ? "opacity-0 -translate-y-2" : "opacity-100 translate-y-0"
@@ -42,7 +42,7 @@ export default function AnnouncementBar() {
         className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-white/10 rounded-full transition-colors"
         aria-label="Dismiss announcement"
       >
-        <X className="w-3.5 h-3.5" />
+        <X className="w-3 h-3" />
       </button>
     </div>
   );

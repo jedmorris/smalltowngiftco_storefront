@@ -49,7 +49,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-2.5 border border-brand-pink rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+          className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
           placeholder="you@example.com"
         />
       </div>
@@ -64,7 +64,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-2.5 border border-brand-pink rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+          className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
           placeholder="Your password"
         />
       </div>

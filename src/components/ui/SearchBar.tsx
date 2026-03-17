@@ -31,7 +31,7 @@ export default function SearchBar({ onClose }: SearchBarProps) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search products..."
-        className="w-full pl-10 pr-10 py-2 bg-white border border-brand-pink rounded-full text-sm text-brand-charcoal placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+        className="w-full pl-10 pr-10 py-2 bg-white border border-gray-200 rounded-full text-sm text-brand-charcoal placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
         autoFocus
       />
       {query && (

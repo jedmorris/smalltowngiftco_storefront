@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Instagram, Facebook, Mail, Shield, Truck, Heart, RotateCcw } from "lucide-react";
+import TextLogo from "@/components/ui/TextLogo";
 
 const shopLinks = [
   { label: "Shop All", href: "/collections" },
@@ -11,6 +11,17 @@ const shopLinks = [
   { label: "Best Sellers", href: "/collections/best-sellers" },
   { label: "Bachelorette", href: "/collections/bachelorette" },
   { label: "Wedding", href: "/collections/wedding" },
+];
+
+const infoLinks = [
+  { label: "About Us", href: "/about" },
+  { label: "Contact Us", href: "/contact" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Shipping Policy", href: "/shipping" },
+  { label: "Returns Policy", href: "/returns" },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
+  { label: "Brand Guide", href: "/brand-guide" },
 ];
 
 const promises = [
@@ -32,9 +43,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-white border-t border-brand-pink/50">
+    <footer className="bg-white border-t border-gray-100">
       {/* Newsletter Banner */}
-      <div className="bg-gradient-to-r from-brand-pink via-brand-blush to-brand-pink">
+      <div className="bg-brand-cream">
         <div className="max-w-7xl mx-auto px-4 py-10 text-center">
           <h3 className="font-serif text-2xl text-brand-charcoal mb-2">Stay in the Loop</h3>
           <p className="text-sm text-gray-500 mb-5 max-w-md mx-auto">
@@ -52,7 +63,7 @@ export default function Footer() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
-                className="flex-1 px-5 py-2.5 border border-brand-pink rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold bg-white"
+                className="flex-1 px-5 py-2.5 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold bg-white"
               />
               <button
                 type="submit"
@@ -66,19 +77,21 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {/* Brand */}
-          <div className="lg:col-span-1">
-            <Image
-              src="/images/logo.png"
-              alt="The Small Town Gift Co."
-              width={160}
-              height={54}
-              className="h-12 w-auto mb-4"
-            />
+          <div>
+            <TextLogo size="md" asLink={false} className="mb-4 inline-block" />
             <p className="text-sm text-gray-500 mb-4 max-w-xs">
               Thoughtful gifts for every occasion. Curated with love from our small town to yours.
             </p>
+            <ul className="space-y-2 mb-6">
+              {promises.map((promise) => (
+                <li key={promise.text} className="flex items-center gap-2 text-sm text-gray-500">
+                  <promise.icon className="w-3.5 h-3.5 text-brand-gold flex-shrink-0" />
+                  {promise.text}
+                </li>
+              ))}
+            </ul>
             <div className="flex gap-3">
               {[
                 { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
@@ -90,7 +103,7 @@ export default function Footer() {
                   href={social.href}
                   target={social.href.startsWith("http") ? "_blank" : undefined}
                   rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="p-2 bg-brand-blush hover:bg-brand-gold hover:text-white rounded-full transition-all duration-200 text-brand-charcoal"
+                  className="text-gray-400 hover:text-brand-gold transition-colors"
                   aria-label={social.label}
                 >
                   <social.icon className="w-4 h-4" />
@@ -101,13 +114,13 @@ export default function Footer() {
 
           {/* Shop */}
           <div>
-            <h3 className="font-serif text-lg mb-4 text-brand-charcoal">Shop</h3>
-            <ul className="space-y-2">
+            <h3 className="text-xs font-medium uppercase tracking-widest text-brand-charcoal mb-4">Shop</h3>
+            <ul className="space-y-2.5">
               {shopLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-gray-500 hover:text-brand-gold hover:translate-x-1 transition-all duration-200 inline-block"
+                    className="text-sm text-gray-500 hover:text-brand-gold transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -116,37 +129,15 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Our Promise */}
-          <div>
-            <h3 className="font-serif text-lg mb-4 text-brand-charcoal">Our Promise</h3>
-            <ul className="space-y-3">
-              {promises.map((promise) => (
-                <li key={promise.text} className="flex items-center gap-2 text-sm text-gray-500">
-                  <span className="text-brand-gold text-[8px]">◆</span>
-                  <promise.icon className="w-4 h-4 text-brand-gold flex-shrink-0" />
-                  {promise.text}
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* Info */}
           <div>
-            <h3 className="font-serif text-lg mb-4 text-brand-charcoal">Info</h3>
-            <ul className="space-y-2">
-              {[
-                { label: "About Us", href: "/about" },
-                { label: "Contact Us", href: "/contact" },
-                { label: "FAQ", href: "/faq" },
-                { label: "Shipping Policy", href: "/shipping" },
-                { label: "Returns Policy", href: "/returns" },
-                { label: "Privacy Policy", href: "/privacy" },
-                { label: "Terms of Service", href: "/terms" },
-              ].map((link) => (
+            <h3 className="text-xs font-medium uppercase tracking-widest text-brand-charcoal mb-4">Info</h3>
+            <ul className="space-y-2.5">
+              {infoLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-gray-500 hover:text-brand-gold hover:translate-x-1 transition-all duration-200 inline-block"
+                    className="text-sm text-gray-500 hover:text-brand-gold transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -157,7 +148,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="mt-12 pt-6 border-t border-brand-pink/50 text-center text-xs text-gray-400">
+        <div className="mt-12 pt-6 border-t border-gray-100 text-center text-xs text-gray-400">
           <p>&copy; {new Date().getFullYear()} The Small Town Gift Co. All rights reserved.</p>
         </div>
       </div>

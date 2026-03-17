@@ -15,7 +15,7 @@ export default function CartSummary({ freeShipping = false }: CartSummaryProps) 
   if (!cart) return null;
 
   return (
-    <div className="border-t border-brand-pink pt-4 space-y-3">
+    <div className="border-t border-gray-100 pt-4 space-y-3">
       <div className="flex justify-between text-sm">
         <span className="text-gray-500">Subtotal</span>
         <span className="font-semibold text-brand-charcoal">
@@ -28,7 +28,7 @@ export default function CartSummary({ freeShipping = false }: CartSummaryProps) 
           {freeShipping ? "FREE" : "Calculated at checkout"}
         </span>
       </div>
-      <div className="flex justify-between items-baseline pt-2 border-t border-brand-pink/30">
+      <div className="flex justify-between items-baseline pt-2 border-t border-gray-100/30">
         <span className="text-gray-500 text-sm">Total</span>
         <span className="font-serif text-xl font-semibold text-brand-charcoal">
           {formatPrice(cart.cost.subtotalAmount)}

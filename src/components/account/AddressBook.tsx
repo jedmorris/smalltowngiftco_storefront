@@ -96,7 +96,7 @@ export default function AddressBook() {
           {addresses.map((addr) => {
             const isDefault = addr.id === defaultId;
             return (
-              <div key={addr.id} className={`border rounded-xl p-4 ${isDefault ? "border-brand-gold bg-brand-gold/5" : "border-brand-pink/50"}`}>
+              <div key={addr.id} className={`border rounded-xl p-4 ${isDefault ? "border-brand-gold bg-brand-gold/5" : "border-gray-100"}`}>
                 <div className="flex items-start justify-between">
                   <div>
                     {isDefault && (

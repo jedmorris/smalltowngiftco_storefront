@@ -40,16 +40,16 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-400 mb-6">
         <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
-        <span className="mx-2">/</span>
+        <span className="mx-2">·</span>
         <Link href="/collections" className="hover:text-brand-gold transition-colors">Collections</Link>
-        <span className="mx-2">/</span>
+        <span className="mx-2">·</span>
         <span className="text-brand-charcoal">{collection.title}</span>
       </nav>
 
       {/* Collection Header */}
       <div className="text-center mb-10">
         {collection.image && (
-          <div className="relative w-full h-48 lg:h-64 rounded-2xl overflow-hidden mb-6">
+          <div className="relative w-full h-48 lg:h-64 rounded-xl overflow-hidden mb-6">
             <Image
               src={collection.image.url}
               alt={collection.image.altText || collection.title}

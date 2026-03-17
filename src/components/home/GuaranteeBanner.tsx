@@ -42,36 +42,28 @@ export default function GuaranteeBanner() {
   }, []);
 
   return (
-    <section className="py-16 lg:py-20" ref={ref}>
+    <section className="py-16 lg:py-20 border-t border-gray-100" ref={ref}>
       <div className="max-w-7xl mx-auto px-4">
-        <div className="bg-gradient-to-br from-brand-forest to-brand-forest/90 rounded-2xl p-8 lg:p-12 shadow-[var(--shadow-medium)]">
-          <div className="text-center mb-8">
-            <span className="text-brand-gold text-sm">◆</span>
-            <h2 className="font-serif text-2xl lg:text-3xl text-white mt-2">
-              Why Shop With Us
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {features.map((feature, i) => (
-              <div
-                key={feature.title}
-                className={`text-center transition-all duration-700 ${
-                  visible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-6"
-                }`}
-                style={{ transitionDelay: visible ? `${i * 150}ms` : "0ms" }}
-              >
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 mb-4">
-                  <feature.icon className="w-6 h-6 text-brand-gold" />
-                </div>
-                <h3 className="font-serif text-lg text-white mb-1">
-                  {feature.title}
-                </h3>
-                <p className="text-sm text-white/70">{feature.description}</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          {features.map((feature, i) => (
+            <div
+              key={feature.title}
+              className={`text-center transition-all duration-700 ${
+                visible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-4"
+              }`}
+              style={{ transitionDelay: visible ? `${i * 100}ms` : "0ms" }}
+            >
+              <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-brand-cream mb-3">
+                <feature.icon className="w-5 h-5 text-brand-gold" />
               </div>
-            ))}
-          </div>
+              <h3 className="font-serif text-sm text-brand-charcoal mb-1">
+                {feature.title}
+              </h3>
+              <p className="text-xs text-gray-500 leading-relaxed">{feature.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -56,7 +56,7 @@ export default function CartLineItem({ item }: CartLineItemProps) {
 
         {/* Quantity controls */}
         <div className="flex items-center gap-2 mt-2">
-          <div className="flex items-center border border-brand-pink rounded">
+          <div className="flex items-center border border-gray-200 rounded">
             <button
               onClick={() =>
                 item.quantity === 1
@@ -64,7 +64,7 @@ export default function CartLineItem({ item }: CartLineItemProps) {
                   : updateQuantity(item.id, item.quantity - 1)
               }
               disabled={isLoading}
-              className="p-1 hover:bg-brand-pink/50 transition-colors disabled:opacity-50"
+              className="p-1 hover:bg-gray-100 transition-colors disabled:opacity-50"
               aria-label="Decrease quantity"
             >
               <Minus className="w-3 h-3" />
@@ -73,7 +73,7 @@ export default function CartLineItem({ item }: CartLineItemProps) {
             <button
               onClick={() => updateQuantity(item.id, item.quantity + 1)}
               disabled={isLoading}
-              className="p-1 hover:bg-brand-pink/50 transition-colors disabled:opacity-50"
+              className="p-1 hover:bg-gray-100 transition-colors disabled:opacity-50"
               aria-label="Increase quantity"
             >
               <Plus className="w-3 h-3" />

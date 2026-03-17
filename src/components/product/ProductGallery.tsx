@@ -3,7 +3,7 @@
 import { useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { ShopifyImage } from "@/lib/shopify/types";
 
 interface ProductGalleryProps {
@@ -38,7 +38,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
 
   if (images.length === 0) {
     return (
-      <div className="aspect-square bg-brand-cream rounded-2xl flex items-center justify-center text-gray-300">
+      <div className="aspect-square bg-brand-cream rounded-xl flex items-center justify-center text-gray-300">
         No image available
       </div>
     );
@@ -49,7 +49,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
       <div className="space-y-4">
         {/* Main image */}
         <div
-          className="relative aspect-square bg-brand-cream rounded-2xl overflow-hidden cursor-pointer group"
+          className="relative aspect-square bg-brand-cream rounded-xl overflow-hidden cursor-pointer group"
           onClick={() => setLightboxOpen(true)}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -63,10 +63,6 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
             sizes="(max-width: 1024px) 100vw, 50vw"
             priority
           />
-          {/* Zoom hint */}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/10 transition-colors">
-            <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-80 transition-opacity" />
-          </div>
           {/* Image counter */}
           {images.length > 1 && (
             <span className="absolute bottom-3 right-3 bg-black/50 text-white text-xs px-2 py-1 rounded-full">
@@ -101,10 +97,10 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
               <button
                 key={image.url}
                 onClick={() => setSelectedIndex(index)}
-                className={`relative w-16 h-16 lg:w-20 lg:h-20 flex-shrink-0 rounded-xl overflow-hidden border-2 transition-all ${
+                className={`relative w-16 h-16 lg:w-20 lg:h-20 flex-shrink-0 rounded-lg overflow-hidden border transition-all ${
                   index === selectedIndex
-                    ? "border-brand-gold ring-2 ring-brand-gold/20"
-                    : "border-transparent hover:border-brand-pink"
+                    ? "border-brand-gold"
+                    : "border-gray-200 hover:border-gray-300"
                 }`}
               >
                 <Image

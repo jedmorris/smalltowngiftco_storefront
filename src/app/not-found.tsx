@@ -1,17 +1,12 @@
 import Link from "next/link";
-import Image from "next/image";
+import TextLogo from "@/components/ui/TextLogo";
 
 export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center py-32 px-4 text-center">
-      <Image
-        src="/images/logo.png"
-        alt="The Small Town Gift Co."
-        width={160}
-        height={54}
-        className="h-12 w-auto mb-8 opacity-60"
-      />
-      <span className="text-brand-gold text-sm mb-4">◆</span>
+      <div className="mb-8 opacity-60">
+        <TextLogo size="md" asLink={false} />
+      </div>
       <h1 className="font-serif text-7xl text-brand-gold mb-4">404</h1>
       <h2 className="font-serif text-2xl text-brand-charcoal mb-4">
         Page Not Found

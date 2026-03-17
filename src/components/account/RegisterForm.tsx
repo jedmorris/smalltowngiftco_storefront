@@ -52,7 +52,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             required
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            className="w-full px-4 py-2.5 border border-brand-pink rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
           />
         </div>
         <div>
@@ -65,7 +65,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             required
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            className="w-full px-4 py-2.5 border border-brand-pink rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
           />
         </div>
       </div>
@@ -80,7 +80,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-2.5 border border-brand-pink rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+          className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
           placeholder="you@example.com"
         />
       </div>
@@ -96,7 +96,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
           minLength={5}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-2.5 border border-brand-pink rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+          className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
           placeholder="At least 5 characters"
         />
       </div>

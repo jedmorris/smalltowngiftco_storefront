@@ -42,12 +42,12 @@ export default function QuickViewModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed inset-4 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-full sm:max-w-3xl sm:max-h-[85vh] bg-white z-50 rounded-2xl shadow-xl overflow-hidden flex flex-col"
+            className="fixed inset-4 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-full sm:max-w-3xl sm:max-h-[85vh] bg-white z-50 rounded-xl shadow-xl overflow-hidden flex flex-col"
           >
             {/* Close button */}
             <button
               onClick={closeQuickView}
-              className="absolute top-3 right-3 z-10 p-1.5 bg-white/90 hover:bg-brand-pink/50 rounded-full transition-colors"
+              className="absolute top-3 right-3 z-10 p-1.5 bg-white/90 hover:bg-gray-100 rounded-full transition-colors"
               aria-label="Close quick view"
             >
               <X className="w-5 h-5" />

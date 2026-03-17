@@ -34,7 +34,7 @@ export default function CartPage() {
         </div>
       ) : (
         <div>
-          <div className="divide-y divide-brand-pink/50">
+          <div className="divide-y divide-gray-100">
             {items.map((item) => (
               <CartLineItem key={item.id} item={item} />
             ))}

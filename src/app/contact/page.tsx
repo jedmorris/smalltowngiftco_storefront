@@ -27,26 +27,24 @@ export default function ContactPage() {
     setSubmitted(true);
   };
 
-  const inputClass = "w-full px-4 py-2.5 border border-brand-pink rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold";
+  const inputClass = "w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold";
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12 lg:py-20">
       <div className="text-center mb-12">
-        <span className="text-brand-gold text-sm">◆</span>
-        <h1 className="font-serif text-4xl lg:text-5xl text-brand-charcoal mt-2 mb-4">
+        <h1 className="font-serif text-4xl lg:text-5xl text-brand-charcoal mb-4">
           Get in Touch
         </h1>
         <p className="text-gray-500 max-w-lg mx-auto">
           Have a question, need help with an order, or just want to say hello? We&apos;d love to hear from you.
         </p>
-        <div className="decorative-underline mx-auto" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
         {/* Contact Form */}
         <div className="lg:col-span-3">
           {submitted ? (
-            <div className="text-center py-16 bg-brand-cream/30 rounded-2xl">
+            <div className="text-center py-16 bg-brand-cream/30 rounded-xl">
               <div className="w-14 h-14 rounded-full bg-brand-pink/30 flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-7 h-7 text-brand-gold" />
               </div>
@@ -129,7 +127,7 @@ export default function ContactPage() {
 
         {/* Contact Info Sidebar */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-brand-cream/30 rounded-2xl p-6 space-y-5">
+          <div className="bg-brand-cream/30 rounded-xl p-6 space-y-5">
             {contactInfo.map((item) => (
               <div key={item.label} className="flex items-start gap-3">
                 <div className="w-9 h-9 rounded-full bg-brand-pink/30 flex items-center justify-center flex-shrink-0">
@@ -149,7 +147,7 @@ export default function ContactPage() {
             ))}
           </div>
 
-          <div className="bg-brand-cream/30 rounded-2xl p-6">
+          <div className="bg-brand-cream/30 rounded-xl p-6">
             <h3 className="font-serif text-lg text-brand-charcoal mb-3">Follow Us</h3>
             <div className="flex gap-3">
               {socials.map((social) => (
@@ -167,7 +165,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="bg-brand-cream/30 rounded-2xl p-6">
+          <div className="bg-brand-cream/30 rounded-xl p-6">
             <h3 className="font-serif text-lg text-brand-charcoal mb-2">Quick Links</h3>
             <ul className="space-y-1.5 text-sm">
               <li><a href="/shipping" className="text-gray-500 hover:text-brand-gold transition-colors">Shipping Policy</a></li>

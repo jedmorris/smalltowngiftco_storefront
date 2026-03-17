@@ -48,7 +48,7 @@ export default function AccountDashboard() {
       {/* Customer Info */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-brand-pink/30 flex items-center justify-center">
+          <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center">
             <User className="w-7 h-7 text-brand-gold" />
           </div>
           <div>
@@ -72,7 +72,7 @@ export default function AccountDashboard() {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-1 border-b border-brand-pink/30 overflow-x-auto">
+      <div className="flex gap-1 border-b border-gray-100 overflow-x-auto">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;

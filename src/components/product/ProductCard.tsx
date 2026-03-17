@@ -33,7 +33,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       onMouseLeave={() => setHovered(false)}
     >
       <Link href={`/products/${product.handle}`} className="block">
-        <div className="relative aspect-square bg-brand-cream rounded-2xl overflow-hidden mb-3 shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] transition-shadow duration-300">
+        <div className="relative aspect-square bg-brand-cream rounded-xl overflow-hidden mb-3">
           {image ? (
             <>
               <Image
@@ -42,7 +42,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 fill
                 className={`object-cover transition-all duration-500 ${
                   hovered && secondImage ? "opacity-0" : "opacity-100"
-                } group-hover:scale-105`}
+                } group-hover:scale-[1.02]`}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               />
               {secondImage && (
@@ -51,7 +51,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                   alt={secondImage.altText || `${product.title} - alternate`}
                   fill
                   className={`object-cover transition-all duration-500 ${
-                    hovered ? "opacity-100 scale-105" : "opacity-0"
+                    hovered ? "opacity-100 scale-[1.02]" : "opacity-0"
                   }`}
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 />
@@ -70,41 +70,20 @@ export default function ProductCard({ product }: ProductCardProps) {
               <Badge variant="sale">-{getSalePercentage(price, compareAtPrice)}%</Badge>
             )}
           </div>
-
-          {/* Image dots for multi-image */}
-          {product.images.length > 1 && (
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
-              {product.images.slice(0, 4).map((_, i) => (
-                <span
-                  key={i}
-                  className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                    (hovered && i === 1) || (!hovered && i === 0)
-                      ? "bg-white"
-                      : "bg-white/40"
-                  }`}
-                />
-              ))}
-            </div>
-          )}
         </div>
 
         <h3 className="text-sm font-medium text-brand-charcoal group-hover:text-brand-gold transition-colors line-clamp-2">
           {product.title}
         </h3>
-        <p className={`text-xs text-gray-500 transition-all duration-300 h-4 ${
-          hovered ? "opacity-100" : "opacity-0"
-        }`}>
-          Quick view
-        </p>
-        <div className="mt-0.5">
+        <div className="mt-1">
           <Price price={price} compareAtPrice={compareAtPrice} className="text-sm" />
         </div>
       </Link>
 
-      {/* Action buttons outside the Link for accessibility */}
+      {/* Action buttons */}
       <div
-        className={`absolute top-3 right-3 z-10 flex flex-col gap-2 transition-all duration-300 ${
-          hovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2"
+        className={`absolute top-3 right-3 z-10 flex flex-col gap-2 transition-opacity duration-300 ${
+          hovered ? "opacity-100" : "opacity-0"
         }`}
       >
         <button

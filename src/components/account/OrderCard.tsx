@@ -21,7 +21,7 @@ export default function OrderCard({ order }: OrderCardProps) {
   };
 
   return (
-    <div className="border border-brand-pink/50 rounded-xl p-4 hover:shadow-[var(--shadow-soft)] transition-shadow">
+    <div className="border border-gray-100 rounded-xl p-4 hover:shadow-[var(--shadow-soft)] transition-shadow">
       <div className="flex items-center justify-between mb-3">
         <div>
           <p className="font-medium text-brand-charcoal">

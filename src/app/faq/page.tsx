@@ -111,7 +111,7 @@ function FAQAccordion({ item }: { item: FAQItem }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-brand-pink/30 last:border-0">
+    <div className="border-b border-gray-100 last:border-0">
       <button
         onClick={() => setOpen(!open)}
         className="flex items-center justify-between w-full py-4 text-left"
@@ -162,8 +162,7 @@ export default function FAQPage() {
       />
     <div className="max-w-3xl mx-auto px-4 py-12 lg:py-20">
       <div className="text-center mb-12">
-        <span className="text-brand-gold text-sm">◆</span>
-        <h1 className="font-serif text-4xl lg:text-5xl text-brand-charcoal mt-2 mb-4">
+        <h1 className="font-serif text-4xl lg:text-5xl text-brand-charcoal mb-4">
           Frequently Asked Questions
         </h1>
         <p className="text-gray-500">
@@ -172,14 +171,13 @@ export default function FAQPage() {
             Contact us
           </Link>
         </p>
-        <div className="decorative-underline mx-auto" />
       </div>
 
       <div className="space-y-8">
         {faqSections.map((section) => (
           <div key={section.title}>
             <h2 className="font-serif text-xl text-brand-charcoal mb-3">{section.title}</h2>
-            <div className="bg-white rounded-2xl shadow-[var(--shadow-soft)] px-6">
+            <div className="bg-white rounded-xl shadow-[var(--shadow-soft)] px-6">
               {section.items.map((item) => (
                 <FAQAccordion key={item.question} item={item} />
               ))}
@@ -188,7 +186,7 @@ export default function FAQPage() {
         ))}
       </div>
 
-      <div className="text-center mt-12 bg-brand-cream/30 rounded-2xl p-8">
+      <div className="text-center mt-12 bg-brand-cream/30 rounded-xl p-8">
         <h3 className="font-serif text-xl text-brand-charcoal mb-2">Still have questions?</h3>
         <p className="text-sm text-gray-500 mb-4">
           We&apos;re here to help! Reach out and we&apos;ll get back to you within 1–2 business days.

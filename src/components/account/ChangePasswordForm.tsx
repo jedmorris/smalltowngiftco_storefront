@@ -58,7 +58,7 @@ export default function ChangePasswordForm() {
     }
   };
 
-  const inputClass = "w-full px-4 py-2.5 border border-brand-pink rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold";
+  const inputClass = "w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md">

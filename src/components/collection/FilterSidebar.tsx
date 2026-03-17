@@ -33,7 +33,7 @@ function FilterSection({
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <div className="border-b border-brand-pink/30 pb-4 mb-4">
+    <div className="border-b border-gray-100 pb-4 mb-4">
       <button
         onClick={() => setOpen(!open)}
         className="flex items-center justify-between w-full text-sm font-medium text-brand-charcoal mb-2"
@@ -187,7 +187,7 @@ export default function FilterSidebar({
       <div className="lg:hidden mb-4">
         <button
           onClick={() => setMobileOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 border border-brand-pink rounded-full text-sm text-brand-charcoal hover:border-brand-gold transition-colors"
+          className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-full text-sm text-brand-charcoal hover:border-brand-gold transition-colors"
         >
           <SlidersHorizontal className="w-4 h-4" />
           Filters
@@ -219,7 +219,7 @@ export default function FilterSidebar({
             >
               <button
                 onClick={() => setMobileOpen(false)}
-                className="absolute top-4 right-4 p-1.5 hover:bg-brand-pink/50 rounded-full transition-colors"
+                className="absolute top-4 right-4 p-1.5 hover:bg-gray-100 rounded-full transition-colors"
                 aria-label="Close filters"
               >
                 <X className="w-5 h-5" />
