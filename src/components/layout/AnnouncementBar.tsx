@@ -29,7 +29,7 @@ export default function AnnouncementBar() {
   if (!visible) return null;
 
   return (
-    <div className="bg-brand-forest text-white text-center py-1.5 px-4 text-xs tracking-wide relative">
+    <div className="bg-brand-espresso text-white text-center py-1.5 px-4 text-xs tracking-wide relative">
       <p
         className={`transition-all duration-300 ${
           animating ? "opacity-0 -translate-y-2" : "opacity-100 translate-y-0"

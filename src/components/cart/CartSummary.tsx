@@ -24,7 +24,7 @@ export default function CartSummary({ freeShipping = false }: CartSummaryProps) 
       </div>
       <div className="flex justify-between text-sm">
         <span className="text-gray-500">Shipping</span>
-        <span className={freeShipping ? "font-semibold text-brand-forest" : "text-gray-400"}>
+        <span className={freeShipping ? "font-semibold text-brand-espresso" : "text-gray-400"}>
           {freeShipping ? "FREE" : "Calculated at checkout"}
         </span>
       </div>

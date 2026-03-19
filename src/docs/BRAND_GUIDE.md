@@ -58,17 +58,17 @@ The ◆ diamond is the brand's signature decorative element.
 
 | Name | Hex | CSS Variable | Tailwind | Usage |
 |------|-----|-------------|----------|-------|
-| Brand Blush | `#FFF0F0` | `--color-brand-blush` | `brand-blush` | Primary page background |
-| Brand Pink | `#FCDEDE` | `--color-brand-pink` | `brand-pink` | Borders, hover states, soft accents |
+| Brand Blush | `#FFFBF7` | `--color-brand-blush` | `brand-blush` | Primary page background |
+| Brand Pink | `#F3D9CA` | `--color-brand-pink` | `brand-pink` | Borders, hover states, soft accents |
 | Brand Gold | `#B8935A` | `--color-brand-gold` | `brand-gold` | Primary accent, CTAs, links, icons |
-| Brand Forest | `#2D4A3E` | `--color-brand-forest` | `brand-forest` | Announcements, secondary CTAs |
-| Brand Cream | `#FDF8F5` | `--color-brand-cream` | `brand-cream` | Card backgrounds, image placeholders |
-| Brand Charcoal | `#2C2C2C` | `--color-brand-charcoal` | `brand-charcoal` | Body text, headings |
+| Brand Espresso | `#3E2724` | `--color-brand-espresso` | `brand-espresso` | Announcements, secondary CTAs |
+| Brand Cream | `#FDF8F3` | `--color-brand-cream` | `brand-cream` | Card backgrounds, image placeholders |
+| Brand Charcoal | `#2A2725` | `--color-brand-charcoal` | `brand-charcoal` | Body text, headings |
 
 ### Extended Palette (Opacity Variants)
 
 - `brand-gold/90` — hover state for primary buttons
-- `brand-forest/90` — hover state for secondary buttons
+- `brand-espresso/90` — hover state for secondary buttons
 - `brand-pink/50` — ghost button hover, interactive backgrounds
 - `brand-pink/30` — icon backgrounds, dropdown hover states
 - `brand-gold/30` — featured badge border, decorative borders
@@ -84,8 +84,8 @@ The ◆ diamond is the brand's signature decorative element.
 
 ### Color Pairing Rules
 
-- **Charcoal on blush/white/cream:** ~12:1 contrast — use for all body text
-- **Forest on white:** ~8:1 contrast — safe for all text sizes
+- **Charcoal on blush/white/cream:** ~14:1 contrast — use for all body text
+- **Espresso on white:** ~12.5:1 contrast — safe for all text sizes
 - **Gold on white:** ~3.5:1 contrast — decorative only, or large text (18px+ / bold 14px+)
 - **Gold bg + white text:** ~4.5:1 at button size — OK for CTAs
 - **Never:** Gold text on cream background (insufficient contrast)
@@ -200,7 +200,7 @@ Warm, approachable, celebratory. Like a best friend who always finds the perfect
 | Variant | Appearance | Use Case |
 |---------|-----------|----------|
 | `primary` | Gold bg, white text | Main CTAs: "Shop Now", "Add to Cart" |
-| `secondary` | Forest bg, white text | Secondary CTAs: announcements, alt actions |
+| `secondary` | Espresso bg, white text | Secondary CTAs: announcements, alt actions |
 | `outline` | Gold border + text → gold bg on hover | Paired next to primary, "Best Sellers" |
 | `ghost` | Charcoal text, pink/50 hover | Subtle actions: filters, toggles |
 | `text` | Gold underline link style | Inline links, "View all" |
@@ -215,7 +215,7 @@ All non-text buttons are `rounded-full` with `active:scale-[0.97]` press feedbac
 
 | Variant | Colors | Use Case |
 |---------|--------|----------|
-| `sale` | Forest bg, white text | Discount labels |
+| `sale` | Espresso bg, white text | Discount labels |
 | `new` | Gold bg, white text | New arrivals |
 | `soldOut` | Gray bg, white text | Out of stock |
 | `featured` | Pink bg, charcoal text, gold/30 border | Promoted items |
@@ -337,7 +337,7 @@ All badges: `rounded-full`, `uppercase`, `tracking-wide`, `text-xs`, `font-semib
 
 ### Promotional Banners (On-Site)
 
-- **Announcement bar:** Forest bg, white text, centered
+- **Announcement bar:** Espresso bg, white text, centered
 - **Animation:** Rotating messages with fade transition
 - **Promo codes:** Bold/strong tags
 - **Separator:** Decorative star ✦
@@ -350,8 +350,8 @@ All badges: `rounded-full`, `uppercase`, `tracking-wide`, `text-xs`, `font-semib
 
 | Pairing | Ratio | Status |
 |---------|-------|--------|
-| Charcoal on blush | ~12:1 | WCAG AAA — body text |
-| Forest on white | ~8:1 | WCAG AAA — all text |
+| Charcoal on blush | ~14:1 | WCAG AAA — body text |
+| Espresso on white | ~12.5:1 | WCAG AAA — all text |
 | Gold on white | ~3.5:1 | WCAG AA large text only (18px+ or bold 14px+) |
 | Gold bg + white text | ~4.5:1 | WCAG AA — buttons at md/lg size |
 

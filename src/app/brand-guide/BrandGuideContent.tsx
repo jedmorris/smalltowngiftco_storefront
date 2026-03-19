@@ -67,7 +67,7 @@ function ColorSwatch({
       >
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
           {copied ? (
-            <Check className="w-4 h-4 text-brand-forest" />
+            <Check className="w-4 h-4 text-brand-espresso" />
           ) : (
             <Copy className="w-4 h-4 text-brand-charcoal/50" />
           )}
@@ -411,15 +411,15 @@ export default function BrandGuideContent() {
             </h3>
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex gap-2">
-                <span className="text-brand-forest">&#10003;</span>
+                <span className="text-brand-espresso">&#10003;</span>
                 Always use Playfair Display, font-bold
               </li>
               <li className="flex gap-2">
-                <span className="text-brand-forest">&#10003;</span>
+                <span className="text-brand-espresso">&#10003;</span>
                 Display on white, blush, or cream backgrounds
               </li>
               <li className="flex gap-2">
-                <span className="text-brand-forest">&#10003;</span>
+                <span className="text-brand-espresso">&#10003;</span>
                 Allow generous whitespace around the text
               </li>
             </ul>
@@ -514,7 +514,7 @@ export default function BrandGuideContent() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white rounded-xl p-6 shadow-[var(--shadow-soft)]">
-            <h3 className="font-serif text-lg text-brand-forest mb-4">
+            <h3 className="font-serif text-lg text-brand-espresso mb-4">
               Good Examples
             </h3>
             <ul className="space-y-3 text-sm text-gray-600">
@@ -760,15 +760,15 @@ export default function BrandGuideContent() {
             {/* Mock grid showing palette */}
             <div className="grid grid-cols-3 gap-1.5 mb-4">
               {[
-                "#FFF0F0",
+                "#FFFBF7",
                 "#B8935A",
-                "#FDF8F5",
-                "#FCDEDE",
-                "#2D4A3E",
-                "#FFF0F0",
+                "#FDF8F3",
+                "#F3D9CA",
+                "#3E2724",
+                "#FFFBF7",
                 "#B8935A",
-                "#FDF8F5",
-                "#FCDEDE",
+                "#FDF8F3",
+                "#F3D9CA",
               ].map((color, i) => (
                 <div
                   key={i}
@@ -854,14 +854,14 @@ export default function BrandGuideContent() {
               On-Site Promos
             </h3>
             {/* Mini announcement bar mockup */}
-            <div className="bg-brand-forest rounded-xl px-4 py-2.5 text-center mb-4">
+            <div className="bg-brand-espresso rounded-xl px-4 py-2.5 text-center mb-4">
               <p className="text-white text-xs">
                 ✦ Free Shipping on Orders $75+ ✦ Use Code{" "}
                 <strong>SPRING15</strong> for 15% Off
               </p>
             </div>
             <ul className="space-y-1 text-xs text-gray-500">
-              <li>Announcement bar: forest bg, white text</li>
+              <li>Announcement bar: espresso bg, white text</li>
               <li>Rotating messages with fade transition</li>
               <li>Promo codes in bold/strong</li>
               <li>✦ star as separator</li>

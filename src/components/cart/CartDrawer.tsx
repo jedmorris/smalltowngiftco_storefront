@@ -85,7 +85,7 @@ export default function CartDrawer() {
                     <motion.div
                       initial={{ scale: 0.95, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="flex items-center justify-center gap-2 text-sm text-brand-forest font-medium"
+                      className="flex items-center justify-center gap-2 text-sm text-brand-espresso font-medium"
                     >
                       <PartyPopper className="w-4 h-4" />
                       You&apos;ve unlocked free shipping!
@@ -97,7 +97,7 @@ export default function CartDrawer() {
                       </p>
                       <div className="w-full h-2 bg-brand-pink/50 rounded-full overflow-hidden">
                         <motion.div
-                          className={`h-full rounded-full transition-colors ${freeShippingReached ? "bg-brand-forest" : "bg-brand-gold"}`}
+                          className={`h-full rounded-full transition-colors ${freeShippingReached ? "bg-brand-espresso" : "bg-brand-gold"}`}
                           initial={{ width: 0 }}
                           animate={{ width: `${shippingProgress}%` }}
                           transition={{ duration: 0.5 }}

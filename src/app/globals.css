@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-brand-blush: #FFF0F0;
-  --color-brand-pink: #FCDEDE;
+  --color-brand-blush: #FFFBF7;
+  --color-brand-pink: #F3D9CA;
   --color-brand-gold: #B8935A;
-  --color-brand-forest: #2D4A3E;
-  --color-brand-cream: #FDF8F5;
-  --color-brand-charcoal: #2C2C2C;
+  --color-brand-espresso: #3E2724;
+  --color-brand-cream: #FDF8F3;
+  --color-brand-charcoal: #2A2725;
 
   --font-serif: var(--font-playfair);
   --font-sans: var(--font-inter);

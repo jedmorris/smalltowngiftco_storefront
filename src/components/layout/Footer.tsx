@@ -52,7 +52,7 @@ export default function Footer() {
             Get exclusive offers, new arrivals & gifting inspo straight to your inbox.
           </p>
           {subscribed ? (
-            <p className="text-brand-forest font-medium animate-fade-in-up">
+            <p className="text-brand-espresso font-medium animate-fade-in-up">
               ✦ You&apos;re in! Thanks for subscribing.
             </p>
           ) : (

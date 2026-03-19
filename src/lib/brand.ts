@@ -2,12 +2,12 @@
 // Source of truth for brand metadata — consumed by /brand-guide and available for tooling.
 
 export const brandColors = [
-  { name: "Brand Blush", hex: "#FFF0F0", variable: "--color-brand-blush", tailwind: "brand-blush", usage: "Primary page background" },
-  { name: "Brand Pink", hex: "#FCDEDE", variable: "--color-brand-pink", tailwind: "brand-pink", usage: "Borders, hover states, soft accents" },
+  { name: "Brand Blush", hex: "#FFFBF7", variable: "--color-brand-blush", tailwind: "brand-blush", usage: "Primary page background" },
+  { name: "Brand Pink", hex: "#F3D9CA", variable: "--color-brand-pink", tailwind: "brand-pink", usage: "Borders, hover states, soft accents" },
   { name: "Brand Gold", hex: "#B8935A", variable: "--color-brand-gold", tailwind: "brand-gold", usage: "Primary accent, CTAs, links, icons" },
-  { name: "Brand Forest", hex: "#2D4A3E", variable: "--color-brand-forest", tailwind: "brand-forest", usage: "Announcements, secondary CTAs" },
-  { name: "Brand Cream", hex: "#FDF8F5", variable: "--color-brand-cream", tailwind: "brand-cream", usage: "Card backgrounds, image placeholders" },
-  { name: "Brand Charcoal", hex: "#2C2C2C", variable: "--color-brand-charcoal", tailwind: "brand-charcoal", usage: "Body text, headings" },
+  { name: "Brand Espresso", hex: "#3E2724", variable: "--color-brand-espresso", tailwind: "brand-espresso", usage: "Announcements, secondary CTAs" },
+  { name: "Brand Cream", hex: "#FDF8F3", variable: "--color-brand-cream", tailwind: "brand-cream", usage: "Card backgrounds, image placeholders" },
+  { name: "Brand Charcoal", hex: "#2A2725", variable: "--color-brand-charcoal", tailwind: "brand-charcoal", usage: "Body text, headings" },
 ] as const;
 
 export const brandShadows = [
