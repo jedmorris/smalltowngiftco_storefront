@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function WishlistPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
-      <h1 className="font-serif text-3xl lg:text-4xl text-brand-charcoal mb-8">
+      <h1 className="font-serif text-3xl lg:text-4xl text-ink mb-8">
         Your Wishlist
       </h1>
       <WishlistContent />

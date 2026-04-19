@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function AccountPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
-      <h1 className="font-serif text-3xl lg:text-4xl text-brand-charcoal mb-8">
+      <h1 className="font-serif text-3xl lg:text-4xl text-ink mb-8">
         My Account
       </h1>
       <AccountDashboard />

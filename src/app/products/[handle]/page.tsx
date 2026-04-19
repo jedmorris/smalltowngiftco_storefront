@@ -70,9 +70,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <div className="mt-20 pt-12 border-t border-gray-100">
+          <div className="mt-20 pt-12 border-t border-soft">
             <div className="text-center mb-10">
-              <h2 className="font-serif text-2xl lg:text-3xl text-brand-charcoal mb-2">
+              <h2 className="font-serif text-2xl lg:text-3xl text-ink mb-2">
                 You Might Also Love
               </h2>
             </div>

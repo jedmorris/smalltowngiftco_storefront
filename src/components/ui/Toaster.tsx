@@ -10,7 +10,7 @@ export default function Toaster() {
         className: "font-sans",
         style: {
           borderRadius: "1rem",
-          border: "1px solid var(--color-brand-pink, #f5e6e0)",
+          border: "1px solid var(--color-bougainvillea-soft, #f5e6e0)",
         },
       }}
     />

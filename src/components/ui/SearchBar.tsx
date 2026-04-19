@@ -99,7 +99,7 @@ export default function SearchBar({ onClose }: SearchBarProps) {
   return (
     <div ref={containerRef} className="relative w-full">
       <form onSubmit={handleSubmit} className="relative flex items-center w-full">
-        <Search className="absolute left-3 w-4 h-4 text-gray-400" />
+        <Search className="absolute left-3 w-4 h-4 text-ink-subtle" strokeWidth={1.6} />
         <input
           type="text"
           value={query}
@@ -107,7 +107,7 @@ export default function SearchBar({ onClose }: SearchBarProps) {
           onKeyDown={handleKeyDown}
           onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
           placeholder="Search products..."
-          className="w-full pl-10 pr-10 py-2 bg-white border border-gray-200 rounded-full text-sm text-brand-charcoal placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+          className="w-full pl-10 pr-10 py-2 bg-white border border-soft rounded-full text-sm text-ink placeholder:text-ink-subtle focus:outline-none focus:ring-2 focus:ring-apricot-deep/30 focus:border-apricot-deep"
           autoFocus
           role="combobox"
           aria-expanded={showSuggestions}
@@ -122,9 +122,9 @@ export default function SearchBar({ onClose }: SearchBarProps) {
               setSuggestions([]);
               setShowSuggestions(false);
             }}
-            className="absolute right-3 text-gray-400 hover:text-brand-charcoal"
+            className="absolute right-3 text-ink-subtle hover:text-ink"
           >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4" strokeWidth={1.6} />
           </button>
         )}
       </form>
@@ -134,7 +134,7 @@ export default function SearchBar({ onClose }: SearchBarProps) {
         <div
           id="search-suggestions"
           role="listbox"
-          className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden z-50"
+          className="absolute top-full left-0 right-0 mt-2 bg-white border border-soft rounded-xl shadow-lg overflow-hidden z-50"
         >
           {suggestions.map((product, index) => (
             <Link
@@ -147,7 +147,7 @@ export default function SearchBar({ onClose }: SearchBarProps) {
               role="option"
               aria-selected={index === selectedIndex}
               className={`flex items-center gap-3 px-4 py-2.5 transition-colors ${
-                index === selectedIndex ? "bg-brand-cream" : "hover:bg-gray-50"
+                index === selectedIndex ? "bg-stucco" : "hover:bg-gray-50"
               }`}
             >
               {product.featuredImage ? (
@@ -159,11 +159,11 @@ export default function SearchBar({ onClose }: SearchBarProps) {
                   className="rounded-md object-cover w-10 h-10"
                 />
               ) : (
-                <div className="w-10 h-10 rounded-md bg-brand-cream flex-shrink-0" />
+                <div className="w-10 h-10 rounded-md bg-stucco flex-shrink-0" />
               )}
               <div className="flex-1 min-w-0">
-                <p className="text-sm text-brand-charcoal truncate">{product.title}</p>
-                <p className="text-xs text-brand-gold">
+                <p className="text-sm text-ink truncate">{product.title}</p>
+                <p className="text-xs text-apricot-deep">
                   {formatPrice(product.priceRange.minVariantPrice)}
                 </p>
               </div>
@@ -175,7 +175,7 @@ export default function SearchBar({ onClose }: SearchBarProps) {
               setShowSuggestions(false);
               onClose?.();
             }}
-            className="block px-4 py-2.5 text-center text-sm text-brand-gold hover:bg-gray-50 border-t border-gray-100"
+            className="block px-4 py-2.5 text-center text-sm text-apricot-deep hover:bg-gray-50 border-t border-soft"
           >
             View all results
           </Link>

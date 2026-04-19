@@ -30,7 +30,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/30 z-40"
+            className="fixed inset-0 bg-ink/35 z-40"
             onClick={onClose}
           />
           {/* Panel */}
@@ -38,23 +38,23 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
-            transition={{ type: "tween", duration: 0.3 }}
-            className="fixed top-0 left-0 bottom-0 w-[85vw] max-w-sm bg-white z-50 shadow-xl flex flex-col"
+            transition={{ type: "tween", duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed top-0 left-0 bottom-0 w-[85vw] max-w-[320px] bg-paper z-50 shadow-strong flex flex-col"
           >
-            <div className="flex items-center justify-between p-5 border-b border-gray-100">
-              <TextLogo size="sm" asLink={false} />
-              <button onClick={onClose} className="p-1 text-brand-charcoal hover:text-brand-gold transition-colors">
-                <X className="w-5 h-5" />
+            <div className="flex items-center justify-between p-5 border-b border-border-soft">
+              <TextLogo size="sm" asLink={false} withBow={false} />
+              <button onClick={onClose} className="p-1 text-ink hover:text-apricot-deep transition-colors">
+                <X className="w-5 h-5" strokeWidth={1.6} />
               </button>
             </div>
             <nav className="flex-1 p-5">
-              <ul className="space-y-1">
+              <ul className="space-y-0">
                 {navLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
                       onClick={onClose}
-                      className="block py-3 text-brand-charcoal hover:text-brand-gold transition-colors font-medium tracking-wide"
+                      className="block py-3.5 text-ink hover:text-apricot-deep transition-colors font-serif text-[15px] border-b border-border-soft"
                     >
                       {link.label}
                     </Link>
@@ -62,8 +62,8 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 ))}
               </ul>
             </nav>
-            <div className="p-5 border-t border-gray-100">
-              <div className="flex gap-4">
+            <div className="p-5 border-t border-border-soft">
+              <div className="flex gap-3">
                 {[
                   { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
                   { href: "https://facebook.com", icon: Facebook, label: "Facebook" },
@@ -74,10 +74,10 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     href={social.href}
                     target={social.href.startsWith("http") ? "_blank" : undefined}
                     rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="text-gray-400 hover:text-brand-gold transition-colors"
+                    className="text-ink-subtle hover:text-apricot-deep transition-colors"
                     aria-label={social.label}
                   >
-                    <social.icon className="w-5 h-5" />
+                    <social.icon className="w-[18px] h-[18px]" strokeWidth={1.6} />
                   </a>
                 ))}
               </div>

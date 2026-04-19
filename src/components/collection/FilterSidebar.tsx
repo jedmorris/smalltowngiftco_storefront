@@ -33,14 +33,15 @@ function FilterSection({
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <div className="border-b border-gray-100 pb-4 mb-4">
+    <div className="border-b border-soft pb-4 mb-4">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center justify-between w-full text-sm font-medium text-brand-charcoal mb-2"
+        className="flex items-center justify-between w-full text-sm font-medium text-ink mb-2"
       >
         {title}
         <ChevronDown
           className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`}
+          strokeWidth={1.6}
         />
       </button>
       <AnimatePresence>
@@ -100,11 +101,11 @@ export default function FilterSidebar({
     <>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-serif text-lg text-brand-charcoal">Filters</h3>
+        <h3 className="font-serif text-lg text-ink">Filters</h3>
         {activeFilterCount > 0 && (
           <button
             onClick={clearAll}
-            className="text-xs text-brand-gold hover:text-brand-gold/80 transition-colors"
+            className="text-xs text-apricot-deep hover:text-apricot-deep/80 transition-colors"
           >
             Clear all ({activeFilterCount})
           </button>
@@ -130,9 +131,9 @@ export default function FilterSidebar({
             onChange={(e) =>
               onChange({ ...filters, availableOnly: e.target.checked })
             }
-            className="w-4 h-4 rounded border-gray-300 text-brand-gold focus:ring-brand-gold"
+            className="w-4 h-4 rounded border-soft text-apricot-deep focus:ring-apricot-deep"
           />
-          <span className="text-sm text-brand-charcoal">In stock only</span>
+          <span className="text-sm text-ink">In stock only</span>
         </label>
       </FilterSection>
 
@@ -146,9 +147,9 @@ export default function FilterSidebar({
                   type="checkbox"
                   checked={filters.vendors.includes(vendor)}
                   onChange={() => toggleArrayFilter("vendors", vendor)}
-                  className="w-4 h-4 rounded border-gray-300 text-brand-gold focus:ring-brand-gold"
+                  className="w-4 h-4 rounded border-soft text-apricot-deep focus:ring-apricot-deep"
                 />
-                <span className="text-sm text-brand-charcoal">{vendor}</span>
+                <span className="text-sm text-ink">{vendor}</span>
               </label>
             ))}
           </div>
@@ -165,9 +166,9 @@ export default function FilterSidebar({
                   type="checkbox"
                   checked={filters.productTypes.includes(type)}
                   onChange={() => toggleArrayFilter("productTypes", type)}
-                  className="w-4 h-4 rounded border-gray-300 text-brand-gold focus:ring-brand-gold"
+                  className="w-4 h-4 rounded border-soft text-apricot-deep focus:ring-apricot-deep"
                 />
-                <span className="text-sm text-brand-charcoal">{type}</span>
+                <span className="text-sm text-ink">{type}</span>
               </label>
             ))}
           </div>
@@ -175,7 +176,7 @@ export default function FilterSidebar({
       )}
 
       {/* Result count */}
-      <p className="text-xs text-gray-400 mt-2">
+      <p className="text-xs text-ink-subtle mt-2">
         {resultCount} {resultCount === 1 ? "product" : "products"} found
       </p>
     </>
@@ -187,12 +188,12 @@ export default function FilterSidebar({
       <div className="lg:hidden mb-4">
         <button
           onClick={() => setMobileOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-full text-sm text-brand-charcoal hover:border-brand-gold transition-colors"
+          className="flex items-center gap-2 px-4 py-2 border border-soft rounded-full text-sm text-ink hover:border-apricot-deep transition-colors"
         >
-          <SlidersHorizontal className="w-4 h-4" />
+          <SlidersHorizontal className="w-4 h-4" strokeWidth={1.6} />
           Filters
           {activeFilterCount > 0 && (
-            <span className="bg-brand-gold text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+            <span className="bg-apricot-deep text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
               {activeFilterCount}
             </span>
           )}
@@ -222,7 +223,7 @@ export default function FilterSidebar({
                 className="absolute top-4 right-4 p-1.5 hover:bg-gray-100 rounded-full transition-colors"
                 aria-label="Close filters"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5" strokeWidth={1.6} />
               </button>
               {filterContent}
             </motion.div>

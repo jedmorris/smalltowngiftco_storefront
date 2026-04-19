@@ -38,7 +38,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
 
   if (images.length === 0) {
     return (
-      <div className="aspect-square bg-brand-cream rounded-xl flex items-center justify-center text-gray-300">
+      <div className="aspect-square bg-stucco rounded-[16px] flex items-center justify-center text-ink-subtle">
         No image available
       </div>
     );
@@ -49,7 +49,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
       <div className="space-y-4">
         {/* Main image */}
         <div
-          className="relative aspect-square bg-brand-cream rounded-xl overflow-hidden cursor-pointer group"
+          className="relative aspect-square bg-stucco rounded-[16px] overflow-hidden cursor-pointer group"
           onClick={() => setLightboxOpen(true)}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -71,28 +71,26 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
             sizes="(max-width: 1024px) 100vw, 50vw"
             priority
           />
-          {/* Image counter */}
           {images.length > 1 && (
-            <span className="absolute bottom-3 right-3 bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+            <span className="absolute bottom-3 right-3 bg-ink/50 text-white text-xs px-2 py-1 rounded-full">
               {selectedIndex + 1} / {images.length}
             </span>
           )}
-          {/* Mobile nav arrows */}
           {images.length > 1 && (
             <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2 pointer-events-none lg:hidden">
               <button
                 onClick={(e) => { e.stopPropagation(); goTo(selectedIndex - 1); }}
-                className="pointer-events-auto p-1.5 bg-white/80 rounded-full shadow-sm"
+                className="pointer-events-auto p-1.5 bg-white/80 rounded-full shadow-soft"
                 aria-label="Previous image"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-4 h-4" strokeWidth={1.6} />
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); goTo(selectedIndex + 1); }}
-                className="pointer-events-auto p-1.5 bg-white/80 rounded-full shadow-sm"
+                className="pointer-events-auto p-1.5 bg-white/80 rounded-full shadow-soft"
                 aria-label="Next image"
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4" strokeWidth={1.6} />
               </button>
             </div>
           )}
@@ -105,10 +103,10 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
               <button
                 key={image.url}
                 onClick={() => setSelectedIndex(index)}
-                className={`relative w-16 h-16 lg:w-20 lg:h-20 flex-shrink-0 rounded-lg overflow-hidden border transition-all ${
+                className={`relative w-16 h-16 lg:w-20 lg:h-20 flex-shrink-0 rounded-[10px] overflow-hidden border transition-all ${
                   index === selectedIndex
-                    ? "border-brand-gold"
-                    : "border-gray-200 hover:border-gray-300"
+                    ? "border-apricot-deep"
+                    : "border-border-soft hover:border-apricot-deep/50"
                 }`}
               >
                 <Image
@@ -131,7 +129,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+            className="fixed inset-0 z-50 bg-ink/90 flex items-center justify-center"
             onClick={() => setLightboxOpen(false)}
           >
             <button
@@ -139,7 +137,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
               className="absolute top-4 right-4 p-2 text-white/70 hover:text-white transition-colors z-10"
               aria-label="Close lightbox"
             >
-              <X className="w-6 h-6" />
+              <X className="w-6 h-6" strokeWidth={1.6} />
             </button>
 
             {images.length > 1 && (
@@ -149,14 +147,14 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
                   className="absolute left-4 p-2 text-white/70 hover:text-white transition-colors z-10"
                   aria-label="Previous"
                 >
-                  <ChevronLeft className="w-8 h-8" />
+                  <ChevronLeft className="w-8 h-8" strokeWidth={1.6} />
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); goTo(selectedIndex + 1); }}
                   className="absolute right-4 p-2 text-white/70 hover:text-white transition-colors z-10"
                   aria-label="Next"
                 >
-                  <ChevronRight className="w-8 h-8" />
+                  <ChevronRight className="w-8 h-8" strokeWidth={1.6} />
                 </button>
               </>
             )}

@@ -17,8 +17,8 @@ export default async function CollectionsPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       <div className="text-center mb-10">
-        <h1 className="font-serif text-4xl text-brand-charcoal mb-3">Our Collections</h1>
-        <p className="text-gray-500 max-w-md mx-auto">
+        <h1 className="font-serif text-4xl text-ink mb-3">Our Collections</h1>
+        <p className="text-ink-muted max-w-md mx-auto">
           Thoughtful gifts, curated for every celebration
         </p>
       </div>
@@ -30,7 +30,7 @@ export default async function CollectionsPage() {
             href={`/collections/${collection.handle}`}
             className="group"
           >
-            <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-brand-cream">
+            <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-stucco">
               {collection.image ? (
                 <Image
                   src={collection.image.url}
@@ -40,7 +40,7 @@ export default async function CollectionsPage() {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-brand-pink to-brand-blush" />
+                <div className="w-full h-full bg-gradient-to-br from-peach-soft to-paper" />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6">

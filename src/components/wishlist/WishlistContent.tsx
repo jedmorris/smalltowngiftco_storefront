@@ -11,18 +11,18 @@ export default function WishlistContent() {
   if (items.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center text-center py-20">
-        <div className="w-16 h-16 rounded-full bg-brand-pink/30 flex items-center justify-center mb-4">
-          <Heart className="w-8 h-8 text-brand-gold" />
+        <div className="w-16 h-16 rounded-full bg-peach-soft/30 flex items-center justify-center mb-4">
+          <Heart className="w-8 h-8 text-apricot-deep" strokeWidth={1.6} />
         </div>
-        <p className="font-serif text-xl text-brand-charcoal mb-2">
+        <p className="font-serif text-xl text-ink mb-2">
           Your wishlist is empty
         </p>
-        <p className="text-sm text-gray-500 mb-6">
+        <p className="text-sm text-ink-muted mb-6">
           Save your favorite items by tapping the heart icon.
         </p>
         <Link
           href="/collections"
-          className="px-8 py-3 bg-brand-gold text-white font-medium rounded-full hover:bg-brand-gold/90 transition-colors"
+          className="px-8 py-3 bg-apricot-deep text-white font-medium rounded-full hover:bg-apricot-deep/90 transition-colors"
         >
           Start Shopping
         </Link>
@@ -32,7 +32,7 @@ export default function WishlistContent() {
 
   return (
     <div>
-      <p className="text-sm text-gray-500 mb-6">
+      <p className="text-sm text-ink-muted mb-6">
         {items.length} {items.length === 1 ? "item" : "items"} saved
       </p>
       <ProductGrid products={items} columns={4} />

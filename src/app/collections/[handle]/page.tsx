@@ -50,12 +50,12 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
         ]}
       />
       {/* Breadcrumb */}
-      <nav className="text-sm text-gray-400 mb-6">
-        <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
+      <nav className="text-sm text-ink-subtle mb-6">
+        <Link href="/" className="hover:text-apricot-deep transition-colors">Home</Link>
         <span className="mx-2">·</span>
-        <Link href="/collections" className="hover:text-brand-gold transition-colors">Collections</Link>
+        <Link href="/collections" className="hover:text-apricot-deep transition-colors">Collections</Link>
         <span className="mx-2">·</span>
-        <span className="text-brand-charcoal">{collection.title}</span>
+        <span className="text-ink">{collection.title}</span>
       </nav>
 
       {/* Collection Header */}
@@ -78,14 +78,14 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
           </div>
         )}
         {!collection.image && (
-          <h1 className="font-serif text-4xl text-brand-charcoal mb-3">
+          <h1 className="font-serif text-4xl text-ink mb-3">
             {collection.title}
           </h1>
         )}
         {collection.description && (
-          <p className="text-gray-500 max-w-lg mx-auto">{collection.description}</p>
+          <p className="text-ink-muted max-w-lg mx-auto">{collection.description}</p>
         )}
-        <p className="text-sm text-gray-400 mt-2">
+        <p className="text-sm text-ink-subtle mt-2">
           {collection.products.length} product{collection.products.length !== 1 ? "s" : ""}
         </p>
       </div>

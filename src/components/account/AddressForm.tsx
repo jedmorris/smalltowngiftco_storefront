@@ -37,7 +37,7 @@ export default function AddressForm({ address, onSave, onCancel }: AddressFormPr
   };
 
   const update = (key: string, value: string) => setForm({ ...form, [key]: value });
-  const inputClass = "w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold";
+  const inputClass = "w-full px-4 py-2.5 border border-soft rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-apricot-deep/30 focus:border-apricot-deep";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -46,45 +46,45 @@ export default function AddressForm({ address, onSave, onCancel }: AddressFormPr
       )}
 
       <div>
-        <label className="block text-sm font-medium text-brand-charcoal mb-1">Address Line 1</label>
+        <label className="block text-sm font-medium text-ink mb-1">Address Line 1</label>
         <input type="text" required value={form.address1} onChange={(e) => update("address1", e.target.value)} className={inputClass} placeholder="123 Main St" />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-brand-charcoal mb-1">Address Line 2</label>
+        <label className="block text-sm font-medium text-ink mb-1">Address Line 2</label>
         <input type="text" value={form.address2} onChange={(e) => update("address2", e.target.value)} className={inputClass} placeholder="Apt, suite, etc. (optional)" />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-brand-charcoal mb-1">City</label>
+          <label className="block text-sm font-medium text-ink mb-1">City</label>
           <input type="text" required value={form.city} onChange={(e) => update("city", e.target.value)} className={inputClass} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-brand-charcoal mb-1">State / Province</label>
+          <label className="block text-sm font-medium text-ink mb-1">State / Province</label>
           <input type="text" required value={form.province} onChange={(e) => update("province", e.target.value)} className={inputClass} />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-brand-charcoal mb-1">ZIP / Postal Code</label>
+          <label className="block text-sm font-medium text-ink mb-1">ZIP / Postal Code</label>
           <input type="text" required value={form.zip} onChange={(e) => update("zip", e.target.value)} className={inputClass} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-brand-charcoal mb-1">Country</label>
+          <label className="block text-sm font-medium text-ink mb-1">Country</label>
           <input type="text" required value={form.country} onChange={(e) => update("country", e.target.value)} className={inputClass} />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-brand-charcoal mb-1">Phone (optional)</label>
+        <label className="block text-sm font-medium text-ink mb-1">Phone (optional)</label>
         <input type="tel" value={form.phone} onChange={(e) => update("phone", e.target.value)} className={inputClass} />
       </div>
 
       <div className="flex gap-3">
         <Button type="submit" disabled={saving}>
-          {saving ? <><Loader2 className="w-4 h-4 animate-spin mr-2" /> Saving...</> : address ? "Update Address" : "Add Address"}
+          {saving ? <><Loader2 className="w-4 h-4 animate-spin mr-2" strokeWidth={1.6} /> Saving...</> : address ? "Update Address" : "Add Address"}
         </Button>
         <Button type="button" variant="ghost" onClick={onCancel}>Cancel</Button>
       </div>

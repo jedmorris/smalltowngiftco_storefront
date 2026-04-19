@@ -31,7 +31,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
-      <h2 className="font-serif text-2xl text-brand-charcoal text-center mb-6">
+      <h2 className="font-serif text-2xl text-ink text-center mb-6">
         Create Account
       </h2>
 
@@ -43,7 +43,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label htmlFor="firstName" className="block text-sm font-medium text-brand-charcoal mb-1">
+          <label htmlFor="firstName" className="block text-sm font-medium text-ink mb-1">
             First Name
           </label>
           <input
@@ -52,11 +52,11 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             required
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+            className="w-full px-4 py-2.5 border border-soft rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-apricot-deep/30 focus:border-apricot-deep"
           />
         </div>
         <div>
-          <label htmlFor="lastName" className="block text-sm font-medium text-brand-charcoal mb-1">
+          <label htmlFor="lastName" className="block text-sm font-medium text-ink mb-1">
             Last Name
           </label>
           <input
@@ -65,13 +65,13 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             required
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+            className="w-full px-4 py-2.5 border border-soft rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-apricot-deep/30 focus:border-apricot-deep"
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="regEmail" className="block text-sm font-medium text-brand-charcoal mb-1">
+        <label htmlFor="regEmail" className="block text-sm font-medium text-ink mb-1">
           Email
         </label>
         <input
@@ -80,13 +80,13 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+          className="w-full px-4 py-2.5 border border-soft rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-apricot-deep/30 focus:border-apricot-deep"
           placeholder="you@example.com"
         />
       </div>
 
       <div>
-        <label htmlFor="regPassword" className="block text-sm font-medium text-brand-charcoal mb-1">
+        <label htmlFor="regPassword" className="block text-sm font-medium text-ink mb-1">
           Password
         </label>
         <input
@@ -96,7 +96,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
           minLength={5}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+          className="w-full px-4 py-2.5 border border-soft rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-apricot-deep/30 focus:border-apricot-deep"
           placeholder="At least 5 characters"
         />
       </div>
@@ -104,7 +104,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
       <Button type="submit" disabled={isLoading} size="lg" className="w-full">
         {isLoading ? (
           <>
-            <Loader2 className="w-5 h-5 animate-spin mr-2" />
+            <Loader2 className="w-5 h-5 animate-spin mr-2" strokeWidth={1.6} />
             Creating account...
           </>
         ) : (
@@ -112,9 +112,9 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
         )}
       </Button>
 
-      <p className="text-center text-sm text-gray-500">
+      <p className="text-center text-sm text-ink-muted">
         Already have an account?{" "}
-        <Link href="/account/login" className="text-brand-gold hover:text-brand-gold/80 font-medium">
+        <Link href="/account/login" className="text-apricot-deep hover:text-apricot-deep/80 font-medium">
           Sign in
         </Link>
       </p>

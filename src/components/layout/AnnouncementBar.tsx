@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 
 const announcements = [
-  <>Free shipping on orders over $75 ✦ Use code <strong>WELCOME15</strong> for 15% off</>,
-  <>Love It Guarantee ✦ Not happy? We&apos;ll make it right or your money back</>,
-  <>New arrivals weekly ✦ Curated gifts for every occasion</>,
+  <>Free shipping on orders over $75 ✦ Use code <strong className="text-peach">WELCOME15</strong> for 15% off</>,
+  <>Love It Guarantee ✦ Not happy? We&apos;ll make it right.</>,
+  <>Summer drops every Thursday ✦ Packed with love from San Diego</>,
 ];
 
 export default function AnnouncementBar() {
@@ -29,20 +29,20 @@ export default function AnnouncementBar() {
   if (!visible) return null;
 
   return (
-    <div className="bg-brand-espresso text-white text-center py-1.5 px-4 text-xs tracking-wide relative">
+    <div className="bg-espresso text-paper text-center py-[9px] px-10 text-xs tracking-[0.04em] relative">
       <p
         className={`transition-all duration-300 ${
-          animating ? "opacity-0 -translate-y-2" : "opacity-100 translate-y-0"
+          animating ? "opacity-0 -translate-y-1" : "opacity-100 translate-y-0"
         }`}
       >
         {announcements[currentIndex]}
       </p>
       <button
         onClick={() => setVisible(false)}
-        className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-white/10 rounded-full transition-colors"
+        className="absolute right-3 top-1/2 -translate-y-1/2 p-1 opacity-70 hover:opacity-100 transition-opacity"
         aria-label="Dismiss announcement"
       >
-        <X className="w-3 h-3" />
+        <X className="w-3 h-3" strokeWidth={1.6} />
       </button>
     </div>
   );

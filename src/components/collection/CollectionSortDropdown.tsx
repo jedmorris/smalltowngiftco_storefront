@@ -18,7 +18,7 @@ export default function CollectionSortDropdown({ value, onChange }: CollectionSo
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="px-4 py-2 border border-gray-200 rounded-full text-sm bg-white text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold cursor-pointer"
+      className="px-4 py-2 border border-soft rounded-full text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-apricot-deep/30 focus:border-apricot-deep cursor-pointer"
     >
       {sortOptions.map((option) => (
         <option key={option.value} value={option.value}>

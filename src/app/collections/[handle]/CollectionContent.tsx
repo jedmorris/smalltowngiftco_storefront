@@ -103,7 +103,7 @@ export default function CollectionContent({ products: initialProducts, collectio
 
   if (products.length === 0) {
     return (
-      <p className="text-center text-gray-500 py-20">
+      <p className="text-center text-ink-muted py-20">
         No products in this collection yet. Check back soon!
       </p>
     );
@@ -121,7 +121,7 @@ export default function CollectionContent({ products: initialProducts, collectio
       />
       <div className="flex-1">
         <div className="flex justify-between items-center mb-6">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-ink-muted">
             {filteredAndSorted.length} {filteredAndSorted.length === 1 ? "product" : "products"}
           </p>
           <CollectionSortDropdown value={sortKey} onChange={setSortKey} />
@@ -134,7 +134,7 @@ export default function CollectionContent({ products: initialProducts, collectio
                 <button
                   onClick={loadMore}
                   disabled={loadingMore}
-                  className="px-8 py-3 border-2 border-brand-gold text-brand-gold font-medium rounded-full hover:bg-brand-gold hover:text-white transition-colors disabled:opacity-50"
+                  className="px-8 py-3 border-2 border-apricot-deep text-apricot-deep font-medium rounded-full hover:bg-apricot-deep hover:text-white transition-colors disabled:opacity-50"
                 >
                   {loadingMore ? "Loading..." : "Load More Products"}
                 </button>
@@ -142,7 +142,7 @@ export default function CollectionContent({ products: initialProducts, collectio
             )}
           </>
         ) : (
-          <p className="text-center text-gray-500 py-20">
+          <p className="text-center text-ink-muted py-20">
             No products match your filters. Try adjusting or clearing them.
           </p>
         )}

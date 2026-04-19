@@ -32,7 +32,7 @@ export default function CartDrawer() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/40 z-40"
+            className="fixed inset-0 bg-ink/35 z-40"
             onClick={closeCart}
           />
           {/* Drawer */}
@@ -41,38 +41,35 @@ export default function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white z-50 shadow-xl flex flex-col"
+            className="fixed top-0 right-0 bottom-0 w-[400px] max-w-[92vw] bg-paper z-50 shadow-strong flex flex-col"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-100">
-              <h2 className="font-serif text-lg text-brand-charcoal">
-                Your Cart ({cart?.totalQuantity ?? 0})
+            <div className="flex items-center justify-between p-5 px-6 border-b border-border-soft">
+              <h2 className="font-serif text-[22px] font-medium text-ink">
+                Your cart
               </h2>
               <button
                 onClick={closeCart}
-                className="p-1.5 hover:bg-gray-100 rounded-full transition-colors"
+                className="p-1.5 hover:bg-peach-soft rounded-full transition-colors"
                 aria-label="Close cart"
               >
-                <X className="w-5 h-5" />
+                <X className="w-[18px] h-[18px]" strokeWidth={1.6} />
               </button>
             </div>
 
             {/* Body */}
             {items.length === 0 ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center px-8">
-                <div className="w-16 h-16 rounded-full bg-brand-pink/30 flex items-center justify-center mb-4">
-                  <ShoppingBag className="w-8 h-8 text-brand-gold" />
+                <div className="text-ink-subtle mb-3">
+                  <ShoppingBag className="w-8 h-8" strokeWidth={1.6} />
                 </div>
-                <p className="font-serif text-xl text-brand-charcoal mb-2">
-                  Your cart is empty
-                </p>
-                <p className="text-sm text-gray-500 mb-6">
-                  Looks like you haven&apos;t added anything yet.
+                <p className="text-ink-muted text-sm">
+                  Your cart is empty — let&apos;s change that.
                 </p>
                 <Link
                   href="/collections"
                   onClick={closeCart}
-                  className="px-8 py-3 bg-brand-gold text-white font-medium rounded-full hover:bg-brand-gold/90 transition-colors"
+                  className="mt-6 px-8 py-3 bg-apricot-deep text-white font-medium rounded-full hover:bg-apricot-deep/90 transition-colors text-sm no-underline"
                 >
                   Start Shopping
                 </Link>
@@ -80,24 +77,24 @@ export default function CartDrawer() {
             ) : (
               <>
                 {/* Free shipping progress bar */}
-                <div className="px-4 py-3 bg-brand-cream/50">
+                <div className="px-6 py-3 bg-stucco/50">
                   {freeShippingReached ? (
                     <motion.div
                       initial={{ scale: 0.95, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="flex items-center justify-center gap-2 text-sm text-brand-espresso font-medium"
+                      className="flex items-center justify-center gap-2 text-sm text-espresso font-medium"
                     >
-                      <PartyPopper className="w-4 h-4" />
+                      <PartyPopper className="w-4 h-4" strokeWidth={1.6} />
                       You&apos;ve unlocked free shipping!
                     </motion.div>
                   ) : (
                     <div>
-                      <p className="text-xs text-gray-500 text-center mb-2">
-                        Add <span className="font-semibold text-brand-gold">${amountRemaining}</span> more for free shipping
+                      <p className="text-xs text-ink-muted text-center mb-2">
+                        Add <span className="font-semibold text-apricot-deep">${amountRemaining}</span> more for free shipping
                       </p>
-                      <div className="w-full h-2 bg-brand-pink/50 rounded-full overflow-hidden">
+                      <div className="w-full h-2 bg-peach-soft rounded-full overflow-hidden">
                         <motion.div
-                          className={`h-full rounded-full transition-colors ${freeShippingReached ? "bg-brand-espresso" : "bg-brand-gold"}`}
+                          className={`h-full rounded-full transition-colors ${freeShippingReached ? "bg-espresso" : "bg-apricot-deep"}`}
                           initial={{ width: 0 }}
                           animate={{ width: `${shippingProgress}%` }}
                           transition={{ duration: 0.5 }}
@@ -107,8 +104,8 @@ export default function CartDrawer() {
                   )}
                 </div>
 
-                <div className="flex-1 overflow-y-auto px-4 cart-scrollbar">
-                  <div className="divide-y divide-gray-100">
+                <div className="flex-1 overflow-y-auto px-6 cart-scrollbar">
+                  <div className="divide-y divide-border-soft">
                     {items.map((item) => (
                       <CartLineItem key={item.id} item={item} />
                     ))}
@@ -116,18 +113,18 @@ export default function CartDrawer() {
                 </div>
 
                 {/* Trust badges */}
-                <div className="px-4 py-2 border-t border-gray-100">
+                <div className="px-6 py-2 border-t border-border-soft">
                   <div className="flex justify-center gap-4">
                     {trustBadges.map((badge) => (
-                      <div key={badge.label} className="flex items-center gap-1 text-xs text-gray-400">
-                        <badge.icon className="w-3.5 h-3.5" />
+                      <div key={badge.label} className="flex items-center gap-1 text-xs text-ink-subtle">
+                        <badge.icon className="w-3.5 h-3.5" strokeWidth={1.6} />
                         {badge.label}
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="p-4">
+                <div className="p-4 bg-white border-t border-border-soft">
                   <CartSummary freeShipping={freeShippingReached} />
                 </div>
               </>

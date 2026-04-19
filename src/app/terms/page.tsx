@@ -13,17 +13,17 @@ export default function TermsPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12 lg:py-20">
       <div className="text-center mb-12">
-        <span className="text-brand-gold text-sm">◆</span>
-        <h1 className="font-serif text-4xl lg:text-5xl text-brand-charcoal mt-2 mb-4">
+        <span className="text-apricot-deep text-sm">◆</span>
+        <h1 className="font-serif text-4xl lg:text-5xl text-ink mt-2 mb-4">
           Terms of Service
         </h1>
-        <p className="text-gray-500">Last updated: March 2026</p>
+        <p className="text-ink-muted">Last updated: March 2026</p>
         <div className="decorative-underline mx-auto" />
       </div>
 
-      <div className="prose prose-sm max-w-none text-gray-600 space-y-8">
+      <div className="prose prose-sm max-w-none text-ink-muted space-y-8">
         <section>
-          <h2 className="font-serif text-xl text-brand-charcoal">1. Agreement to Terms</h2>
+          <h2 className="font-serif text-xl text-ink">1. Agreement to Terms</h2>
           <p>
             By accessing or using The Small Town Gift Co. website at smalltowngiftco.com (&quot;Site&quot;),
             you agree to be bound by these Terms of Service (&quot;Terms&quot;). If you do not agree to
@@ -32,7 +32,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-xl text-brand-charcoal">2. Products & Pricing</h2>
+          <h2 className="font-serif text-xl text-ink">2. Products & Pricing</h2>
           <ul className="list-disc pl-5 space-y-1">
             <li>All product descriptions, images, and prices are subject to change without notice.</li>
             <li>We make every effort to display product colors and details accurately, but we cannot guarantee your screen will display them exactly.</li>
@@ -43,7 +43,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-xl text-brand-charcoal">3. Orders & Payment</h2>
+          <h2 className="font-serif text-xl text-ink">3. Orders & Payment</h2>
           <ul className="list-disc pl-5 space-y-1">
             <li>By placing an order, you represent that you are at least 18 years old or have parental consent.</li>
             <li>All orders are subject to acceptance and product availability.</li>
@@ -54,24 +54,24 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-xl text-brand-charcoal">4. Shipping</h2>
+          <h2 className="font-serif text-xl text-ink">4. Shipping</h2>
           <p>
-            Please refer to our <a href="/shipping" className="text-brand-gold hover:text-brand-gold/80">Shipping Policy</a> for
+            Please refer to our <a href="/shipping" className="text-apricot-deep hover:text-apricot-deep/80">Shipping Policy</a> for
             detailed information on shipping methods, timeframes, and costs. We are not responsible
             for delays caused by shipping carriers or customs processing.
           </p>
         </section>
 
         <section>
-          <h2 className="font-serif text-xl text-brand-charcoal">5. Returns & Refunds</h2>
+          <h2 className="font-serif text-xl text-ink">5. Returns & Refunds</h2>
           <p>
-            Please refer to our <a href="/returns" className="text-brand-gold hover:text-brand-gold/80">Returns Policy</a> for
+            Please refer to our <a href="/returns" className="text-apricot-deep hover:text-apricot-deep/80">Returns Policy</a> for
             detailed information on returns, exchanges, and refunds.
           </p>
         </section>
 
         <section>
-          <h2 className="font-serif text-xl text-brand-charcoal">6. User Accounts</h2>
+          <h2 className="font-serif text-xl text-ink">6. User Accounts</h2>
           <ul className="list-disc pl-5 space-y-1">
             <li>You are responsible for maintaining the confidentiality of your account credentials.</li>
             <li>You are responsible for all activity that occurs under your account.</li>
@@ -81,7 +81,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-xl text-brand-charcoal">7. Intellectual Property</h2>
+          <h2 className="font-serif text-xl text-ink">7. Intellectual Property</h2>
           <p>
             All content on this Site — including text, graphics, logos, images, product designs, and
             software — is the property of The Small Town Gift Co. or its licensors and is protected
@@ -91,7 +91,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-xl text-brand-charcoal">8. Limitation of Liability</h2>
+          <h2 className="font-serif text-xl text-ink">8. Limitation of Liability</h2>
           <p>
             To the fullest extent permitted by law, The Small Town Gift Co. shall not be liable for
             any indirect, incidental, special, consequential, or punitive damages arising from your
@@ -101,7 +101,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-xl text-brand-charcoal">9. Indemnification</h2>
+          <h2 className="font-serif text-xl text-ink">9. Indemnification</h2>
           <p>
             You agree to indemnify and hold harmless The Small Town Gift Co. and its officers,
             directors, employees, and agents from any claims, losses, or damages arising from your
@@ -110,7 +110,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-xl text-brand-charcoal">10. Governing Law</h2>
+          <h2 className="font-serif text-xl text-ink">10. Governing Law</h2>
           <p>
             These Terms shall be governed by and construed in accordance with the laws of the
             United States. Any disputes shall be resolved in the courts of the state in which
@@ -119,7 +119,7 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-xl text-brand-charcoal">11. Changes to Terms</h2>
+          <h2 className="font-serif text-xl text-ink">11. Changes to Terms</h2>
           <p>
             We reserve the right to modify these Terms at any time. Changes will be posted on this
             page with an updated date. Your continued use of the Site after changes constitutes
@@ -128,10 +128,10 @@ export default function TermsPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-xl text-brand-charcoal">12. Contact</h2>
+          <h2 className="font-serif text-xl text-ink">12. Contact</h2>
           <p>
             Questions about these Terms? Contact us at{" "}
-            <a href="mailto:hello@smalltowngiftco.com" className="text-brand-gold hover:text-brand-gold/80">
+            <a href="mailto:hello@smalltowngiftco.com" className="text-apricot-deep hover:text-apricot-deep/80">
               hello@smalltowngiftco.com
             </a>
           </p>

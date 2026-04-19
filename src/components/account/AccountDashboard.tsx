@@ -27,7 +27,7 @@ export default function AccountDashboard() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-20" role="status" aria-label="Loading">
-        <div className="w-8 h-8 border-2 border-brand-gold border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-apricot-deep border-t-transparent rounded-full animate-spin" />
         <span className="sr-only">Loading</span>
       </div>
     );
@@ -48,15 +48,15 @@ export default function AccountDashboard() {
       {/* Customer Info */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center">
-            <User className="w-7 h-7 text-brand-gold" />
+          <div className="w-14 h-14 rounded-full bg-stucco flex items-center justify-center">
+            <User className="w-7 h-7 text-apricot-deep" strokeWidth={1.6} />
           </div>
           <div>
-            <h2 className="font-serif text-xl text-brand-charcoal">
+            <h2 className="font-serif text-xl text-ink">
               {customer.firstName} {customer.lastName}
             </h2>
-            <p className="text-sm text-gray-500">{customer.email}</p>
-            <p className="text-xs text-gray-400 mt-0.5">
+            <p className="text-sm text-ink-muted">{customer.email}</p>
+            <p className="text-xs text-ink-subtle mt-0.5">
               Member since{" "}
               {new Date(customer.createdAt).toLocaleDateString("en-US", {
                 year: "numeric",
@@ -66,13 +66,13 @@ export default function AccountDashboard() {
           </div>
         </div>
         <Button variant="ghost" size="sm" onClick={handleSignOut}>
-          <LogOut className="w-4 h-4 mr-2" />
+          <LogOut className="w-4 h-4 mr-2" strokeWidth={1.6} />
           Sign Out
         </Button>
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-1 border-b border-gray-100 overflow-x-auto">
+      <div className="flex gap-1 border-b border-soft overflow-x-auto">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -82,11 +82,11 @@ export default function AccountDashboard() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
                 isActive
-                  ? "border-brand-gold text-brand-gold"
-                  : "border-transparent text-gray-500 hover:text-brand-charcoal hover:border-gray-300"
+                  ? "border-apricot-deep text-apricot-deep"
+                  : "border-transparent text-ink-muted hover:text-ink hover:border-ink-subtle"
               }`}
             >
-              <Icon className="w-4 h-4" />
+              <Icon className="w-4 h-4" strokeWidth={1.6} />
               {tab.label}
             </button>
           );
@@ -97,14 +97,14 @@ export default function AccountDashboard() {
       {activeTab === "overview" && (
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <Package className="w-5 h-5 text-brand-gold" />
-            <h3 className="font-serif text-lg text-brand-charcoal">Order History</h3>
+            <Package className="w-5 h-5 text-apricot-deep" strokeWidth={1.6} />
+            <h3 className="font-serif text-lg text-ink">Order History</h3>
           </div>
 
           {customer.orders.length === 0 ? (
-            <div className="text-center py-12 bg-brand-cream/30 rounded-xl">
-              <Package className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500 mb-4">No orders yet</p>
+            <div className="text-center py-12 bg-stucco/30 rounded-xl">
+              <Package className="w-10 h-10 text-ink-subtle mx-auto mb-3" strokeWidth={1.6} />
+              <p className="text-ink-muted mb-4">No orders yet</p>
               <Button variant="outline" size="sm" onClick={() => router.push("/collections")}>
                 Start Shopping
               </Button>

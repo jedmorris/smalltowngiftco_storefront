@@ -31,50 +31,50 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-30 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+      <header className="sticky top-0 z-30 bg-white border-b border-border-soft">
+        <div className="max-w-[1280px] mx-auto px-4">
+          <div className="flex items-center justify-between h-[108px]">
             {/* Left — Mobile menu + nav */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 flex-1">
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="lg:hidden p-2 text-brand-charcoal hover:text-brand-gold transition-colors"
+                className="lg:hidden p-2 text-ink hover:text-apricot-deep transition-colors"
                 aria-label="Open menu"
               >
-                <Menu className="w-5 h-5" />
+                <Menu className="w-5 h-5" strokeWidth={1.6} />
               </button>
-              <nav className="hidden lg:flex items-center gap-8">
+              <nav className="hidden lg:flex items-center gap-7">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="relative text-xs font-medium text-brand-charcoal tracking-wide uppercase hover:text-brand-gold transition-colors group"
+                    className="relative text-[11px] font-medium text-ink tracking-[0.16em] uppercase hover:text-apricot-deep transition-colors group"
                   >
                     {link.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-px bg-brand-gold transition-all duration-300 group-hover:w-full" />
+                    <span className="absolute -bottom-1 left-0 w-0 h-px bg-apricot-deep transition-all duration-300 group-hover:w-full" />
                   </Link>
                 ))}
               </nav>
             </div>
 
             {/* Center — Text Logo */}
-            <TextLogo size="lg" />
+            <TextLogo size="md" />
 
             {/* Right — Search + Wishlist + Account + Cart */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 flex-1 justify-end">
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
-                className="p-2 text-brand-charcoal hover:text-brand-gold transition-colors"
+                className="p-2 text-ink hover:text-apricot-deep transition-colors"
                 aria-label={searchOpen ? "Close search" : "Open search"}
               >
-                {searchOpen ? <X className="w-5 h-5" /> : <Search className="w-5 h-5" />}
+                {searchOpen ? <X className="w-5 h-5" strokeWidth={1.6} /> : <Search className="w-5 h-5" strokeWidth={1.6} />}
               </button>
               <Link
                 href="/wishlist"
-                className="hidden sm:flex relative p-2 text-brand-charcoal hover:text-brand-gold transition-colors"
+                className="hidden sm:flex relative p-2 text-ink hover:text-apricot-deep transition-colors"
                 aria-label={`Wishlist (${wishlistCount} items)`}
               >
-                <Heart className="w-5 h-5" />
+                <Heart className="w-5 h-5" strokeWidth={1.6} />
                 <AnimatePresence mode="wait">
                   {wishlistCount > 0 && (
                     <motion.span
@@ -82,7 +82,7 @@ export default function Header() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       exit={{ scale: 0 }}
-                      className="absolute -top-0.5 -right-0.5 bg-brand-gold text-white text-xs w-4 h-4 flex items-center justify-center rounded-full font-medium"
+                      className="absolute top-0.5 right-0 bg-gold text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full font-medium"
                     >
                       {wishlistCount}
                     </motion.span>
@@ -95,10 +95,10 @@ export default function Header() {
                   <>
                     <button
                       onClick={() => setAccountMenuOpen(!accountMenuOpen)}
-                      className="p-2 text-brand-charcoal hover:text-brand-gold transition-colors"
+                      className="p-2 text-ink hover:text-apricot-deep transition-colors"
                       aria-label="Account menu"
                     >
-                      <User className="w-5 h-5" />
+                      <User className="w-5 h-5" strokeWidth={1.6} />
                     </button>
                     <AnimatePresence>
                       {accountMenuOpen && (
@@ -115,36 +115,36 @@ export default function Header() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -8 }}
                             transition={{ duration: 0.15 }}
-                            className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50"
+                            className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-medium border border-border-soft py-2 z-50"
                           >
-                            <p className="px-4 py-1.5 text-xs text-gray-400 truncate">
+                            <p className="px-4 py-1.5 text-xs text-ink-subtle truncate">
                               {customer?.firstName ?? customer?.email}
                             </p>
                             <Link
                               href="/account"
                               onClick={() => setAccountMenuOpen(false)}
-                              className="flex items-center gap-2 px-4 py-2 text-sm text-brand-charcoal hover:text-brand-gold transition-colors"
+                              className="flex items-center gap-2 px-4 py-2 text-sm text-ink hover:text-apricot-deep transition-colors"
                             >
-                              <User className="w-4 h-4" />
+                              <User className="w-4 h-4" strokeWidth={1.6} />
                               My Account
                             </Link>
                             <Link
                               href="/account"
                               onClick={() => setAccountMenuOpen(false)}
-                              className="flex items-center gap-2 px-4 py-2 text-sm text-brand-charcoal hover:text-brand-gold transition-colors"
+                              className="flex items-center gap-2 px-4 py-2 text-sm text-ink hover:text-apricot-deep transition-colors"
                             >
-                              <Package className="w-4 h-4" />
+                              <Package className="w-4 h-4" strokeWidth={1.6} />
                               Orders
                             </Link>
-                            <hr className="my-1 border-gray-100" />
+                            <hr className="my-1 border-border-soft" />
                             <button
                               onClick={() => {
                                 setAccountMenuOpen(false);
                                 signOut();
                               }}
-                              className="flex items-center gap-2 w-full px-4 py-2 text-sm text-brand-charcoal hover:text-brand-gold transition-colors"
+                              className="flex items-center gap-2 w-full px-4 py-2 text-sm text-ink hover:text-apricot-deep transition-colors"
                             >
-                              <LogOut className="w-4 h-4" />
+                              <LogOut className="w-4 h-4" strokeWidth={1.6} />
                               Sign Out
                             </button>
                           </motion.div>
@@ -155,19 +155,19 @@ export default function Header() {
                 ) : (
                   <Link
                     href="/account/login"
-                    className="p-2 text-brand-charcoal hover:text-brand-gold transition-colors"
+                    className="p-2 text-ink hover:text-apricot-deep transition-colors"
                     aria-label="Sign in"
                   >
-                    <User className="w-5 h-5" />
+                    <User className="w-5 h-5" strokeWidth={1.6} />
                   </Link>
                 )}
               </div>
               <button
                 onClick={openCart}
-                className="relative p-2 text-brand-charcoal hover:text-brand-gold transition-colors"
+                className="relative p-2 text-ink hover:text-apricot-deep transition-colors"
                 aria-label={`Cart (${totalQuantity} items)`}
               >
-                <ShoppingBag className="w-5 h-5" />
+                <ShoppingBag className="w-5 h-5" strokeWidth={1.6} />
                 <AnimatePresence mode="wait">
                   {totalQuantity > 0 && (
                     <motion.span
@@ -175,7 +175,7 @@ export default function Header() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       exit={{ scale: 0 }}
-                      className="absolute -top-0.5 -right-0.5 bg-brand-gold text-white text-xs w-4 h-4 flex items-center justify-center rounded-full font-medium"
+                      className="absolute top-0.5 right-0 bg-gold text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full font-medium"
                     >
                       {totalQuantity}
                     </motion.span>

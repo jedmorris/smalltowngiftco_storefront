@@ -81,43 +81,43 @@ export default function ReviewSection({ productHandle }: { productHandle: string
     }
   };
 
-  const inputClass = "w-full px-4 py-2.5 border border-brand-pink rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold";
+  const inputClass = "w-full px-4 py-2.5 border border-border-soft rounded-full text-ink focus:outline-none focus:ring-[3px] focus:ring-apricot-deep/25 focus:border-apricot-deep font-sans text-sm";
 
   return (
-    <div className="mt-16 pt-12 border-t border-brand-pink/50">
+    <div className="mt-16 pt-12 border-t border-border-soft">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="font-serif text-2xl text-brand-charcoal">Customer Reviews</h2>
+          <h2 className="font-serif text-2xl text-ink">Customer Reviews</h2>
           {reviews.length > 0 && (
             <div className="flex items-center gap-2 mt-1">
               <StarRating rating={Math.round(avgRating)} size="sm" />
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-ink-muted">
                 {avgRating} out of 5 ({reviews.length} {reviews.length === 1 ? "review" : "reviews"})
               </span>
             </div>
           )}
         </div>
         <Button variant="outline" size="sm" onClick={() => setShowForm(!showForm)}>
-          <MessageSquare className="w-4 h-4 mr-2" />
+          <MessageSquare className="w-4 h-4 mr-2" strokeWidth={1.6} />
           Write a Review
         </Button>
       </div>
 
       {showForm && (
-        <form onSubmit={handleSubmit} className="bg-brand-cream/30 rounded-2xl p-6 mb-8 space-y-4">
-          <h3 className="font-serif text-lg text-brand-charcoal">Write Your Review</h3>
+        <form onSubmit={handleSubmit} className="bg-stucco/30 rounded-[16px] p-6 mb-8 space-y-4">
+          <h3 className="font-serif text-lg text-ink">Write Your Review</h3>
 
           {error && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600">{error}</div>
+            <div className="p-3 bg-red-50 border border-red-200 rounded-[10px] text-sm text-red-600">{error}</div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-brand-charcoal mb-1">Rating</label>
+            <label className="block text-sm font-medium text-ink mb-1">Rating</label>
             <StarRating rating={rating} onRate={setRating} interactive />
           </div>
 
           <div>
-            <label htmlFor="reviewName" className="block text-sm font-medium text-brand-charcoal mb-1">
+            <label htmlFor="reviewName" className="block text-sm font-medium text-ink mb-1">
               Your Name
             </label>
             <input
@@ -131,7 +131,7 @@ export default function ReviewSection({ productHandle }: { productHandle: string
           </div>
 
           <div>
-            <label htmlFor="reviewTitle" className="block text-sm font-medium text-brand-charcoal mb-1">
+            <label htmlFor="reviewTitle" className="block text-sm font-medium text-ink mb-1">
               Review Title
             </label>
             <input
@@ -146,7 +146,7 @@ export default function ReviewSection({ productHandle }: { productHandle: string
           </div>
 
           <div>
-            <label htmlFor="reviewBody" className="block text-sm font-medium text-brand-charcoal mb-1">
+            <label htmlFor="reviewBody" className="block text-sm font-medium text-ink mb-1">
               Your Review
             </label>
             <textarea
@@ -155,7 +155,7 @@ export default function ReviewSection({ productHandle }: { productHandle: string
               rows={4}
               value={body}
               onChange={(e) => setBody(e.target.value)}
-              className={inputClass}
+              className={`${inputClass} !rounded-[16px]`}
               placeholder="Tell others about your experience with this product"
             />
           </div>
@@ -173,16 +173,16 @@ export default function ReviewSection({ productHandle }: { productHandle: string
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="w-8 h-8 border-2 border-brand-gold/30 border-t-brand-gold rounded-full animate-spin mx-auto" />
+          <div className="w-8 h-8 border-2 border-apricot-deep/30 border-t-apricot-deep rounded-full animate-spin mx-auto" />
         </div>
       ) : reviews.length === 0 ? (
-        <div className="text-center py-12 bg-brand-cream/30 rounded-xl">
-          <MessageSquare className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-          <p className="text-gray-500 mb-1">No reviews yet</p>
-          <p className="text-sm text-gray-400">Be the first to share your thoughts!</p>
+        <div className="text-center py-12 bg-stucco/30 rounded-[16px]">
+          <MessageSquare className="w-10 h-10 text-ink-subtle mx-auto mb-3" strokeWidth={1.6} />
+          <p className="text-ink-muted mb-1">No reviews yet</p>
+          <p className="text-sm text-ink-subtle">Be the first to share your thoughts!</p>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-soft)] px-6 py-5">
+        <div className="bg-white rounded-[16px] shadow-soft px-6 py-5">
           {reviews.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}

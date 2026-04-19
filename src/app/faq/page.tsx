@@ -111,14 +111,15 @@ function FAQAccordion({ item }: { item: FAQItem }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-gray-100 last:border-0">
+    <div className="border-b border-soft last:border-0">
       <button
         onClick={() => setOpen(!open)}
         className="flex items-center justify-between w-full py-4 text-left"
       >
-        <span className="text-sm font-medium text-brand-charcoal pr-4">{item.question}</span>
+        <span className="text-sm font-medium text-ink pr-4">{item.question}</span>
         <ChevronDown
-          className={`w-4 h-4 text-brand-gold flex-shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`w-4 h-4 text-apricot-deep flex-shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
+          strokeWidth={1.6}
         />
       </button>
       <AnimatePresence>
@@ -130,7 +131,7 @@ function FAQAccordion({ item }: { item: FAQItem }) {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <p className="text-sm text-gray-600 pb-4 leading-relaxed">{item.answer}</p>
+            <p className="text-sm text-ink-muted pb-4 leading-relaxed">{item.answer}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -162,12 +163,12 @@ export default function FAQPage() {
       />
     <div className="max-w-3xl mx-auto px-4 py-12 lg:py-20">
       <div className="text-center mb-12">
-        <h1 className="font-serif text-4xl lg:text-5xl text-brand-charcoal mb-4">
+        <h1 className="font-serif text-4xl lg:text-5xl text-ink mb-4">
           Frequently Asked Questions
         </h1>
-        <p className="text-gray-500">
+        <p className="text-ink-muted">
           Can&apos;t find what you&apos;re looking for?{" "}
-          <Link href="/contact" className="text-brand-gold hover:text-brand-gold/80">
+          <Link href="/contact" className="text-apricot-deep hover:text-apricot-deep/80">
             Contact us
           </Link>
         </p>
@@ -176,7 +177,7 @@ export default function FAQPage() {
       <div className="space-y-8">
         {faqSections.map((section) => (
           <div key={section.title}>
-            <h2 className="font-serif text-xl text-brand-charcoal mb-3">{section.title}</h2>
+            <h2 className="font-serif text-xl text-ink mb-3">{section.title}</h2>
             <div className="bg-white rounded-xl shadow-[var(--shadow-soft)] px-6">
               {section.items.map((item) => (
                 <FAQAccordion key={item.question} item={item} />
@@ -186,14 +187,14 @@ export default function FAQPage() {
         ))}
       </div>
 
-      <div className="text-center mt-12 bg-brand-cream/30 rounded-xl p-8">
-        <h3 className="font-serif text-xl text-brand-charcoal mb-2">Still have questions?</h3>
-        <p className="text-sm text-gray-500 mb-4">
+      <div className="text-center mt-12 bg-stucco/30 rounded-xl p-8">
+        <h3 className="font-serif text-xl text-ink mb-2">Still have questions?</h3>
+        <p className="text-sm text-ink-muted mb-4">
           We&apos;re here to help! Reach out and we&apos;ll get back to you within 1–2 business days.
         </p>
         <Link
           href="/contact"
-          className="inline-flex items-center px-6 py-2.5 bg-brand-gold text-white font-medium rounded-full hover:bg-brand-gold/90 transition-colors"
+          className="inline-flex items-center px-6 py-2.5 bg-apricot-deep text-white font-medium rounded-full hover:bg-apricot-deep/90 transition-colors"
         >
           Contact Us
         </Link>

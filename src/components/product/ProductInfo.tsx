@@ -40,16 +40,16 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   return (
     <div className="space-y-8">
       {/* Title */}
-      <h1 className="font-serif text-3xl lg:text-4xl text-brand-charcoal">
+      <h1 className="font-serif font-normal text-3xl lg:text-4xl text-ink">
         {product.title}
       </h1>
 
       {/* Star rating placeholder */}
       <div className="flex items-center gap-1">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} className="w-4 h-4 text-brand-gold/30" />
+          <Star key={i} className="w-4 h-4 text-apricot-deep/30" strokeWidth={1.6} />
         ))}
-        <span className="text-xs text-gray-400 ml-1">No reviews yet</span>
+        <span className="text-xs text-ink-subtle ml-1">No reviews yet</span>
       </div>
 
       {/* Price */}
@@ -67,8 +67,8 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         </div>
       ) : (
         <div className="flex items-center gap-1.5 text-sm">
-          <Circle className="w-2.5 h-2.5 fill-gray-400 text-gray-400" />
-          <span className="text-gray-500">Out of Stock</span>
+          <Circle className="w-2.5 h-2.5 fill-ink-subtle text-ink-subtle" />
+          <span className="text-ink-muted">Out of Stock</span>
         </div>
       )}
 
@@ -87,24 +87,24 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
       {/* Wishlist + Share */}
       <div className="flex gap-3">
-        <button className="flex-1 flex items-center justify-center gap-2 py-2.5 border border-gray-200 rounded-full text-sm text-brand-charcoal hover:border-brand-gold transition-colors">
-          <Heart className="w-4 h-4" />
+        <button className="flex-1 flex items-center justify-center gap-2 py-2.5 border border-border-soft rounded-full text-sm text-ink hover:border-espresso transition-colors">
+          <Heart className="w-4 h-4" strokeWidth={1.6} />
           Wishlist
         </button>
         <button
           onClick={handleShare}
-          className="flex-1 flex items-center justify-center gap-2 py-2.5 border border-gray-200 rounded-full text-sm text-brand-charcoal hover:border-brand-gold transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 py-2.5 border border-border-soft rounded-full text-sm text-ink hover:border-espresso transition-colors"
         >
-          <Share2 className="w-4 h-4" />
+          <Share2 className="w-4 h-4" strokeWidth={1.6} />
           Share
         </button>
       </div>
 
       {/* Trust badges */}
-      <div className="flex flex-wrap gap-4 pt-6 border-t border-gray-100">
+      <div className="flex flex-wrap gap-4 pt-6 border-t border-border-soft">
         {trustBadges.map((badge) => (
-          <div key={badge.label} className="flex items-center gap-1.5 text-xs text-gray-500">
-            <badge.icon className="w-3.5 h-3.5 text-brand-gold flex-shrink-0" />
+          <div key={badge.label} className="flex items-center gap-1.5 text-xs text-ink-muted">
+            <badge.icon className="w-3.5 h-3.5 text-apricot-deep flex-shrink-0" strokeWidth={1.6} />
             {badge.label}
           </div>
         ))}
@@ -112,17 +112,17 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
       {/* Collapsible Description */}
       {product.descriptionHtml && (
-        <div className="border-t border-gray-100">
+        <div className="border-t border-border-soft">
           <button
             onClick={() => setDescriptionOpen(!descriptionOpen)}
             className="flex items-center justify-between w-full py-4 text-left"
           >
-            <h3 className="font-serif text-lg text-brand-charcoal">Description</h3>
-            <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${descriptionOpen ? "rotate-180" : ""}`} />
+            <h3 className="font-serif text-lg text-ink">Description</h3>
+            <ChevronDown className={`w-5 h-5 text-ink-subtle transition-transform ${descriptionOpen ? "rotate-180" : ""}`} strokeWidth={1.6} />
           </button>
           <div className={`overflow-hidden transition-all duration-300 ${descriptionOpen ? "max-h-[500px] pb-4" : "max-h-0"}`}>
             <div
-              className="prose-boutique prose prose-sm text-gray-600 max-w-none"
+              className="prose-boutique prose prose-sm text-ink-muted max-w-none"
               dangerouslySetInnerHTML={{ __html: sanitizeHtml(product.descriptionHtml) }}
             />
           </div>
@@ -130,32 +130,32 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       )}
 
       {/* Collapsible Product Details */}
-      <div className="border-t border-gray-100">
+      <div className="border-t border-border-soft">
         <button
           onClick={() => setDetailsOpen(!detailsOpen)}
           className="flex items-center justify-between w-full py-4 text-left"
         >
-          <h3 className="font-serif text-lg text-brand-charcoal">Product Details</h3>
-          <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${detailsOpen ? "rotate-180" : ""}`} />
+          <h3 className="font-serif text-lg text-ink">Product Details</h3>
+          <ChevronDown className={`w-5 h-5 text-ink-subtle transition-transform ${detailsOpen ? "rotate-180" : ""}`} strokeWidth={1.6} />
         </button>
         <div className={`overflow-hidden transition-all duration-300 ${detailsOpen ? "max-h-[500px] pb-4" : "max-h-0"}`}>
           <dl className="space-y-2 text-sm">
             {product.vendor && (
               <div className="flex gap-2">
-                <dt className="text-gray-400 w-24">Brand</dt>
-                <dd className="text-brand-charcoal">{product.vendor}</dd>
+                <dt className="text-ink-subtle w-24">Brand</dt>
+                <dd className="text-ink">{product.vendor}</dd>
               </div>
             )}
             {product.productType && (
               <div className="flex gap-2">
-                <dt className="text-gray-400 w-24">Type</dt>
-                <dd className="text-brand-charcoal">{product.productType}</dd>
+                <dt className="text-ink-subtle w-24">Type</dt>
+                <dd className="text-ink">{product.productType}</dd>
               </div>
             )}
             {product.tags.length > 0 && (
               <div className="flex gap-2">
-                <dt className="text-gray-400 w-24">Tags</dt>
-                <dd className="text-brand-charcoal">{product.tags.join(", ")}</dd>
+                <dt className="text-ink-subtle w-24">Tags</dt>
+                <dd className="text-ink">{product.tags.join(", ")}</dd>
               </div>
             )}
           </dl>

@@ -6,23 +6,23 @@ import { Shield, Truck, Heart, Lock } from "lucide-react";
 const features = [
   {
     icon: Shield,
-    title: "Love It Guarantee",
-    description: "Not happy? We'll make it right or your money back.",
+    title: "Love-it promise",
+    description: "Not happy? We'll make it right.",
   },
   {
     icon: Truck,
-    title: "Free Shipping",
-    description: "On all orders over $75. Fast & tracked delivery.",
+    title: "Free shipping",
+    description: "On orders over $75.",
   },
   {
     icon: Heart,
-    title: "Made with Love",
-    description: "Designed in our small town, crafted with care.",
+    title: "Packed with love",
+    description: "From our small town in SD.",
   },
   {
     icon: Lock,
-    title: "Secure Checkout",
-    description: "Your payment info is safe & encrypted.",
+    title: "Secure checkout",
+    description: "Safe & encrypted.",
   },
 ];
 
@@ -42,9 +42,9 @@ export default function GuaranteeBanner() {
   }, []);
 
   return (
-    <section className="py-16 lg:py-20 border-t border-gray-100" ref={ref}>
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+    <section className="py-16 border-t border-border-soft" ref={ref}>
+      <div className="max-w-[1280px] mx-auto px-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
           {features.map((feature, i) => (
             <div
               key={feature.title}
@@ -55,13 +55,13 @@ export default function GuaranteeBanner() {
               }`}
               style={{ transitionDelay: visible ? `${i * 100}ms` : "0ms" }}
             >
-              <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-brand-cream mb-3">
-                <feature.icon className="w-5 h-5 text-brand-gold" />
+              <div className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-peach-soft text-apricot-deep border border-apricot-deep/25 mb-3">
+                <feature.icon className="w-5 h-5" strokeWidth={1.6} />
               </div>
-              <h3 className="font-serif text-sm text-brand-charcoal mb-1">
+              <h3 className="font-serif text-[15px] font-medium text-ink mb-0.5">
                 {feature.title}
               </h3>
-              <p className="text-xs text-gray-500 leading-relaxed">{feature.description}</p>
+              <p className="text-xs text-ink-muted leading-relaxed">{feature.description}</p>
             </div>
           ))}
         </div>

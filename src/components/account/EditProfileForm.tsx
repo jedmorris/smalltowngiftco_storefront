@@ -38,7 +38,7 @@ export default function EditProfileForm() {
     }
   };
 
-  const inputClass = "w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold";
+  const inputClass = "w-full px-4 py-2.5 border border-soft rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-apricot-deep/30 focus:border-apricot-deep";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
@@ -47,34 +47,34 @@ export default function EditProfileForm() {
       )}
       {success && (
         <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-sm text-green-600 flex items-center gap-2">
-          <CheckCircle className="w-4 h-4" /> Profile updated successfully
+          <CheckCircle className="w-4 h-4" strokeWidth={1.6} /> Profile updated successfully
         </div>
       )}
 
       <div>
-        <label className="block text-sm font-medium text-brand-charcoal mb-1">Email</label>
-        <input type="email" value={customer?.email ?? ""} disabled className={`${inputClass} bg-gray-50 text-gray-400 cursor-not-allowed`} />
-        <p className="text-xs text-gray-400 mt-1">Email cannot be changed here</p>
+        <label className="block text-sm font-medium text-ink mb-1">Email</label>
+        <input type="email" value={customer?.email ?? ""} disabled className={`${inputClass} bg-gray-50 text-ink-subtle cursor-not-allowed`} />
+        <p className="text-xs text-ink-subtle mt-1">Email cannot be changed here</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label htmlFor="editFirst" className="block text-sm font-medium text-brand-charcoal mb-1">First Name</label>
+          <label htmlFor="editFirst" className="block text-sm font-medium text-ink mb-1">First Name</label>
           <input id="editFirst" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} className={inputClass} />
         </div>
         <div>
-          <label htmlFor="editLast" className="block text-sm font-medium text-brand-charcoal mb-1">Last Name</label>
+          <label htmlFor="editLast" className="block text-sm font-medium text-ink mb-1">Last Name</label>
           <input id="editLast" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} className={inputClass} />
         </div>
       </div>
 
       <div>
-        <label htmlFor="editPhone" className="block text-sm font-medium text-brand-charcoal mb-1">Phone</label>
+        <label htmlFor="editPhone" className="block text-sm font-medium text-ink mb-1">Phone</label>
         <input id="editPhone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className={inputClass} placeholder="(555) 123-4567" />
       </div>
 
       <Button type="submit" disabled={saving}>
-        {saving ? <><Loader2 className="w-4 h-4 animate-spin mr-2" /> Saving...</> : "Save Changes"}
+        {saving ? <><Loader2 className="w-4 h-4 animate-spin mr-2" strokeWidth={1.6} /> Saving...</> : "Save Changes"}
       </Button>
     </form>
   );

@@ -20,7 +20,6 @@ export default function QuickViewModal() {
 
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Focus trap & Escape key
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -51,7 +50,6 @@ export default function QuickViewModal() {
   useEffect(() => {
     if (isOpen) {
       document.addEventListener("keydown", handleKeyDown);
-      // Focus the close button on open
       setTimeout(() => {
         modalRef.current?.querySelector<HTMLElement>("button")?.focus();
       }, 100);
@@ -74,7 +72,7 @@ export default function QuickViewModal() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/40 z-40"
+            className="fixed inset-0 bg-ink/40 z-40"
             onClick={closeQuickView}
           />
           {/* Modal */}
@@ -87,20 +85,20 @@ export default function QuickViewModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed inset-4 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-full sm:max-w-3xl sm:max-h-[85vh] bg-white z-50 rounded-xl shadow-xl overflow-hidden flex flex-col"
+            className="fixed inset-4 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-full sm:max-w-3xl sm:max-h-[85vh] bg-white z-50 rounded-[20px] shadow-strong overflow-hidden flex flex-col"
           >
             {/* Close button */}
             <button
               onClick={closeQuickView}
-              className="absolute top-3 right-3 z-10 p-1.5 bg-white/90 hover:bg-gray-100 rounded-full transition-colors"
+              className="absolute top-3 right-3 z-10 p-1.5 bg-white/90 hover:bg-peach-soft rounded-full transition-colors"
               aria-label="Close quick view"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5" strokeWidth={1.6} />
             </button>
 
             <div className="flex flex-col sm:flex-row overflow-y-auto">
               {/* Image */}
-              <div className="relative sm:w-1/2 aspect-square bg-brand-cream flex-shrink-0">
+              <div className="relative sm:w-1/2 aspect-square bg-stucco flex-shrink-0">
                 {product.featuredImage ? (
                   <Image
                     src={selectedVariant?.image?.url ?? product.featuredImage.url}
@@ -110,11 +108,10 @@ export default function QuickViewModal() {
                     sizes="(max-width: 640px) 100vw, 50vw"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-300">
+                  <div className="w-full h-full flex items-center justify-center text-ink-subtle">
                     No image
                   </div>
                 )}
-                {/* Badges */}
                 <div className="absolute top-3 left-3 flex flex-col gap-1">
                   {!product.availableForSale && <Badge variant="soldOut">Sold Out</Badge>}
                   {onSale && compareAtPrice && price && (
@@ -125,10 +122,10 @@ export default function QuickViewModal() {
 
               {/* Details */}
               <div className="sm:w-1/2 p-6 flex flex-col">
-                <p className="text-xs text-brand-gold/60 uppercase tracking-wider mb-1">
+                <p className="text-xs text-apricot-deep/60 uppercase tracking-wider mb-1">
                   {product.vendor}
                 </p>
-                <h2 className="font-serif text-xl lg:text-2xl text-brand-charcoal mb-2">
+                <h2 className="font-serif text-xl lg:text-2xl text-ink mb-2">
                   {product.title}
                 </h2>
                 {price && (
@@ -137,12 +134,10 @@ export default function QuickViewModal() {
                   </div>
                 )}
 
-                {/* Description */}
-                <p className="text-sm text-gray-600 mb-6 line-clamp-4">
+                <p className="text-sm text-ink-muted mb-6 line-clamp-4">
                   {product.description}
                 </p>
 
-                {/* Variants */}
                 {selectedVariant && (
                   <div className="mb-6">
                     <VariantSelector
@@ -156,7 +151,6 @@ export default function QuickViewModal() {
                   </div>
                 )}
 
-                {/* Actions */}
                 <div className="mt-auto space-y-3">
                   {selectedVariant && (
                     <AddToCartButton
@@ -167,19 +161,19 @@ export default function QuickViewModal() {
                   <div className="flex gap-3">
                     <button
                       onClick={() => toggleWishlist(product)}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 border-2 rounded-full text-sm font-medium transition-colors ${
+                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 border-[1.5px] rounded-full text-sm font-medium transition-colors ${
                         wishlisted
-                          ? "border-brand-gold bg-brand-gold/10 text-brand-gold"
-                          : "border-gray-200 text-brand-charcoal hover:border-brand-gold"
+                          ? "border-apricot-deep bg-apricot-deep/10 text-apricot-deep"
+                          : "border-border-soft text-ink hover:border-espresso"
                       }`}
                     >
-                      <Heart className="w-4 h-4" fill={wishlisted ? "currentColor" : "none"} />
+                      <Heart className="w-4 h-4" strokeWidth={1.6} fill={wishlisted ? "currentColor" : "none"} />
                       {wishlisted ? "Saved" : "Save"}
                     </button>
                     <Link
                       href={`/products/${product.handle}`}
                       onClick={closeQuickView}
-                      className="flex-1 flex items-center justify-center py-2.5 border-2 border-gray-200 rounded-full text-sm font-medium text-brand-charcoal hover:border-brand-gold transition-colors"
+                      className="flex-1 flex items-center justify-center py-2.5 border-[1.5px] border-border-soft rounded-full text-sm font-medium text-ink hover:border-espresso transition-colors no-underline"
                     >
                       View Full Details
                     </Link>

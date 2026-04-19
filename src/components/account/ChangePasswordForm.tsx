@@ -58,13 +58,13 @@ export default function ChangePasswordForm() {
     }
   };
 
-  const inputClass = "w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold";
+  const inputClass = "w-full px-4 py-2.5 border border-soft rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-apricot-deep/30 focus:border-apricot-deep";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
-      <div className="p-3 bg-brand-cream/50 rounded-lg flex items-start gap-2">
-        <AlertTriangle className="w-4 h-4 text-brand-gold flex-shrink-0 mt-0.5" />
-        <p className="text-xs text-gray-500">Changing your password will sign you out of other devices.</p>
+      <div className="p-3 bg-stucco/50 rounded-lg flex items-start gap-2">
+        <AlertTriangle className="w-4 h-4 text-apricot-deep flex-shrink-0 mt-0.5" strokeWidth={1.6} />
+        <p className="text-xs text-ink-muted">Changing your password will sign you out of other devices.</p>
       </div>
 
       {error && (
@@ -72,27 +72,27 @@ export default function ChangePasswordForm() {
       )}
       {success && (
         <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-sm text-green-600 flex items-center gap-2">
-          <CheckCircle className="w-4 h-4" /> Password updated successfully
+          <CheckCircle className="w-4 h-4" strokeWidth={1.6} /> Password updated successfully
         </div>
       )}
 
       <div>
-        <label htmlFor="currentPw" className="block text-sm font-medium text-brand-charcoal mb-1">Current Password</label>
+        <label htmlFor="currentPw" className="block text-sm font-medium text-ink mb-1">Current Password</label>
         <input id="currentPw" type="password" required value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} className={inputClass} />
       </div>
 
       <div>
-        <label htmlFor="newPw" className="block text-sm font-medium text-brand-charcoal mb-1">New Password</label>
+        <label htmlFor="newPw" className="block text-sm font-medium text-ink mb-1">New Password</label>
         <input id="newPw" type="password" required minLength={5} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className={inputClass} placeholder="At least 5 characters" />
       </div>
 
       <div>
-        <label htmlFor="confirmPw" className="block text-sm font-medium text-brand-charcoal mb-1">Confirm New Password</label>
+        <label htmlFor="confirmPw" className="block text-sm font-medium text-ink mb-1">Confirm New Password</label>
         <input id="confirmPw" type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className={inputClass} />
       </div>
 
       <Button type="submit" disabled={saving}>
-        {saving ? <><Loader2 className="w-4 h-4 animate-spin mr-2" /> Updating...</> : "Update Password"}
+        {saving ? <><Loader2 className="w-4 h-4 animate-spin mr-2" strokeWidth={1.6} /> Updating...</> : "Update Password"}
       </Button>
     </form>
   );

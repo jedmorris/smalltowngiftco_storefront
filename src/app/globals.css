@@ -1,46 +1,69 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-brand-blush: #FFFBF7;
-  --color-brand-pink: #F3D9CA;
-  --color-brand-gold: #B8935A;
-  --color-brand-espresso: #3E2724;
-  --color-brand-cream: #FDF8F3;
-  --color-brand-charcoal: #2A2725;
+  /* ── Positano Palette ──────────────────────────────────── */
+  --color-paper: #FFF8EE;
+  --color-paper-deep: #F9EBD5;
+  --color-stucco: #F4E9D6;
+  --color-peach-soft: #FBE3D1;
+  --color-peach: #F6C9A8;
+  --color-apricot: #F3B488;
+  --color-apricot-deep: #E39A6E;
+  --color-bougainvillea-soft: #F5CDD4;
+  --color-bougainvillea: #E08EA3;
+  --color-ocean-soft: #BCD9D7;
+  --color-ocean: #7FB5B5;
+  --color-ocean-deep: #4F8E8E;
+  --color-lemon: #F2D27B;
+  --color-espresso: #4A2E1F;
+  --color-espresso-soft: #6B4A38;
+  --color-ink: #33231A;
+  --color-ink-muted: #7A6458;
+  --color-ink-subtle: #A89586;
+  --color-gold: #B8935A;
+  --color-border-soft: #EFE2CE;
 
-  --font-serif: var(--font-playfair);
-  --font-sans: var(--font-inter);
+  /* ── Fonts ─────────────────────────────────────────────── */
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-dm-sans);
+  --font-script: var(--font-caveat);
 
-  --shadow-soft: 0 2px 15px rgba(184, 147, 90, 0.05);
-  --shadow-medium: 0 4px 25px rgba(184, 147, 90, 0.08);
-  --shadow-strong: 0 8px 40px rgba(184, 147, 90, 0.12);
+  /* ── Shadows (espresso-tinted) ─────────────────────────── */
+  --shadow-soft: 0 2px 12px rgba(74, 46, 31, 0.06);
+  --shadow-medium: 0 6px 24px rgba(74, 46, 31, 0.10);
+  --shadow-strong: 0 14px 40px rgba(74, 46, 31, 0.16);
 
-  --animate-fade-in-up: fade-in-up 0.6s ease-out both;
+  /* ── Radii ─────────────────────────────────────────────── */
+  --radius-pill: 9999px;
+  --radius-card: 1rem;
+  --radius-lg: 1.25rem;
+  --radius-md: 0.625rem;
+
+  /* ── Animations ────────────────────────────────────────── */
+  --animate-fade-in-up: fade-in-up 0.7s ease-out both;
   --animate-scale-in: scale-in 0.4s ease-out both;
   --animate-shimmer: shimmer 2s infinite;
-  --animate-pulse-soft: pulse-soft 2s ease-in-out infinite;
+  --animate-pulse-soft: pulse-soft 2.2s ease-in-out infinite;
+  --animate-sway: sway 6s ease-in-out infinite;
 }
 
+/* ── Motion tokens ─────────────────────────────────────── */
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 200ms;
+  --dur-med: 300ms;
+  --dur-slow: 600ms;
+}
+
+/* ── Keyframes ─────────────────────────────────────────── */
 @keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes shimmer {
@@ -53,58 +76,62 @@
   50% { opacity: 0.7; }
 }
 
-body {
-  background: var(--color-brand-blush);
-  color: var(--color-brand-charcoal);
-  font-family: var(--font-sans), system-ui, sans-serif;
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
 }
 
-/* Smooth scrolling */
+/* ── Base ──────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar for cart drawer */
-.cart-scrollbar::-webkit-scrollbar {
-  width: 4px;
-}
-.cart-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.cart-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--color-brand-gold);
-  border-radius: 2px;
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.55;
 }
 
-/* Decorative utilities */
+/* ── Decorative utilities ──────────────────────────────── */
 .decorative-underline {
   display: block;
-  width: 80px;
+  width: 72px;
   height: 1px;
-  background: linear-gradient(to right, var(--color-brand-gold), var(--color-brand-gold)/30);
+  background: linear-gradient(to right, var(--color-apricot-deep), rgba(227, 154, 110, 0.30));
   margin-top: 0.75rem;
 }
 
-.bow-accent::before {
-  content: "◆";
-  color: var(--color-brand-gold);
-  font-size: 0.5rem;
-  margin-right: 0.5rem;
-}
-.bow-accent::after {
-  content: "◆";
-  color: var(--color-brand-gold);
-  font-size: 0.5rem;
-  margin-left: 0.5rem;
+.bloom-eyebrow::before {
+  content: "❋";
+  color: var(--color-apricot-deep);
+  font-size: 0.875rem;
+  line-height: 1;
 }
 
 /* Image overlays */
 .image-overlay-gradient {
-  background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(51, 35, 26, 0.45) 0%, transparent 60%);
 }
 
 .image-overlay-vignette {
-  box-shadow: inset 0 0 80px rgba(0,0,0,0.15);
+  box-shadow: inset 0 0 80px rgba(51, 35, 26, 0.12);
+}
+
+.image-grain {
+  position: relative;
+}
+.image-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255, 229, 200, 0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(224, 142, 163, 0.15) 0%, transparent 55%);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
 }
 
 /* Staggered grid animations */
@@ -118,16 +145,32 @@ html {
 .animate-stagger > *:nth-child(8) { animation-delay: 700ms; }
 
 /* Boutique prose styling */
-.prose-boutique a {
-  color: var(--color-brand-gold);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.prose-boutique strong {
-  color: var(--color-brand-gold);
-}
 .prose-boutique {
   line-height: 1.8;
+}
+.prose-boutique a {
+  color: var(--color-apricot-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(227, 154, 110, 0.30);
+}
+.prose-boutique a:hover {
+  text-decoration-color: var(--color-apricot-deep);
+}
+.prose-boutique strong {
+  color: var(--color-apricot-deep);
+}
+
+/* Custom scrollbar for cart drawer */
+.cart-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.cart-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.cart-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-apricot-deep);
+  border-radius: 2px;
 }
 
 /* Scrollbar hide */
@@ -137,4 +180,13 @@ html {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* ── Reduced motion ────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

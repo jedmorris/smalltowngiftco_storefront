@@ -3,22 +3,23 @@
 import { ButtonHTMLAttributes, forwardRef } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "text";
+  variant?: "primary" | "secondary" | "outline" | "soft" | "ghost" | "text";
   size?: "sm" | "md" | "lg";
 }
 
 const variants = {
-  primary: "bg-brand-gold text-white hover:bg-brand-gold/90 hover:shadow-[var(--shadow-medium)]",
-  secondary: "bg-brand-espresso text-white hover:bg-brand-espresso/90 hover:shadow-[var(--shadow-medium)]",
-  outline: "border-2 border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-white hover:shadow-[var(--shadow-soft)]",
-  ghost: "text-brand-charcoal hover:bg-brand-pink/50",
-  text: "text-brand-gold hover:text-brand-gold/80 underline underline-offset-4 decoration-brand-gold/30 hover:decoration-brand-gold",
+  primary: "bg-apricot-deep text-white hover:bg-apricot-deep/90 hover:shadow-medium",
+  secondary: "bg-espresso text-paper hover:bg-espresso/90 hover:shadow-medium",
+  outline: "border-[1.5px] border-espresso text-espresso hover:bg-espresso hover:text-paper",
+  soft: "bg-peach-soft text-espresso hover:bg-peach",
+  ghost: "text-ink hover:bg-peach-soft",
+  text: "text-apricot-deep hover:text-apricot-deep/80 underline underline-offset-[5px] decoration-apricot-deep/30 hover:decoration-apricot-deep",
 };
 
 const sizes = {
-  sm: "px-4 py-1.5 text-sm",
-  md: "px-6 py-2.5 text-base",
-  lg: "px-8 py-3.5 text-lg",
+  sm: "px-4 py-[7px] text-[13px]",
+  md: "px-[26px] py-[11px] text-[15px]",
+  lg: "px-8 py-[14px] text-[17px]",
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -27,7 +28,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={`inline-flex items-center justify-center font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.97] ${
+        className={`inline-flex items-center justify-center gap-2 font-medium tracking-[0.02em] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.97] ${
           isText ? "" : "rounded-full"
         } ${variants[variant]} ${isText ? "" : sizes[size]} ${className}`}
         {...props}

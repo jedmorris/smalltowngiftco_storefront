@@ -12,11 +12,11 @@ export default function Price({ price, compareAtPrice, className = "" }: PricePr
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <span className={onSale ? "text-red-600 font-semibold" : "text-brand-charcoal font-semibold"}>
+      <span className={onSale ? "text-red-600 font-semibold" : "text-ink font-semibold"}>
         {formatPrice(price)}
       </span>
       {onSale && compareAtPrice && (
-        <span className="text-gray-400 line-through text-sm">
+        <span className="text-ink-subtle line-through text-sm">
           {formatPrice(compareAtPrice)}
         </span>
       )}

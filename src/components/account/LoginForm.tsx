@@ -29,7 +29,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
-      <h2 className="font-serif text-2xl text-brand-charcoal text-center mb-6">
+      <h2 className="font-serif text-2xl text-ink text-center mb-6">
         Sign In
       </h2>
 
@@ -40,7 +40,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
       )}
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-brand-charcoal mb-1">
+        <label htmlFor="email" className="block text-sm font-medium text-ink mb-1">
           Email
         </label>
         <input
@@ -49,13 +49,13 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+          className="w-full px-4 py-2.5 border border-soft rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-apricot-deep/30 focus:border-apricot-deep"
           placeholder="you@example.com"
         />
       </div>
 
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-brand-charcoal mb-1">
+        <label htmlFor="password" className="block text-sm font-medium text-ink mb-1">
           Password
         </label>
         <input
@@ -64,13 +64,13 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold"
+          className="w-full px-4 py-2.5 border border-soft rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-apricot-deep/30 focus:border-apricot-deep"
           placeholder="Your password"
         />
       </div>
 
       <div className="text-right">
-        <Link href="/account/forgot-password" className="text-sm text-brand-gold hover:text-brand-gold/80">
+        <Link href="/account/forgot-password" className="text-sm text-apricot-deep hover:text-apricot-deep/80">
           Forgot password?
         </Link>
       </div>
@@ -78,7 +78,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
       <Button type="submit" disabled={isLoading} size="lg" className="w-full">
         {isLoading ? (
           <>
-            <Loader2 className="w-5 h-5 animate-spin mr-2" />
+            <Loader2 className="w-5 h-5 animate-spin mr-2" strokeWidth={1.6} />
             Signing in...
           </>
         ) : (
@@ -86,9 +86,9 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
         )}
       </Button>
 
-      <p className="text-center text-sm text-gray-500">
+      <p className="text-center text-sm text-ink-muted">
         Don&apos;t have an account?{" "}
-        <Link href="/account/register" className="text-brand-gold hover:text-brand-gold/80 font-medium">
+        <Link href="/account/register" className="text-apricot-deep hover:text-apricot-deep/80 font-medium">
           Create one
         </Link>
       </p>

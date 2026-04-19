@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import SectionHeader from "@/components/ui/SectionHeader";
 import type { Collection } from "@/lib/shopify/types";
 
 interface FeaturedCollectionsProps {
@@ -28,31 +29,26 @@ export default function FeaturedCollections({ collections }: FeaturedCollections
   if (collections.length === 0) return null;
 
   return (
-    <section className="py-16 lg:py-24" ref={ref}>
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Section header */}
-        <div className="text-center mb-12">
-          <h2 className="font-serif text-3xl lg:text-4xl text-brand-charcoal mb-3">
-            Shop by Collection
-          </h2>
-          <p className="text-gray-500 max-w-md mx-auto">
-            Find the perfect gift for every celebration
-          </p>
-        </div>
+    <section className="py-[4.5rem] lg:py-24" ref={ref}>
+      <div className="max-w-[1280px] mx-auto px-4">
+        <SectionHeader
+          title="Shop by Collection"
+          subtitle="Find the perfect gift for every celebration"
+        />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
           {collections.map((collection, i) => (
             <Link
               key={collection.id}
               href={`/collections/${collection.handle}`}
-              className={`group block transition-all duration-700 ${
+              className={`group block transition-all duration-700 no-underline ${
                 visible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: visible ? `${i * 100}ms` : "0ms" }}
             >
-              <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-brand-cream border border-gray-100">
+              <div className="relative aspect-[3/4] rounded-[20px] overflow-hidden bg-stucco image-grain">
                 {collection.image ? (
                   <Image
                     src={collection.image.url}
@@ -62,16 +58,19 @@ export default function FeaturedCollections({ collections }: FeaturedCollections
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-brand-pink to-brand-blush" />
+                  <div className="w-full h-full bg-gradient-to-br from-bougainvillea-soft to-peach-soft" />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <h3 className="font-serif text-lg text-white transition-transform duration-300 group-hover:-translate-y-1">
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/45 via-ink/5 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-[22px]">
+                  <div className="text-[10px] tracking-[0.2em] uppercase text-paper/90 mb-1">
+                    {collection.description?.slice(0, 30) || "Collection"}
+                  </div>
+                  <h3 className="font-serif text-2xl text-paper font-medium tracking-[0.01em] transition-transform duration-300 group-hover:-translate-y-1">
                     {collection.title}
                   </h3>
-                  <span className="flex items-center gap-1 text-white/80 text-sm mt-1">
+                  <span className="inline-flex items-center gap-1 text-paper/85 text-[13px] mt-1.5 no-underline">
                     Shop now
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                    <ArrowRight className="w-[13px] h-[13px] transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.6} />
                   </span>
                 </div>
               </div>

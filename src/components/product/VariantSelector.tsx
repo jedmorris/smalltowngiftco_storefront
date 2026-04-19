@@ -13,7 +13,6 @@ export default function VariantSelector({
   selectedVariant,
   onSelect,
 }: VariantSelectorProps) {
-  // Group options by name (e.g., "Size", "Color")
   const optionGroups = new Map<string, { value: string; variant: ProductVariant }[]>();
 
   for (const variant of variants) {
@@ -28,13 +27,11 @@ export default function VariantSelector({
     }
   }
 
-  // Skip if only "Default Title"
   if (variants.length === 1 && variants[0].title === "Default Title") {
     return null;
   }
 
   const handleOptionChange = (optionName: string, value: string) => {
-    // Find variant matching all selected options with the new value
     const currentOptions = new Map(
       selectedVariant.selectedOptions.map((o) => [o.name, o.value])
     );
@@ -58,13 +55,12 @@ export default function VariantSelector({
 
         return (
           <div key={name}>
-            <label className="block text-sm font-medium text-brand-charcoal mb-2">
-              {name}: <span className="text-gray-500">{selectedValue}</span>
+            <label className="block text-sm font-medium text-ink mb-2">
+              {name}: <span className="text-ink-muted">{selectedValue}</span>
             </label>
             <div className="flex flex-wrap gap-2">
               {options.map(({ value }) => {
                 const isSelected = selectedValue === value;
-                // Check if this option combination is available
                 const isAvailable = variants.some(
                   (v) =>
                     v.availableForSale &&
@@ -78,12 +74,12 @@ export default function VariantSelector({
                     key={value}
                     onClick={() => handleOptionChange(name, value)}
                     disabled={!isAvailable}
-                    className={`px-4 py-2 border rounded-lg text-sm transition-colors ${
+                    className={`px-4 py-2 border rounded-[10px] text-sm transition-colors ${
                       isSelected
-                        ? "border-brand-gold bg-brand-gold/10 text-brand-gold font-medium"
+                        ? "border-apricot-deep bg-apricot-deep/10 text-apricot-deep font-medium"
                         : isAvailable
-                        ? "border-gray-200 text-brand-charcoal hover:border-brand-gold"
-                        : "border-gray-100 text-gray-300 cursor-not-allowed line-through"
+                        ? "border-border-soft text-ink hover:border-apricot-deep"
+                        : "border-border-soft/50 text-ink-subtle cursor-not-allowed line-through"
                     }`}
                   >
                     {value}

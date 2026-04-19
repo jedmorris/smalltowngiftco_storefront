@@ -16,22 +16,22 @@ export default function CartSummary({ freeShipping = false }: CartSummaryProps) 
   if (!cart) return null;
 
   return (
-    <div className="border-t border-gray-100 pt-4 space-y-3">
+    <div className="border-t border-soft pt-4 space-y-3">
       <div className="flex justify-between text-sm">
-        <span className="text-gray-500">Subtotal</span>
-        <span className="font-semibold text-brand-charcoal">
+        <span className="text-ink-muted">Subtotal</span>
+        <span className="font-semibold text-ink">
           {formatPrice(cart.cost.subtotalAmount)}
         </span>
       </div>
       <div className="flex justify-between text-sm">
-        <span className="text-gray-500">Shipping</span>
-        <span className={freeShipping ? "font-semibold text-brand-espresso" : "text-gray-400"}>
+        <span className="text-ink-muted">Shipping</span>
+        <span className={freeShipping ? "font-semibold text-espresso" : "text-ink-subtle"}>
           {freeShipping ? "FREE" : "Calculated at checkout"}
         </span>
       </div>
-      <div className="flex justify-between items-baseline pt-2 border-t border-gray-100/30">
-        <span className="text-gray-500 text-sm">Total</span>
-        <span className="font-serif text-xl font-semibold text-brand-charcoal">
+      <div className="flex justify-between items-baseline pt-2 border-t border-soft/30">
+        <span className="text-ink-muted text-sm">Total</span>
+        <span className="font-serif text-xl font-semibold text-ink">
           {formatPrice(cart.cost.subtotalAmount)}
         </span>
       </div>
@@ -50,8 +50,8 @@ export default function CartSummary({ freeShipping = false }: CartSummaryProps) 
           Checkout
         </Button>
       </a>
-      <div className="flex items-center justify-center gap-1.5 text-xs text-gray-400">
-        <ShieldCheck className="w-3.5 h-3.5" />
+      <div className="flex items-center justify-center gap-1.5 text-xs text-ink-subtle">
+        <ShieldCheck className="w-3.5 h-3.5" strokeWidth={1.6} />
         Secure, encrypted checkout
       </div>
     </div>

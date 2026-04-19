@@ -30,8 +30,9 @@ export default function StarRating({ rating, onRate, size = "md", interactive = 
           >
             <Star
               className={`${starSize} ${
-                filled ? "fill-brand-gold text-brand-gold" : "fill-none text-gray-300"
+                filled ? "fill-apricot-deep text-apricot-deep" : "fill-none text-border-soft"
               } transition-colors`}
+              strokeWidth={1.6}
             />
           </button>
         );
