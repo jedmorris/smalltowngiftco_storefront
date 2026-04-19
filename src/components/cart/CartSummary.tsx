@@ -3,6 +3,7 @@
 import { ShieldCheck } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/shopify";
+import { trackBeginCheckout } from "@/lib/analytics";
 import Button from "@/components/ui/Button";
 
 interface CartSummaryProps {
@@ -34,7 +35,17 @@ export default function CartSummary({ freeShipping = false }: CartSummaryProps) 
           {formatPrice(cart.cost.subtotalAmount)}
         </span>
       </div>
-      <a href={cart.checkoutUrl} className="block">
+      <a
+        href={cart.checkoutUrl}
+        className="block"
+        onClick={() => {
+          trackBeginCheckout(
+            cart.lines,
+            cart.cost.totalAmount.amount,
+            cart.cost.totalAmount.currencyCode
+          );
+        }}
+      >
         <Button className="w-full" size="lg">
           Checkout
         </Button>

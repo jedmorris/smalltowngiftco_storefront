@@ -157,14 +157,18 @@ export const GET_ALL_COLLECTIONS = `
 export const GET_COLLECTION_BY_HANDLE = `
   ${COLLECTION_FRAGMENT}
   ${PRODUCT_FRAGMENT}
-  query GetCollectionByHandle($handle: String!, $first: Int!) {
+  query GetCollectionByHandle($handle: String!, $first: Int!, $after: String) {
     collection(handle: $handle) {
       ...CollectionFields
-      products(first: $first) {
+      products(first: $first, after: $after) {
         edges {
           node {
             ...ProductFields
           }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
         }
       }
     }
@@ -193,6 +197,37 @@ export const GET_PRODUCT_HANDLES = `
         node {
           handle
           updatedAt
+        }
+      }
+    }
+  }
+`;
+
+export const GET_PRODUCT_RECOMMENDATIONS = `
+  ${PRODUCT_FRAGMENT}
+  query GetProductRecommendations($productId: ID!) {
+    productRecommendations(productId: $productId) {
+      ...ProductFields
+    }
+  }
+`;
+
+export const PREDICTIVE_SEARCH = `
+  query PredictiveSearch($query: String!, $limit: Int!) {
+    predictiveSearch(query: $query, limit: $limit, types: [PRODUCT]) {
+      products {
+        id
+        handle
+        title
+        featuredImage {
+          url
+          altText
+        }
+        priceRange {
+          minVariantPrice {
+            amount
+            currencyCode
+          }
         }
       }
     }

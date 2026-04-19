@@ -1,44 +1,44 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { MessageSquare } from "lucide-react";
+import { toast } from "sonner";
 import StarRating from "./StarRating";
 import ReviewCard, { type Review } from "./ReviewCard";
 import Button from "@/components/ui/Button";
 
-function getStorageKey(handle: string) {
-  return `reviews_${handle}`;
-}
-
-function getStoredReviews(handle: string): Review[] {
-  if (typeof window === "undefined") return [];
-  const stored = localStorage.getItem(getStorageKey(handle));
-  if (!stored) return [];
-  try {
-    return JSON.parse(stored);
-  } catch {
-    return [];
-  }
-}
-
 export default function ReviewSection({ productHandle }: { productHandle: string }) {
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    setReviews(getStoredReviews(productHandle));
+  const fetchReviews = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/reviews?handle=${encodeURIComponent(productHandle)}`);
+      const data = await res.json();
+      if (data.reviews) setReviews(data.reviews);
+    } catch {
+      // Silent fail — show empty state
+    } finally {
+      setLoading(false);
+    }
   }, [productHandle]);
+
+  useEffect(() => {
+    fetchReviews();
+  }, [fetchReviews]);
 
   const avgRating = reviews.length > 0
     ? Math.round((reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length) * 10) / 10
     : 0;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -47,24 +47,38 @@ export default function ReviewSection({ productHandle }: { productHandle: string
       return;
     }
 
-    const newReview: Review = {
-      id: Date.now().toString(),
-      name: name.trim() || "Anonymous",
-      rating,
-      title: title.trim(),
-      body: body.trim(),
-      date: new Date().toISOString(),
-    };
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productHandle,
+          name: name.trim() || "Anonymous",
+          rating,
+          title: title.trim(),
+          body: body.trim(),
+        }),
+      });
 
-    const updated = [newReview, ...reviews];
-    setReviews(updated);
-    localStorage.setItem(getStorageKey(productHandle), JSON.stringify(updated));
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Something went wrong");
+        return;
+      }
 
-    setName("");
-    setRating(0);
-    setTitle("");
-    setBody("");
-    setShowForm(false);
+      toast.success("Review submitted!");
+      setName("");
+      setRating(0);
+      setTitle("");
+      setBody("");
+      setShowForm(false);
+      fetchReviews();
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputClass = "w-full px-4 py-2.5 border border-brand-pink rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold";
@@ -147,7 +161,9 @@ export default function ReviewSection({ productHandle }: { productHandle: string
           </div>
 
           <div className="flex gap-3">
-            <Button type="submit">Submit Review</Button>
+            <Button type="submit" disabled={submitting}>
+              {submitting ? "Submitting..." : "Submit Review"}
+            </Button>
             <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>
               Cancel
             </Button>
@@ -155,7 +171,11 @@ export default function ReviewSection({ productHandle }: { productHandle: string
         </form>
       )}
 
-      {reviews.length === 0 ? (
+      {loading ? (
+        <div className="text-center py-12">
+          <div className="w-8 h-8 border-2 border-brand-gold/30 border-t-brand-gold rounded-full animate-spin mx-auto" />
+        </div>
+      ) : reviews.length === 0 ? (
         <div className="text-center py-12 bg-brand-cream/30 rounded-xl">
           <MessageSquare className="w-10 h-10 text-gray-300 mx-auto mb-3" />
           <p className="text-gray-500 mb-1">No reviews yet</p>

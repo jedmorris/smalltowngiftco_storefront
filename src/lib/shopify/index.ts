@@ -9,6 +9,8 @@ import {
   SEARCH_PRODUCTS,
   GET_PRODUCT_HANDLES,
   GET_COLLECTION_HANDLES,
+  GET_PRODUCT_RECOMMENDATIONS,
+  PREDICTIVE_SEARCH,
 } from "./queries";
 import {
   CREATE_CART,
@@ -111,6 +113,49 @@ export async function getProductHandles(): Promise<{ handle: string; updatedAt: 
   return flattenEdges(data.products);
 }
 
+export async function getProductRecommendations(productId: string): Promise<Product[]> {
+  try {
+    const data = await shopifyFetch<{
+      productRecommendations: RawProduct[] | null;
+    }>({
+      query: GET_PRODUCT_RECOMMENDATIONS,
+      variables: { productId },
+      tags: ["products"],
+      revalidate: 3600,
+    });
+
+    if (!data.productRecommendations) return [];
+    return data.productRecommendations.map(normalizeProduct);
+  } catch {
+    return [];
+  }
+}
+
+export interface PredictiveSearchResult {
+  id: string;
+  handle: string;
+  title: string;
+  featuredImage: { url: string; altText: string | null } | null;
+  priceRange: {
+    minVariantPrice: { amount: string; currencyCode: string };
+  };
+}
+
+export async function predictiveSearch(query: string, limit = 5): Promise<PredictiveSearchResult[]> {
+  try {
+    const data = await shopifyFetch<{
+      predictiveSearch: { products: PredictiveSearchResult[] };
+    }>({
+      query: PREDICTIVE_SEARCH,
+      variables: { query, limit },
+    });
+
+    return data.predictiveSearch.products;
+  } catch {
+    return [];
+  }
+}
+
 // ─── Collections ─────────────────────────────────────────
 
 export async function getAllCollections(): Promise<Collection[]> {
@@ -128,15 +173,18 @@ export async function getAllCollections(): Promise<Collection[]> {
 
 export async function getCollectionByHandle(
   handle: string,
-  productCount = 50
-): Promise<(Collection & { products: Product[] }) | null> {
+  productCount = 24,
+  after?: string
+): Promise<(Collection & { products: Product[]; pageInfo: { hasNextPage: boolean; endCursor: string | null } }) | null> {
   const data = await shopifyFetch<{
     collection: (Collection & {
-      products: ShopifyConnection<RawProduct>;
+      products: ShopifyConnection<RawProduct> & {
+        pageInfo: { hasNextPage: boolean; endCursor: string | null };
+      };
     }) | null;
   }>({
     query: GET_COLLECTION_BY_HANDLE,
-    variables: { handle, first: productCount },
+    variables: { handle, first: productCount, after: after || null },
     tags: ["collections"],
     revalidate: 3600,
   });
@@ -145,6 +193,7 @@ export async function getCollectionByHandle(
   return {
     ...data.collection,
     products: flattenEdges(data.collection.products).map(normalizeProduct),
+    pageInfo: data.collection.products.pageInfo,
   };
 }
 

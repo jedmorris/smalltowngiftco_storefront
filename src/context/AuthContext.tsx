@@ -48,6 +48,12 @@ async function readToken(): Promise<string | null> {
 async function writeToken(token: string): Promise<void> {
   const encrypted = await encryptToken(token);
   localStorage.setItem(TOKEN_KEY, encrypted);
+  // Set a cookie flag so server-side middleware can detect auth
+  document.cookie = "shopify_customer_token=1; path=/; max-age=7776000; SameSite=Lax";
+}
+
+function removeTokenCookie() {
+  document.cookie = "shopify_customer_token=; path=/; max-age=0";
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -66,12 +72,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setCustomer(c);
           } else {
             localStorage.removeItem(TOKEN_KEY);
+            removeTokenCookie();
             tokenRef.current = null;
           }
         }
       })
       .catch(() => {
         localStorage.removeItem(TOKEN_KEY);
+        removeTokenCookie();
         tokenRef.current = null;
       })
       .finally(() => setIsLoading(false));
@@ -127,6 +135,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     }
     localStorage.removeItem(TOKEN_KEY);
+    removeTokenCookie();
     tokenRef.current = null;
     setCustomer(null);
   }, []);

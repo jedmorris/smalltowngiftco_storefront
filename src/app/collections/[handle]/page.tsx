@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCollectionByHandle, getCollectionHandles } from "@/lib/shopify";
 import CollectionContent from "./CollectionContent";
+import JsonLd from "@/components/seo/JsonLd";
 
 interface CollectionPageProps {
   params: Promise<{ handle: string }>;
@@ -22,6 +23,9 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
   return {
     title: collection.seo?.title || collection.title,
     description: collection.seo?.description || collection.description,
+    alternates: {
+      canonical: `/collections/${handle}`,
+    },
   };
 }
 
@@ -37,6 +41,14 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
+      <JsonLd
+        collection={collection}
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Collections", url: "/collections" },
+          { name: collection.title, url: `/collections/${collection.handle}` },
+        ]}
+      />
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-400 mb-6">
         <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
@@ -78,7 +90,11 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
         </p>
       </div>
 
-      <CollectionContent products={collection.products} />
+      <CollectionContent
+        products={collection.products}
+        collectionHandle={handle}
+        initialPageInfo={collection.pageInfo}
+      />
     </div>
   );
 }

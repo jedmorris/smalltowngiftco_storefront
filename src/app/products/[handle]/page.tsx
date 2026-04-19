@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProductByHandle, getProductHandles, getFeaturedProducts } from "@/lib/shopify";
+import { getProductByHandle, getProductHandles, getProductRecommendations } from "@/lib/shopify";
 import ProductGallery from "@/components/product/ProductGallery";
 import ProductInfo from "@/components/product/ProductInfo";
 import ProductGrid from "@/components/product/ProductGrid";
 import ReviewSection from "@/components/product/ReviewSection";
 import JsonLd from "@/components/seo/JsonLd";
+import ProductViewTracker from "@/components/product/ProductViewTracker";
 
 interface ProductPageProps {
   params: Promise<{ handle: string }>;
@@ -24,6 +25,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   return {
     title: product.seo?.title || product.title,
     description: product.seo?.description || product.description,
+    alternates: {
+      canonical: `/products/${handle}`,
+    },
     openGraph: {
       title: product.title,
       description: product.description,
@@ -36,22 +40,26 @@ export const revalidate = 3600;
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { handle } = await params;
-  const [product, allProducts] = await Promise.all([
-    getProductByHandle(handle),
-    getFeaturedProducts(8),
-  ]);
+  const product = await getProductByHandle(handle);
 
   if (!product) {
     notFound();
   }
 
-  const relatedProducts = allProducts
-    .filter((p) => p.id !== product.id)
-    .slice(0, 4);
+  const recommendations = await getProductRecommendations(product.id);
+  const relatedProducts = recommendations.slice(0, 4);
 
   return (
     <>
-      <JsonLd product={product} />
+      <JsonLd
+        product={product}
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Products", url: "/collections" },
+          { name: product.title, url: `/products/${product.handle}` },
+        ]}
+      />
+      <ProductViewTracker product={product} />
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           <ProductGallery images={product.images} title={product.title} />

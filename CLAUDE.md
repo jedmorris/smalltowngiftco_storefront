@@ -1,33 +1,27 @@
-# Agent Instructions
-(Mirrored: CLAUDE.md, AGENTS.md, GEMINI.md)
+# Agent Instructions — itsmejessicajean / Small Town Gift Co.
 
-**Core Architecture:** 3 layers separating probabilistic intent from deterministic execution.
-1. **Directive (SOPs):** Markdown in `directives/`. Defines goals, inputs, tools, outputs.
-2. **Orchestration (You):** Routing & decisions. Read directives → call `execution/` scripts. *Never* do work (scraping, math) yourself.
-3. **Execution (Tools):** Python scripts in `execution/`. Use `.env` for secrets.
+**Stack:** Next.js 16 + React 19 + TypeScript 5 + Tailwind CSS 4 + Shopify Hydrogen React
 
-**Operating Principles:**
-1. **Tools First:** Check `execution/` for existing scripts before creating new ones.
-2. **Self-Anneal:** If a tool fails: Analyze error → Fix script → Test → Update directive with learnings.
-3. **Directives:** Update them to reflect API constraints or edge cases. *Ask* before changing core goals.
+**Architecture:**
+- `src/app/` — Next.js App Router (pages, API routes, layouts)
+- `src/components/` — React components (layout, product, cart, analytics, ui)
+- `src/context/` — Client-side state (CartContext, AuthContext, WishlistContext, QuickViewContext)
+- `src/lib/shopify/` — Shopify Storefront API client, queries, mutations, types, normalization
+- `src/lib/` — Utilities (analytics, consent, sanitize, token-crypto, sentry)
+- `public/` — Static assets, manifest.json, robots.txt
+
+**Deployment:** Vercel (`smalltowngiftco.vercel.app`)
+
+**Key Patterns:**
+- ISR with 3600s revalidation + on-demand revalidation via `/api/revalidate` webhook
+- `NEXT_PUBLIC_*` env vars must use static literal access (no dynamic `process.env[name]`)
+- Auth tokens encrypted with AES-GCM before localStorage; cookie flag for middleware SSR check
+- Reviews stored server-side in `.tmp/reviews.json`
+- Sentry for error monitoring (config in `sentry.*.config.ts`)
+- GA4 + Meta Pixel for analytics (consent-gated)
 
 **File System:**
-* `.tmp/`: Intermediates. Ephemeral, git-ignored.
-* `execution/`: Python scripts.
-* `directives/`: Markdown SOPs.
-* `.env` / `credentials.json`: Secrets.
-* **Rule:** Processing is local (`.tmp/`); Deliverables are Cloud (Sheets/Slides).
-
-**Cloud Webhooks (Modal):**
-Trigger: "Add a webhook that..."
-1. Read `directives/add_webhook.md`.
-2. Create `directives/<new_directive>.md`.
-3. Map slug in `execution/webhooks.json`.
-4. Deploy: `modal deploy execution/modal_webhook.py`.
-5. Test.
-
-**Endpoints:** `https://<workspace>--<app>-<func>.modal.run`
-* Functions: `list_webhooks`, `directive` (`?slug=`), `test_email`.
-* Activity streams to Slack.
+- `.tmp/`: Ephemeral data (reviews, intermediates). Git-ignored.
+- `.env.local`: Secrets. Git-ignored.
 
 **Mandate:** Use Opus-4.6 for everything while building.

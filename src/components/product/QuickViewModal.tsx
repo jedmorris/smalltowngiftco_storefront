@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -17,6 +17,47 @@ export default function QuickViewModal() {
   const { product, isOpen, closeQuickView } = useQuickView();
   const { isInWishlist, toggleWishlist } = useWishlist();
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
+
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Focus trap & Escape key
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeQuickView();
+        return;
+      }
+      if (e.key !== "Tab" || !modalRef.current) return;
+
+      const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    },
+    [closeQuickView]
+  );
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+      // Focus the close button on open
+      setTimeout(() => {
+        modalRef.current?.querySelector<HTMLElement>("button")?.focus();
+      }, 100);
+      return () => document.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [isOpen, handleKeyDown]);
 
   const selectedVariant = product?.variants[selectedVariantIndex] ?? product?.variants[0];
   const wishlisted = product ? isInWishlist(product.id) : false;
@@ -38,6 +79,10 @@ export default function QuickViewModal() {
           />
           {/* Modal */}
           <motion.div
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Quick view: ${product.title}`}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}

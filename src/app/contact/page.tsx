@@ -17,14 +17,32 @@ const socials = [
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Open mailto with form data
-    const mailto = `mailto:hello@smalltowngiftco.com?subject=${encodeURIComponent(form.subject)}&body=${encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)}`;
-    window.location.href = mailto;
-    setSubmitted(true);
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Something went wrong");
+        return;
+      }
+      setSubmitted(true);
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass = "w-full px-4 py-2.5 border border-gray-200 rounded-lg text-brand-charcoal focus:outline-none focus:ring-2 focus:ring-brand-gold/30 focus:border-brand-gold";
@@ -50,7 +68,7 @@ export default function ContactPage() {
               </div>
               <h2 className="font-serif text-2xl text-brand-charcoal mb-2">Message Sent!</h2>
               <p className="text-gray-500 mb-6">
-                Your email client should have opened with your message.
+                Thanks for reaching out!
                 We&apos;ll get back to you within 1–2 business days.
               </p>
               <Button variant="outline" onClick={() => setSubmitted(false)}>
@@ -117,9 +135,12 @@ export default function ContactPage() {
                   placeholder="Tell us how we can help..."
                 />
               </div>
-              <Button type="submit" size="lg" className="w-full sm:w-auto">
+              {error && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600">{error}</div>
+              )}
+              <Button type="submit" size="lg" className="w-full sm:w-auto" disabled={loading}>
                 <Send className="w-4 h-4 mr-2" />
-                Send Message
+                {loading ? "Sending..." : "Send Message"}
               </Button>
             </form>
           )}

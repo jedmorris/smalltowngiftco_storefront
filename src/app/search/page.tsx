@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { searchProducts } from "@/lib/shopify";
 import ProductGrid from "@/components/product/ProductGrid";
+import SearchTracker from "@/components/analytics/SearchTracker";
 
 interface SearchPageProps {
   searchParams: Promise<{ q?: string }>;
@@ -21,6 +22,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
+      {query && <SearchTracker query={query} />}
       <div className="text-center mb-10">
         <h1 className="font-serif text-4xl text-brand-charcoal mb-3">
           {query ? `Results for "${query}"` : "Search"}

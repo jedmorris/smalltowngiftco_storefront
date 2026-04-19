@@ -54,6 +54,14 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft") goTo(selectedIndex - 1);
+            else if (e.key === "ArrowRight") goTo(selectedIndex + 1);
+            else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setLightboxOpen(true); }
+          }}
+          tabIndex={0}
+          role="button"
+          aria-label={`View ${title} image ${selectedIndex + 1} of ${images.length}. Use arrow keys to navigate.`}
         >
           <Image
             src={selectedImage.url}

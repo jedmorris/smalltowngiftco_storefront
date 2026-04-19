@@ -1,14 +1,36 @@
-import type { Product } from "@/lib/shopify/types";
+import type { Product, Collection } from "@/lib/shopify/types";
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
 
 interface JsonLdProps {
   product?: Product;
+  collection?: Collection;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
-export default function JsonLd({ product }: JsonLdProps) {
+export default function JsonLd({ product, collection, breadcrumbs }: JsonLdProps) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://smalltowngiftco.com";
+  const schemas: object[] = [];
+
+  // Breadcrumb schema
+  if (breadcrumbs && breadcrumbs.length > 0) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: breadcrumbs.map((crumb, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: crumb.name,
+        item: crumb.url.startsWith("http") ? crumb.url : `${siteUrl}${crumb.url}`,
+      })),
+    });
+  }
 
   if (product) {
-    const jsonLd = {
+    schemas.push({
       "@context": "https://schema.org",
       "@type": "Product",
       name: product.title,
@@ -28,31 +50,36 @@ export default function JsonLd({ product }: JsonLdProps) {
           : "https://schema.org/OutOfStock",
         url: `${siteUrl}/products/${product.handle}`,
       },
-    };
-
-    return (
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-    );
+    });
+  } else if (collection) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: collection.title,
+      description: collection.description,
+      url: `${siteUrl}/collections/${collection.handle}`,
+    });
+  } else {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "The Small Town Gift Co.",
+      url: siteUrl,
+      logo: `${siteUrl}/images/logo.png`,
+      description:
+        "Designer shirts, sweaters, and personalized gifts for every occasion.",
+    });
   }
 
-  // Default: Organization
-  const orgJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "The Small Town Gift Co.",
-    url: siteUrl,
-    logo: `${siteUrl}/images/logo.png`,
-    description:
-      "Designer shirts, sweaters, and personalized gifts for every occasion.",
-  };
-
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
-    />
+    <>
+      {schemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+    </>
   );
 }

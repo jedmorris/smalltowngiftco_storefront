@@ -8,10 +8,32 @@ import type { Product } from "@/lib/shopify/types";
 
 interface CollectionContentProps {
   products: Product[];
+  collectionHandle: string;
+  initialPageInfo: { hasNextPage: boolean; endCursor: string | null };
 }
 
-export default function CollectionContent({ products }: CollectionContentProps) {
+export default function CollectionContent({ products: initialProducts, collectionHandle, initialPageInfo }: CollectionContentProps) {
+  const [products, setProducts] = useState(initialProducts);
+  const [pageInfo, setPageInfo] = useState(initialPageInfo);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [sortKey, setSortKey] = useState("featured");
+
+  const loadMore = async () => {
+    if (!pageInfo.hasNextPage || !pageInfo.endCursor) return;
+    setLoadingMore(true);
+    try {
+      const res = await fetch(`/api/collections/${collectionHandle}?after=${pageInfo.endCursor}`);
+      const data = await res.json();
+      if (data.products) {
+        setProducts((prev) => [...prev, ...data.products]);
+        setPageInfo(data.pageInfo);
+      }
+    } catch {
+      // Silent fail
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   // Extract available filter values from products
   const { vendors, types, priceBounds } = useMemo(() => {
@@ -105,7 +127,20 @@ export default function CollectionContent({ products }: CollectionContentProps) 
           <CollectionSortDropdown value={sortKey} onChange={setSortKey} />
         </div>
         {filteredAndSorted.length > 0 ? (
-          <ProductGrid products={filteredAndSorted} columns={3} />
+          <>
+            <ProductGrid products={filteredAndSorted} columns={3} />
+            {pageInfo.hasNextPage && (
+              <div className="text-center mt-10">
+                <button
+                  onClick={loadMore}
+                  disabled={loadingMore}
+                  className="px-8 py-3 border-2 border-brand-gold text-brand-gold font-medium rounded-full hover:bg-brand-gold hover:text-white transition-colors disabled:opacity-50"
+                >
+                  {loadingMore ? "Loading..." : "Load More Products"}
+                </button>
+              </div>
+            )}
+          </>
         ) : (
           <p className="text-center text-gray-500 py-20">
             No products match your filters. Try adjusting or clearing them.
