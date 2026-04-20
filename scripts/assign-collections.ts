@@ -53,6 +53,9 @@ async function main() {
   const byCollection = new Map<string, AdminProductWithTags[]>();
   for (const handle of targetHandles) byCollection.set(handle, []);
 
+  // Skip products that already have the `collection:<handle>` bookkeeping tag
+  // from a prior assign run — Shopify's collectionAddProducts errors on duplicates.
+  let alreadyAssigned = 0;
   for (const p of products) {
     const matched = matchCollections({
       title: p.title,
@@ -62,8 +65,17 @@ async function main() {
     });
     for (const h of matched) {
       if (!byCollection.has(h)) continue;
+      if (p.tags.includes(`collection:${h}`)) {
+        alreadyAssigned++;
+        continue;
+      }
       byCollection.get(h)!.push(p);
     }
+  }
+  if (alreadyAssigned > 0) {
+    console.log(
+      `\nSkipped ${alreadyAssigned} product/collection pair(s) already tagged from prior run.`
+    );
   }
 
   console.log(`\nMatch summary:`);
