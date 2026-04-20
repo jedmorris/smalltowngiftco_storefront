@@ -29,6 +29,29 @@ const COLLECTION_BY_HANDLE = /* GraphQL */ `
   }
 `;
 
+const PRODUCTS_NEEDING_PUBLISH = /* GraphQL */ `
+  query ProductsNeedingPublish($first: Int!, $after: String) {
+    products(first: $first, after: $after, sortKey: UPDATED_AT, reverse: true) {
+      edges {
+        cursor
+        node {
+          id
+          title
+          resourcePublications(first: 20) {
+            edges {
+              node {
+                publication { id name }
+                isPublished
+              }
+            }
+          }
+        }
+      }
+      pageInfo { hasNextPage endCursor }
+    }
+  }
+`;
+
 const PUBLISHABLE_PUBLISH = /* GraphQL */ `
   mutation Publish($id: ID!, $input: [PublicationInput!]!) {
     publishablePublish(id: $id, input: $input) {
@@ -38,8 +61,10 @@ const PUBLISHABLE_PUBLISH = /* GraphQL */ `
   }
 `;
 
-// Channels to publish to. "Online Store" is the main storefront; "Shop" surfaces in Shop app.
-const TARGET_CHANNELS = ["Online Store", "Shop"];
+// Channels to publish to. Online Store = hosted storefront. Shop = Shop app.
+// "My Store Headless" is the Hydrogen/headless channel that the Storefront API
+// token is bound to — without it, the Next.js Vercel app can't see products.
+const TARGET_CHANNELS = ["Online Store", "Shop", "My Store Headless"];
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
@@ -69,6 +94,81 @@ async function main() {
     process.exit(1);
   }
 
+  // ── Publish products ──
+  console.log(`\nAuditing products for missing channel publications…`);
+  let prodPublished = 0;
+  let prodSkipped = 0;
+  let prodFailed = 0;
+  let prodTotal = 0;
+  let after: string | undefined;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const page = await shopifyAdminFetch<{
+      products: {
+        edges: Array<{
+          cursor: string;
+          node: {
+            id: string;
+            title: string;
+            resourcePublications: {
+              edges: Array<{
+                node: { publication: { id: string; name: string }; isPublished: boolean };
+              }>;
+            };
+          };
+        }>;
+        pageInfo: { hasNextPage: boolean; endCursor: string | null };
+      };
+    }>({ query: PRODUCTS_NEEDING_PUBLISH, variables: { first: 100, after } });
+
+    for (const e of page.products.edges) {
+      prodTotal++;
+      const n = e.node;
+      const alreadyPublishedTo = new Set(
+        n.resourcePublications.edges
+          .filter((x) => x.node.isPublished)
+          .map((x) => x.node.publication.name)
+      );
+      const toPublish = targetPubIds.filter((p) => {
+        const name = TARGET_CHANNELS.find((n) => pubIdByName.get(n) === p.publicationId);
+        return name && !alreadyPublishedTo.has(name);
+      });
+      if (toPublish.length === 0) {
+        prodSkipped++;
+        continue;
+      }
+      if (!args.commit) {
+        prodPublished++;
+        continue;
+      }
+      const res = await shopifyAdminFetch<{
+        publishablePublish: {
+          publishable: { id: string } | null;
+          userErrors: Array<{ field: string[] | null; message: string }>;
+        };
+      }>({ query: PUBLISHABLE_PUBLISH, variables: { id: n.id, input: toPublish } });
+
+      if (res.publishablePublish.userErrors.length > 0) {
+        prodFailed++;
+        console.error(
+          `  ✗ ${n.title.slice(0, 50)} — ${res.publishablePublish.userErrors.map((e) => e.message).join("; ")}`
+        );
+      } else {
+        prodPublished++;
+        if (prodPublished % 50 === 0) {
+          console.log(`  ✓ published ${prodPublished} products so far`);
+        }
+      }
+    }
+
+    if (!page.products.pageInfo.hasNextPage) break;
+    after = page.products.pageInfo.endCursor ?? undefined;
+  }
+  console.log(
+    `  Products: ${prodPublished} published / ${prodSkipped} already OK / ${prodFailed} failed (${prodTotal} scanned)`
+  );
+
+  // ── Publish collections ──
   console.log(`\nPublishing ${COLLECTIONS.length} collection(s):`);
   let published = 0;
   let skipped = 0;
