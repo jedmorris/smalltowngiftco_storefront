@@ -95,9 +95,15 @@ async function revalidate(topic: string): Promise<{ status: number; body: string
   if (!secret) {
     return { status: 0, body: "SHOPIFY_REVALIDATION_SECRET not set" };
   }
-  const url = process.env.NEXT_PUBLIC_SITE_URL
-    ? `${process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "")}/api/revalidate`
-    : "https://smalltowngiftco.com/api/revalidate";
+  // Use VERCEL_DEPLOYMENT_URL if set (Vercel-hosted Next.js app), else fall back
+  // to NEXT_PUBLIC_SITE_URL, else the default vercel.app domain.
+  // Note: smalltowngiftco.com (apex) currently points to Wix, NOT the Next.js app,
+  // so we can't use NEXT_PUBLIC_SITE_URL as the revalidate target unless the user
+  // sets it explicitly to the Vercel URL.
+  const base =
+    process.env.VERCEL_DEPLOYMENT_URL ??
+    "https://smalltowngiftco.vercel.app";
+  const url = `${base.replace(/\/$/, "")}/api/revalidate`;
   try {
     const res = await fetch(url, {
       method: "POST",
