@@ -6,7 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "script": "NODE_OPTIONS='--conditions=react-server' tsx",
+    "admin:auth": "NODE_OPTIONS='--conditions=react-server' tsx scripts/auth.ts",
+    "admin:list-products": "NODE_OPTIONS='--conditions=react-server' tsx scripts/list-products.ts",
+    "admin:update-inventory": "NODE_OPTIONS='--conditions=react-server' tsx scripts/update-inventory.ts",
+    "printify:list-shops": "NODE_OPTIONS='--conditions=react-server' tsx scripts/printify-list-shops.ts",
+    "printify:audit": "NODE_OPTIONS='--conditions=react-server' tsx scripts/printify-audit.ts",
+    "printify:replicate": "NODE_OPTIONS='--conditions=react-server' tsx scripts/printify-replicate.ts",
+    "printify:publish": "NODE_OPTIONS='--conditions=react-server' tsx scripts/printify-publish.ts",
+    "shopify:create-collections": "NODE_OPTIONS='--conditions=react-server' tsx scripts/create-collections.ts",
+    "shopify:assign-collections": "NODE_OPTIONS='--conditions=react-server' tsx scripts/assign-collections.ts"
   },
   "dependencies": {
     "@sentry/nextjs": "^10.49.0",
@@ -17,6 +27,7 @@
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "server-only": "^0.0.1",
     "sonner": "^2.0.7"
   },
   "devDependencies": {
@@ -25,9 +36,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.4.2",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

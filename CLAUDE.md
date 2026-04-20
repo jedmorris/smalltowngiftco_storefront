@@ -6,7 +6,10 @@
 - `src/app/` — Next.js App Router (pages, API routes, layouts)
 - `src/components/` — React components (layout, product, cart, analytics, ui)
 - `src/context/` — Client-side state (CartContext, AuthContext, WishlistContext, QuickViewContext)
-- `src/lib/shopify/` — Shopify Storefront API client, queries, mutations, types, normalization
+- `src/lib/shopify/` — Shopify **Storefront** API client (customer-facing reads, cart, account ops)
+- `src/lib/shopify/admin/` — Shopify **Admin** API client (GraphQL + REST). Server-only via `import "server-only"`. Consumed only by Node scripts in `scripts/` — never imported from `src/app/` or any client component.
+- `src/lib/printify/` — Printify API client. Server-only. Used by `scripts/printify-*.ts` to replicate the POD catalog from the Etsy-connected Printify shop into the Shopify-connected Printify shop (then Printify pushes products live to Shopify). Rate-limited to ~9 req/s under Printify's 600/min cap.
+- `scripts/` — One-off admin/ops scripts run via `tsx`. Admin API: `admin:auth`, `admin:list-products`, `admin:update-inventory`. Catalog replication + collections: `printify:list-shops`, `printify:audit`, `printify:replicate`, `printify:publish`, `shopify:create-collections`, `shopify:assign-collections`. All writes default to dry-run (pass `--commit` to actually write). Loads `.env.local` via `dotenv`. See `scripts/README.md`.
 - `src/lib/` — Utilities (analytics, consent, sanitize, token-crypto, sentry)
 - `public/` — Static assets, manifest.json, robots.txt
 
@@ -15,6 +18,7 @@
 **Key Patterns:**
 - ISR with 3600s revalidation + on-demand revalidation via `/api/revalidate` webhook
 - `NEXT_PUBLIC_*` env vars must use static literal access (no dynamic `process.env[name]`)
+- Admin API token (`SHOPIFY_ADMIN_ACCESS_TOKEN`) is server-only — never prefix with `NEXT_PUBLIC_`, never import `@/lib/shopify/admin` from a client component (`server-only` will fail the build if you try).
 - Auth tokens encrypted with AES-GCM before localStorage; cookie flag for middleware SSR check
 - Reviews stored server-side in `.tmp/reviews.json`
 - Sentry for error monitoring (config in `sentry.*.config.ts`)
