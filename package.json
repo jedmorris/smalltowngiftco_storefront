@@ -17,6 +17,7 @@
     "printify:publish": "NODE_OPTIONS='--conditions=react-server' tsx scripts/printify-publish.ts",
     "shopify:create-collections": "NODE_OPTIONS='--conditions=react-server' tsx scripts/create-collections.ts",
     "shopify:assign-collections": "NODE_OPTIONS='--conditions=react-server' tsx scripts/assign-collections.ts",
+    "shopify:publish-channels": "NODE_OPTIONS='--conditions=react-server' tsx scripts/publish-to-channels.ts",
     "sync:daily": "NODE_OPTIONS='--conditions=react-server' tsx scripts/daily-sync.ts"
   },
   "dependencies": {

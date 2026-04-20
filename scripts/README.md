@@ -54,6 +54,7 @@ Generic form: `npm run script -- scripts/<file>.ts`
 | `printify-publish.ts`       | Printify           | Push target-shop products live to Shopify           |
 | `create-collections.ts`     | Shopify GraphQL    | Create the 4 target collections (idempotent)        |
 | `assign-collections.ts`     | Shopify GraphQL    | Keyword-match products → assign to collections + tag |
+| `publish-to-channels.ts`    | Shopify GraphQL    | Ensure collections published to Online Store + Shop channels |
 | `daily-sync.ts`             | All of the above   | Full pipeline orchestrator + Vercel revalidate + log |
 
 ## Daily sync routine

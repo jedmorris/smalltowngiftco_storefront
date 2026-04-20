@@ -142,9 +142,10 @@ async function main() {
   const env: Record<string, string> = { PRINTIFY_MIN_GAP_MS: "1500" };
   const steps: StepResult[] = [];
 
-  steps.push(await runStep("[1/3] Replicate new Printify products to Shopify-shop", "npm run printify:replicate -- --commit", env));
-  steps.push(await runStep("[2/3] Publish Printify → Shopify", "npm run printify:publish -- --commit", env));
-  steps.push(await runStep("[3/3] Assign products to collections", "npm run shopify:assign-collections -- --commit", env));
+  steps.push(await runStep("[1/4] Replicate new Printify products to Shopify-shop", "npm run printify:replicate -- --commit", env));
+  steps.push(await runStep("[2/4] Publish Printify → Shopify", "npm run printify:publish -- --commit", env));
+  steps.push(await runStep("[3/4] Assign products to collections", "npm run shopify:assign-collections -- --commit", env));
+  steps.push(await runStep("[4/4] Ensure collections published to storefront channels", "npm run shopify:publish-channels -- --commit", env));
 
   log(`\n── Revalidate Vercel cache ──`);
   const r1 = await revalidate("products/update");
