@@ -54,6 +54,17 @@ Generic form: `npm run script -- scripts/<file>.ts`
 | `printify-publish.ts`       | Printify           | Push target-shop products live to Shopify           |
 | `create-collections.ts`     | Shopify GraphQL    | Create the 4 target collections (idempotent)        |
 | `assign-collections.ts`     | Shopify GraphQL    | Keyword-match products → assign to collections + tag |
+| `daily-sync.ts`             | All of the above   | Full pipeline orchestrator + Vercel revalidate + log |
+
+## Daily sync routine
+
+`scripts/daily-sync.ts` chains all three write operations plus a Vercel cache revalidate, designed to run unattended at 2 AM PT via a Claude Code scheduled task (`smalltowngiftco-daily-sync`, cron `0 2 * * *` local TZ).
+
+- Invoke manually: `npm run sync:daily`
+- Log: `.tmp/daily-sync.log` (append-only, timestamped blocks per run)
+- Each step is idempotent — reruns are safe and cheap when nothing new has landed in Printify
+- Uses `PRINTIFY_MIN_GAP_MS=1500` throughout to ride through Printify's publish-endpoint rate limits
+- Tail the log to see the latest run's summary: `tail -80 .tmp/daily-sync.log`
 
 ## Printify → Shopify replication flow
 

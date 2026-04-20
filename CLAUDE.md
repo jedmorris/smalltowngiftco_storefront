@@ -10,6 +10,7 @@
 - `src/lib/shopify/admin/` — Shopify **Admin** API client (GraphQL + REST). Server-only via `import "server-only"`. Consumed only by Node scripts in `scripts/` — never imported from `src/app/` or any client component.
 - `src/lib/printify/` — Printify API client. Server-only. Used by `scripts/printify-*.ts` to replicate the POD catalog from the Etsy-connected Printify shop into the Shopify-connected Printify shop (then Printify pushes products live to Shopify). Rate-limited to ~9 req/s under Printify's 600/min cap.
 - `scripts/` — One-off admin/ops scripts run via `tsx`. Admin API: `admin:auth`, `admin:list-products`, `admin:update-inventory`. Catalog replication + collections: `printify:list-shops`, `printify:audit`, `printify:replicate`, `printify:publish`, `shopify:create-collections`, `shopify:assign-collections`. All writes default to dry-run (pass `--commit` to actually write). Loads `.env.local` via `dotenv`. See `scripts/README.md`.
+- `scripts/daily-sync.ts` (`npm run sync:daily`) — orchestrator that runs the full replicate → publish → assign → revalidate pipeline and appends to `.tmp/daily-sync.log`. Registered as a Claude Code scheduled task (`smalltowngiftco-daily-sync`, cron `0 2 * * *` local TZ) that fires every morning at 2 AM PT. Runs only when Claude Code is active on the Mac.
 - `src/lib/` — Utilities (analytics, consent, sanitize, token-crypto, sentry)
 - `public/` — Static assets, manifest.json, robots.txt
 
