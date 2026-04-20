@@ -2,7 +2,6 @@ import "./_bootstrap";
 
 import {
   listAllProducts,
-  getProduct,
   publishProduct,
   publishingSucceeded,
 } from "../src/lib/printify";
@@ -19,22 +18,6 @@ function requireEnv(name: string): string {
 
 async function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
-}
-
-async function pollForExternal(
-  shopId: string,
-  productId: string,
-  timeoutMs = 120_000
-): Promise<{ id: string; handle: string } | null> {
-  const start = Date.now();
-  while (Date.now() - start < timeoutMs) {
-    const p = await getProduct(shopId, productId);
-    if (p.external?.id) {
-      return { id: p.external.id, handle: p.external.handle ?? "" };
-    }
-    await sleep(5000);
-  }
-  return null;
 }
 
 async function main() {
@@ -54,7 +37,7 @@ async function main() {
   const limited = args.limit ? toPublish.slice(0, args.limit) : toPublish;
 
   console.log(`Products: ${products.length}`);
-  console.log(`Already published: ${products.length - toPublish.length}`);
+  console.log(`Already published (has external id): ${products.length - toPublish.length}`);
   console.log(`Will publish: ${limited.length}`);
 
   if (!args.commit) {
@@ -62,32 +45,73 @@ async function main() {
     return;
   }
 
-  let published = 0;
-  let failed = 0;
-  for (const p of limited) {
+  // ── Phase 1: fire all publish calls (no polling). Printify pushes async to Shopify. ──
+  console.log(`\nPhase 1 — firing ${limited.length} publish call(s)…`);
+  const fired: string[] = [];
+  let fireFail = 0;
+  for (let i = 0; i < limited.length; i++) {
+    const p = limited[i];
     try {
       await publishProduct(targetShopId, p.id);
-      const ext = await pollForExternal(targetShopId, p.id);
-      if (!ext) {
-        failed++;
-        console.error(
-          `  ✗ ${p.title.slice(0, 60)} — timed out waiting for Shopify external id`
-        );
-        continue;
+      fired.push(p.id);
+      if ((i + 1) % 25 === 0 || i === limited.length - 1) {
+        console.log(`  fired ${i + 1}/${limited.length}`);
       }
-      await publishingSucceeded(targetShopId, p.id, ext);
-      published++;
-      console.log(
-        `  ✓ ${published}/${limited.length}  ${ext.id}  ${p.title.slice(0, 60)}`
-      );
     } catch (err) {
-      failed++;
+      fireFail++;
       console.error(
-        `  ✗ ${p.title.slice(0, 60)} — ${String(err).slice(0, 200)}`
+        `  ✗ publish ${p.title.slice(0, 60)} — ${String(err).slice(0, 200)}`
       );
     }
   }
-  console.log(`\nDone. Published: ${published}, Failed: ${failed}`);
+  console.log(`Phase 1 done. Fired: ${fired.length}, Failed to fire: ${fireFail}`);
+
+  // ── Phase 2: wait for Printify to finish pushing to Shopify. ──
+  const waitSec = 90;
+  console.log(`\nPhase 2 — waiting ${waitSec}s for Printify to populate Shopify external ids…`);
+  await sleep(waitSec * 1000);
+
+  // ── Phase 3: refresh product list; for each fired, ack with external id. ──
+  console.log(`\nPhase 3 — refreshing product list to collect external ids…`);
+  const firedSet = new Set(fired);
+  const refreshed = await listAllProducts(targetShopId, (n, total) => {
+    process.stdout.write(`\r  fetched ${n}/${total}`);
+  });
+  process.stdout.write("\n");
+
+  const readyToAck = refreshed.filter(
+    (p) => firedSet.has(p.id) && p.external?.id
+  );
+  const notReady = fired.length - readyToAck.length;
+
+  console.log(`Ready to ack: ${readyToAck.length}`);
+  if (notReady > 0) {
+    console.log(`Still pending (no external id yet): ${notReady} — re-run later to ack these`);
+  }
+
+  let acked = 0;
+  let ackFail = 0;
+  for (const p of readyToAck) {
+    try {
+      await publishingSucceeded(targetShopId, p.id, {
+        id: p.external!.id,
+        handle: p.external!.handle ?? "",
+      });
+      acked++;
+      if (acked % 25 === 0 || acked === readyToAck.length) {
+        console.log(`  acked ${acked}/${readyToAck.length}`);
+      }
+    } catch (err) {
+      ackFail++;
+      console.error(
+        `  ✗ ack ${p.title.slice(0, 60)} — ${String(err).slice(0, 200)}`
+      );
+    }
+  }
+
+  console.log(
+    `\nDone. Fired: ${fired.length}, Fire failures: ${fireFail}, Acked: ${acked}, Ack failures: ${ackFail}, Pending: ${notReady}`
+  );
 }
 
 main().catch((err) => {

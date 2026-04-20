@@ -12,7 +12,7 @@ interface PrintifyFetchOptions {
 }
 
 let lastCallAt = 0;
-const MIN_GAP_MS = 350; // ~3 req/s — publish endpoints have tight per-minute limits
+const MIN_GAP_MS = Number(process.env.PRINTIFY_MIN_GAP_MS ?? 350); // default ~3 req/s; override with PRINTIFY_MIN_GAP_MS for throttle-heavy endpoints like publish
 
 async function throttle(): Promise<void> {
   const wait = lastCallAt + MIN_GAP_MS - Date.now();
