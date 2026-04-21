@@ -1,40 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Search, ShoppingBag, Heart, X, User, LogOut, Package } from "lucide-react";
+import { Menu, Search, ShoppingBag, Heart, X, User, LogOut, Package, ChevronDown } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
-import MobileMenu from "./MobileMenu";
+import MobileNavDrawer from "./MobileNavDrawer";
+import MegaMenu from "./MegaMenu";
 import SearchBar from "@/components/ui/SearchBar";
 import TextLogo from "@/components/ui/TextLogo";
-
-const navLinks = [
-  { label: "Shop All", href: "/collections" },
-  { label: "New Arrivals", href: "/collections/new-arrivals" },
-  { label: "Best Sellers", href: "/collections/best-sellers" },
-  { label: "Bachelorette", href: "/collections/bachelorette" },
-  { label: "Wedding", href: "/collections/wedding" },
-];
+import { PRIMARY_NAV } from "@/lib/navigation";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const [openNav, setOpenNav] = useState<string | null>(null);
+
   const { cart, openCart } = useCart();
   const { count: wishlistCount } = useWishlist();
   const { customer, isAuthenticated, signOut } = useAuth();
 
   const totalQuantity = cart?.totalQuantity ?? 0;
 
+  // Close mega-menu on Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpenNav(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   return (
     <>
       <header className="sticky top-0 z-30 bg-white border-b border-border-soft">
         <div className="max-w-[1280px] mx-auto px-4">
-          <div className="flex items-center justify-between h-[108px]">
-            {/* Left — Mobile menu + nav */}
+          <div className="flex items-center justify-between h-[88px] lg:h-[96px]">
+            {/* Left — Mobile menu + logo */}
             <div className="flex items-center gap-4 flex-1">
               <button
                 onClick={() => setMobileMenuOpen(true)}
@@ -43,18 +48,7 @@ export default function Header() {
               >
                 <Menu className="w-5 h-5" strokeWidth={1.6} />
               </button>
-              <nav className="hidden lg:flex items-center gap-7">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="relative text-[11px] font-medium text-ink tracking-[0.16em] uppercase hover:text-apricot-deep transition-colors group"
-                  >
-                    {link.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-px bg-apricot-deep transition-all duration-300 group-hover:w-full" />
-                  </Link>
-                ))}
-              </nav>
+              <div className="hidden lg:block" />
             </div>
 
             {/* Center — Text Logo */}
@@ -89,7 +83,6 @@ export default function Header() {
                   )}
                 </AnimatePresence>
               </Link>
-              {/* Account */}
               <div className="relative hidden sm:block">
                 {isAuthenticated ? (
                   <>
@@ -185,6 +178,54 @@ export default function Header() {
             </div>
           </div>
 
+          {/* Primary nav (desktop only) */}
+          <nav
+            className="hidden lg:flex items-center justify-center gap-9 pb-4 relative"
+            aria-label="Primary"
+          >
+            {PRIMARY_NAV.map((item) => {
+              const hasColumns = Boolean(item.columns?.length);
+              const isOpen = openNav === item.label;
+              return (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => hasColumns && setOpenNav(item.label)}
+                  onMouseLeave={() => hasColumns && setOpenNav(null)}
+                >
+                  <Link
+                    href={item.href}
+                    onFocus={() => hasColumns && setOpenNav(item.label)}
+                    aria-haspopup={hasColumns ? "menu" : undefined}
+                    aria-expanded={hasColumns ? isOpen : undefined}
+                    className={`inline-flex items-center gap-1 text-[11.5px] font-medium tracking-[0.18em] uppercase transition-colors py-1 ${
+                      item.emphasis === "sale"
+                        ? "text-apricot-deep hover:text-espresso"
+                        : "text-ink hover:text-apricot-deep"
+                    }`}
+                  >
+                    {item.label}
+                    {hasColumns && (
+                      <ChevronDown className="w-3 h-3 opacity-70" strokeWidth={1.8} />
+                    )}
+                  </Link>
+                </div>
+              );
+            })}
+          </nav>
+
+          {/* Mega-menus positioned below the nav row */}
+          {PRIMARY_NAV.map((item) =>
+            item.columns ? (
+              <MegaMenu
+                key={item.label}
+                item={item}
+                open={openNav === item.label}
+                onClose={() => setOpenNav(null)}
+              />
+            ) : null
+          )}
+
           {/* Search bar dropdown */}
           <AnimatePresence>
             {searchOpen && (
@@ -204,7 +245,7 @@ export default function Header() {
         </div>
       </header>
 
-      <MobileMenu
+      <MobileNavDrawer
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
       />

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCollectionByHandle, getCollectionHandles } from "@/lib/shopify";
 import CollectionContent from "./CollectionContent";
+import CategorySidebar from "@/components/collection/CategorySidebar";
 import JsonLd from "@/components/seo/JsonLd";
 
 interface CollectionPageProps {
@@ -40,7 +41,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="max-w-[1280px] mx-auto px-4 py-8 lg:py-12">
       <JsonLd
         collection={collection}
         breadcrumbs={[
@@ -49,52 +50,55 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
           { name: collection.title, url: `/collections/${collection.handle}` },
         ]}
       />
+
       {/* Breadcrumb */}
-      <nav className="text-sm text-ink-subtle mb-6">
-        <Link href="/" className="hover:text-apricot-deep transition-colors">Home</Link>
-        <span className="mx-2">·</span>
-        <Link href="/collections" className="hover:text-apricot-deep transition-colors">Collections</Link>
-        <span className="mx-2">·</span>
+      <nav className="text-xs text-ink-subtle mb-4" aria-label="Breadcrumb">
+        <Link href="/" className="hover:text-apricot-deep transition-colors no-underline">Home</Link>
+        <span className="mx-2">/</span>
+        <Link href="/collections" className="hover:text-apricot-deep transition-colors no-underline">Collections</Link>
+        <span className="mx-2">/</span>
         <span className="text-ink">{collection.title}</span>
       </nav>
 
-      {/* Collection Header */}
-      <div className="text-center mb-10">
-        {collection.image && (
-          <div className="relative w-full h-48 lg:h-64 rounded-xl overflow-hidden mb-6">
-            <Image
-              src={collection.image.url}
-              alt={collection.image.altText || collection.title}
-              fill
-              className="object-cover"
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-black/30" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <h1 className="font-serif text-4xl lg:text-5xl text-white">
-                {collection.title}
-              </h1>
-            </div>
-          </div>
-        )}
-        {!collection.image && (
-          <h1 className="font-serif text-4xl text-ink mb-3">
-            {collection.title}
-          </h1>
-        )}
+      {/* Optional collection hero image banner */}
+      {collection.image && (
+        <div className="relative w-full h-40 lg:h-56 rounded-[18px] overflow-hidden mb-8">
+          <Image
+            src={collection.image.url}
+            alt={collection.image.altText || collection.title}
+            fill
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-ink/30" />
+        </div>
+      )}
+
+      {/* Header row: title + meta */}
+      <div className="mb-8">
+        <h1 className="font-serif text-3xl lg:text-5xl text-ink mb-2">{collection.title}</h1>
         {collection.description && (
-          <p className="text-ink-muted max-w-lg mx-auto">{collection.description}</p>
+          <p className="text-ink-muted max-w-2xl">{collection.description}</p>
         )}
-        <p className="text-sm text-ink-subtle mt-2">
+        <p className="text-xs text-ink-subtle mt-2 uppercase tracking-[0.18em]">
           {collection.products.length} product{collection.products.length !== 1 ? "s" : ""}
         </p>
       </div>
 
-      <CollectionContent
-        products={collection.products}
-        collectionHandle={handle}
-        initialPageInfo={collection.pageInfo}
-      />
+      {/* Two-column body: sidebar + product grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-8 lg:gap-12">
+        <div className="hidden lg:block">
+          <CategorySidebar currentHandle={handle} />
+        </div>
+
+        <div>
+          <CollectionContent
+            products={collection.products}
+            collectionHandle={handle}
+            initialPageInfo={collection.pageInfo}
+          />
+        </div>
+      </div>
     </div>
   );
 }
